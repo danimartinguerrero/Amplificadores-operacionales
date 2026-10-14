@@ -1,22 +1,16 @@
 % =========================================================================
 \section{Introducción}\label{sec:introduccion}
 % =========================================================================
-En este PreLab se obtienen, con el modelo ideal del amplificador operacional (AO), las ganancias de
-tres circuitos realimentados: el amplificador inversor ($A_V=-10$), el no inversor ($A_V=+11$) y el
-inversor generalizado, que con un condensador en la realimentación se comporta como un filtro paso bajo.
+En este PreLab diseñamos los tres circuitos de la sesión: un amplificador inversor de ganancia $-10$, uno
+no inversor de ganancia $+11$ y, por último, un inversor generalizado que, al colocar un condensador en
+la realimentación, se convierte en un filtro paso bajo.
 
-Un AO amplifica la diferencia entre sus entradas no inversora ($+$) e inversora ($-$),
-$\vout=A\,(\vp-\vm)$, con una ganancia en lazo abierto $A$ muy grande; tiene una resistencia de entrada
-$\Rin$ entre ambas entradas y una resistencia de salida $\Rout$. El \emph{AO ideal} cumple
-\[
-  \Rin\to\infty,\qquad \Rout\to0,\qquad A\to\infty .
-\]
-Si trabaja en zona lineal gracias a una \emph{realimentación negativa} (una red que lleva parte de la
-salida a la entrada inversora), se derivan las dos reglas que usaremos en todos los cálculos:
+En todos ellos tratamos el amplificador operacional como \emph{ideal}: resistencia de entrada infinita,
+resistencia de salida nula y ganancia $A$ infinita. Como la salida está realimentada hacia la entrada
+inversora y permanece finita, de $\vout=A(\vp-\vm)$ se siguen las dos reglas en las que nos apoyaremos:
 \begin{itemize}[leftmargin=3em]
-  \item[(R1)] \emph{corrientes de entrada nulas}, $i_+=i_-=0$, porque entre las entradas solo hay $\Rin\to\infty$;
-  \item[(R2)] \emph{cortocircuito virtual}, $\vp=\vm$, porque la salida es finita ($\abs{\vout}\le\Vsat$) y
-        $\vp-\vm=\vout/A\to0$ cuando $A\to\infty$.
+  \item[(R1)] no entra corriente por las entradas, $i_+=i_-=0$;
+  \item[(R2)] ambas entradas están al mismo potencial, $\vp=\vm$ (cortocircuito virtual).
 \end{itemize}
-Además, con $\Rout=0$ la tensión de salida no depende de la carga. Cada circuito se resuelve imponiendo
-(R1) y (R2) y aplicando la ley de Kirchhoff de corrientes en el nudo inversor y la ley de Ohm.
+Con ellas, la ley de Ohm y la ley de Kirchhoff de corrientes en el nudo inversor, resolvemos los tres
+circuitos.
