@@ -1,0 +1,238 @@
+% =========================================================================
+%  Instrumentación Electrónica — PreLab de la sesión 1 (amplificadores operacionales)
+%  Estilo heredado de los apuntes de Electromagnetismo I (Temas 0 y 1):
+%  amsart, Palatino, versalitas, enunciados numerados por sección, paleta de
+%  azules y grises sobrios. Ecuaciones numeradas a la derecha (opción reqno).
+% =========================================================================
+
+% --- IDIOMA Y CODIFICACIÓN ------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+
+% --- TIPOGRAFÍA (Palatino) --------------------------------------------------
+\usepackage{mathpazo}
+\linespread{1.05}
+\emergencystretch=2em
+\usepackage[final]{microtype}
+
+% --- MATEMÁTICAS -------------------------------------------------------------
+\usepackage{amsmath, amssymb, mathtools}
+\usepackage{bm}
+
+% --- UNIDADES (coma decimal, como en el resto de los apuntes) ---------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}, group-separator={\,}, group-minimum-digits=5,
+         exponent-product=\cdot, per-mode=symbol, range-phrase={--},
+         list-final-separator={ y }, list-pair-separator={ y }}
+
+% --- PÁGINA, COLORES Y GRÁFICOS --------------------------------------------
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+% Paleta base (idéntica a la de los apuntes de Electromagnetismo I)
+\definecolor{azulprof}{HTML}{1F3A5F}    % azul oscuro
+\definecolor{azulacero}{HTML}{3B6EA5}   % azul medio
+\definecolor{azulclaro}{HTML}{8FB3D9}   % azul claro
+\definecolor{azulfondo}{HTML}{F3F7FB}   % fondo tenue de definiciones
+\definecolor{grispizarra}{HTML}{6B7280} % gris
+\definecolor{grisclaro}{HTML}{D4D8DE}   % gris claro
+\definecolor{acento}{HTML}{B8800A}      % acento: ámbar oscuro
+\definecolor{rojoteo}{HTML}{B8800A}     % señales de salida, resultados
+\definecolor{verdeteo}{HTML}{2F6F68}    % corrientes y sentidos de referencia
+\definecolor{opfondo}{HTML}{E4EEF8}     % relleno del triángulo del AO
+
+\usepackage{tikz}
+\usetikzlibrary{babel, arrows.meta, calc, positioning, decorations.markings,
+                patterns, intersections}
+\usepackage[european, straightvoltages, RPvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepgfplotslibrary{fillbetween}
+\usepackage{booktabs}
+\usepackage{needspace}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[inline]{enumitem}
+\setlist[itemize]{leftmargin=1.6em, itemsep=2pt, topsep=4pt}
+\setlist[enumerate]{leftmargin=1.8em, itemsep=2pt, topsep=4pt}
+
+% --- ENLACES Y REFERENCIAS CRUZADAS ----------------------------------------
+\usepackage[colorlinks=true, linkcolor=azulacero, citecolor=azulacero,
+            urlcolor=azulacero, plainpages=false, pdfusetitle=false,
+            pdftitle={PreLab. Sesión 1: amplificadores operacionales},
+            pdfauthor={Daniel Martín Guerrero}]{hyperref}
+\usepackage[spanish,nameinlink]{cleveref}
+
+% --- CABECERAS ---------------------------------------------------------------
+\pagestyle{headings}
+\makeatletter
+\def\ps@headings{%
+  \let\@mkboth\markboth
+  \def\@evenhead{\small\scshape\normalfont\thepage\hfil Instrumentación Electrónica}%
+  \def\@oddhead{\small\scshape\normalfont PreLab. Sesión 1: amplificadores operacionales\hfil\thepage}%
+  \let\@evenfoot\@empty \let\@oddfoot\@empty}
+\makeatother
+
+% Subsecciones como títulos en bloque (no «run-in»), con aire antes y después
+\usepackage{titlesec}
+\titleformat{\subsection}[block]{\normalfont\bfseries\color{azulprof}}{\thesubsection.}{0.6em}{}
+\titlespacing*{\subsection}{0pt}{3ex plus 1ex minus .5ex}{1.6ex plus .4ex}
+\setcounter{tocdepth}{2}
+\makeatletter
+\def\@@and{y}
+\renewcommand{\keywordsname}{Palabras clave}
+% Índice: número de sección en una caja de anchura fija (evita el solape de amsart)
+\renewcommand{\tocsection}[3]{\indentlabel{\@ifnotempty{#2}{\makebox[1.6em][l]{#2.}}}#3}
+\renewcommand{\tocsubsection}[3]{\indentlabel{\@ifnotempty{#2}{\makebox[2.4em][l]{#2.}}}#3}
+\def\l@section{\@tocline{1}{2pt}{0pt}{1.6em}{}}
+\def\l@subsection{\@tocline{2}{0pt}{1.6em}{2.4em}{}}
+\def\l@part{\@tocline{-1}{8pt plus 2pt}{0pt}{0pt}{\bfseries\color{azulprof}}}
+\makeatother
+
+% =========================================================================
+%               NOTACIÓN Y MACROS DE USO FRECUENTE
+% =========================================================================
+\newcommand{\dif}{\mathrm{d}}
+\newcommand{\eul}{\mathrm{e}}
+\newcommand{\jj}{\mathrm{j}}                         % unidad imaginaria (j)
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\defeq}{\mathrel{\overset{\mathrm{def}}{=}}}
+\newcommand{\Lt}{\mathcal{L}}                        % transformada de Laplace
+\DeclareMathOperator{\sen}{sen}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\arctg}{arctg}
+\DeclareMathOperator{\Real}{Re}
+\renewcommand{\sin}{\sen}                            % «sen» en todo el texto
+% Magnitudes de circuito
+\newcommand{\vin}{v_{\mathrm{in}}}
+\newcommand{\vout}{v_{\mathrm{out}}}
+\newcommand{\Vin}{V_{\mathrm{in}}}
+\newcommand{\Vout}{V_{\mathrm{out}}}
+\newcommand{\Vsat}{V_{\mathrm{sat}}}
+\newcommand{\Vcc}{V_{\mathrm{CC}}}
+\newcommand{\Vee}{V_{\mathrm{EE}}}
+\newcommand{\Rin}{R_{\mathrm{in}}}
+\newcommand{\Rout}{R_{\mathrm{out}}}
+\newcommand{\Zin}{Z_{\mathrm{in}}}
+\newcommand{\Zout}{Z_{\mathrm{out}}}
+\newcommand{\Av}{A_{V}}
+\newcommand{\vp}{v_{+}}
+\newcommand{\vm}{v_{-}}
+\newcommand{\dB}{\,\mathrm{dB}}
+\newcommand{\pend}[1]{\textcolor{grispizarra}{\colorbox{grisclaro}{\strut\,#1\,}}}
+
+% =========================================================================
+%        ENTORNOS FORMALES (enunciados numerados, estilo artículo)
+% =========================================================================
+\usepackage{amsthm}
+\usepackage[most]{tcolorbox}
+
+\newtheoremstyle{cienplano}{10pt}{10pt}{\itshape}{}%
+  {\bfseries\color{azulprof}}{.}{0.6em}%
+  {\thmname{#1}\thmnumber{ #2}\thmnote{\normalfont\upshape\ (#3)}}
+\newtheoremstyle{ciendef}{10pt}{10pt}{\normalfont}{}%
+  {\bfseries\color{azulprof}}{.}{0.6em}%
+  {\thmname{#1}\thmnumber{ #2}\thmnote{\normalfont\upshape\ (#3)}}
+\newtheoremstyle{cienobs}{8pt}{8pt}{\normalfont}{}%
+  {\itshape\color{azulprof}}{.}{0.6em}%
+  {\thmname{#1}\thmnumber{ #2}\thmnote{\normalfont\upshape\ (#3)}}
+
+\theoremstyle{cienplano}
+\newtheorem{proposicion}{Proposición}
+\newtheorem{teorema}[proposicion]{Teorema}
+\newtheorem{corolario}[proposicion]{Corolario}
+\theoremstyle{ciendef}
+\newtheorem{ejemplo}[proposicion]{Ejemplo}
+\newtheorem{ejercicio}[proposicion]{PreLab}
+\newtheorem{hipotesis}[proposicion]{Hipótesis}
+% Definiciones: único entorno enmarcado (caja fina, fondo tenue, título en el borde)
+\newcounter{definicion}
+\renewcommand{\thedefinicion}{\theproposicion}
+\newtcolorbox{definicionbox}[1]{%
+  enhanced, breakable, sharp corners,
+  colback=azulfondo, colframe=azulclaro, boxrule=0.4pt,
+  left=9pt, right=9pt, top=5pt, bottom=5pt,
+  before skip=12pt, after skip=12pt,
+  attach boxed title to top left={yshift*=-\tcboxedtitleheight/2, xshift=8pt},
+  boxed title style={colback=white, colframe=white, sharp corners, boxrule=0pt,
+                     left=3pt, right=3pt, top=1pt, bottom=1pt},
+  fonttitle=\bfseries\color{azulprof}, coltitle=azulprof,
+  title={Definición~\thedefinicion\ifx\relax#1\relax\else\ (#1)\fi}}
+\newenvironment{definicion}[1][]
+  {\par\stepcounter{proposicion}\refstepcounter{definicion}\begin{definicionbox}{#1}}
+  {\end{definicionbox}}
+
+% Enunciado de cada recuadro del PreLab: misma caja, con filete ámbar (los
+% recuadros amarillos del guion), para distinguir lo pedido de lo resuelto.
+\newcounter{prelab}
+\newtcolorbox{prelabbox}[1]{%
+  enhanced, sharp corners,
+  colback=white, colframe=acento!70, boxrule=0.5pt, leftrule=2.2pt,
+  left=9pt, right=9pt, top=5pt, bottom=5pt,
+  before skip=12pt, after skip=10pt,
+  attach boxed title to top left={yshift*=-\tcboxedtitleheight/2, xshift=8pt},
+  boxed title style={colback=white, colframe=white, sharp corners, boxrule=0pt,
+                     left=3pt, right=3pt, top=1pt, bottom=1pt},
+  fonttitle=\bfseries\color{acento!85!black}, coltitle=acento!85!black,
+  title={PreLab~\theprelab\ifx\relax#1\relax\else\ (#1)\fi}}
+\newenvironment{prelab}[1][]
+  {\par\refstepcounter{prelab}\begin{prelabbox}{#1}}
+  {\end{prelabbox}}
+
+\theoremstyle{cienobs}
+\newtheorem{observacion}[proposicion]{Observación}
+
+% Resolución: misma maquinaria que «proof», con otro rótulo
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+\newenvironment{resolucion}[1][Resolución]
+  {\begin{proof}[\itshape\color{azulprof}#1]}{\end{proof}}
+
+% Resultado final enmarcado (como \boxed, pero con el filete de la paleta)
+\newcommand{\resultado}[1]{\fcolorbox{azulacero}{white}{\ensuremath{\displaystyle #1}}}
+
+\crefname{proposicion}{proposición}{proposiciones}
+\Crefname{proposicion}{Proposición}{Proposiciones}
+\crefname{teorema}{teorema}{teoremas}
+\Crefname{teorema}{Teorema}{Teoremas}
+\crefname{corolario}{corolario}{corolarios}
+\Crefname{corolario}{Corolario}{Corolarios}
+\crefname{definicion}{definición}{definiciones}
+\Crefname{definicion}{Definición}{Definiciones}
+\crefname{ejemplo}{ejemplo}{ejemplos}
+\Crefname{ejemplo}{Ejemplo}{Ejemplos}
+\crefname{hipotesis}{hipótesis}{hipótesis}
+\Crefname{hipotesis}{Hipótesis}{Hipótesis}
+\crefname{prelab}{PreLab}{PreLabs}
+\Crefname{prelab}{PreLab}{PreLabs}
+\crefname{observacion}{observación}{observaciones}
+\Crefname{observacion}{Observación}{Observaciones}
+\crefname{section}{sección}{secciones}
+\Crefname{section}{Sección}{Secciones}
+\crefname{subsection}{sección}{secciones}
+\Crefname{subsection}{Sección}{Secciones}
+\crefname{table}{tabla}{tablas}
+\Crefname{table}{Tabla}{Tablas}
+\crefname{figure}{figura}{figuras}
+\Crefname{figure}{Figura}{Figuras}
+\crefname{equation}{ecuación}{ecuaciones}
+\Crefname{equation}{Ecuación}{Ecuaciones}
+\crefformat{equation}{ecuación~(#2#1#3)}
+\Crefformat{equation}{Ecuación~(#2#1#3)}
+\crefrangeformat{equation}{ecuaciones~(#3#1#4)--(#5#2#6)}
+\crefmultiformat{equation}{ecuaciones~(#2#1#3)}{ y~(#2#1#3)}{, (#2#1#3)}{ y~(#2#1#3)}
+
+\usepackage[font=small, labelfont={sc,color=azulprof}, labelsep=period,
+            margin=0.6cm, justification=justified]{caption}
+\usepackage{subcaption}
+
+% Referencia a un panel de figura: «figura 5\,(b)», enlazada en bloque
+\newcommand{\figpanel}[2]{\hyperref[#1]{figura~\ref*{#1}\,\textup{(#2)}}}
+\newcommand{\Figpanel}[2]{\hyperref[#1]{Figura~\ref*{#1}\,\textup{(#2)}}}
+
+% =========================================================================
+%        ESTILOS GRÁFICOS COMUNES (TikZ / circuitikz / pgfplots)
+% =========================================================================
+\input{figuras/estilos}

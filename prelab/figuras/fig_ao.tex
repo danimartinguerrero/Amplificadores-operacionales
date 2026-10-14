@@ -1,0 +1,28 @@
+% Figura: (a) símbolo del AO; (b) modelo ideal.
+\begin{figure}[ht]
+\centering
+\begin{minipage}[b]{0.40\textwidth}\centering
+\begin{circuitikz}[circuito, scale=0.9, transform shape]
+  \draw (0,0) node[op amp, ao] (A) {};
+  \draw (A.-) to[short, -o] ++(-0.6,0) node[left] {$\vm$};
+  \draw (A.+) to[short, -o] ++(-0.6,0) node[left] {$\vp$};
+  \draw (A.out) to[short, -o] ++(0.5,0) node[right] {$\vout$};
+  \draw (A.up) -- ++(0,0.45) node[above, font=\scriptsize] {$+\Vcc$};
+  \draw (A.down) -- ++(0,-0.45) node[below, font=\scriptsize] {$-\Vee$};
+\end{circuitikz}\\[2pt]
+{\small (a)}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.45\textwidth}\centering
+\begin{circuitikz}[circuito, scale=0.85, transform shape]
+  \draw[azulclaro, fill=opfondo, line width=0.5pt] (-0.4,2.8) -- (-0.4,-0.8) -- (4.4,1.0) -- cycle;
+  \draw (-1.1,2.0) node[left] {$\vm$} to[short, o-, i={$i_-=0$}] (0.4,2.0);
+  \draw (-1.1,0) node[left] {$\vp$} to[short, o-, i_={$i_+=0$}] (0.4,0);
+  \draw (2.3,-1.1) node[ground] {} -- (2.3,0.1) to[cV, l=\scriptsize$A(\vp-\vm)$] (2.3,1.9) -- (4.4,1.9) to[short, -o] (5.0,1.9) node[right] {$\vout$};
+\end{circuitikz}\\[2pt]
+{\small (b)}
+\end{minipage}
+\caption{El amplificador operacional. (a) Símbolo, con la alimentación (que en los esquemas siguientes
+se omite). (b) Modelo ideal: entradas en circuito abierto ($\Rin\to\infty$), fuente
+de salida sin resistencia en serie ($\Rout\to0$) y $A\to\infty$.}
+\label{fig:ao}
+\end{figure}

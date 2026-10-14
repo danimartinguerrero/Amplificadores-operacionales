@@ -1,0 +1,15 @@
+% =========================================================================
+\section{Resumen de resultados}\label{sec:resumen}
+% =========================================================================
+\begin{center}\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & Inversor & No inversor & Inversor generalizado\\
+\midrule
+Ganancia & $A_V=-\dfrac{R_2}{R_1}$ & $A_V=1+\dfrac{R_2}{R_1}$ & $H(s)=-\dfrac{Z_2(s)}{Z_1(s)}$\\
+Diseño / caso & $R_2=10\,\mathrm{k}\Omega$ & $R_2=10\,\mathrm{k}\Omega$ & $Z_1=R$, $Z_2=R_F\parallel C$\\
+Resultado & $A_V=-10$ (contrafase) & $A_V=+11$ (en fase) & $H(s)=-\dfrac{R_F}{R}\,\dfrac{1}{1+sR_FC}$, paso bajo\\
+\bottomrule
+\end{tabular}
+\end{center}

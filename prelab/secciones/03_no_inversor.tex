@@ -1,0 +1,75 @@
+% =========================================================================
+\section{Circuito 2: amplificador no inversor}\label{sec:no-inversor}
+% =========================================================================
+\begin{prelab}[Amplificador no inversor]
+Usando un modelo de amplificador operacional ideal, encuéntrese la ganancia en tensión
+$A_V=\Vout/\Vin$ en función de las resistencias del circuito de la \cref{fig:no-inversor}. Si imponemos un
+valor de $R_1=1\,\mathrm{k}\Omega$, determínese el valor de $R_2$ para conseguir la ganancia pedida, $A_V=+11$ a
+$1\,\mathrm{kHz}$.
+\end{prelab}
+
+\input{figuras/fig_no_inversor}
+
+\begin{resolucion}
+\textbf{Hipótesis.} AO ideal en zona lineal: $R_2$ une la salida con la entrada inversora (realimentación
+negativa), de modo que valen (R1), $i_+=i_-=0$, y (R2), $\vp=\vm$. Tomamos los sentidos de corriente de la
+\cref{fig:no-inversor}: $i_1$ por $R_1$ desde el nudo inversor hacia tierra e $i_2$ por $R_2$ desde la salida
+hacia el nudo inversor.
+
+\textbf{Paso 1: tensión en la entrada no inversora.} La señal se aplica directamente a la entrada $+$, y
+por (R1), $i_+=0$, no hay caída de tensión en esa conexión:
+\begin{equation}\label{eq:n-vp}
+  \vp=\vin .
+\end{equation}
+
+\textbf{Paso 2: cortocircuito virtual.} Por (R2) y \eqref{eq:n-vp}, el nudo inversor sigue a la entrada:
+\begin{equation}\label{eq:n-vm}
+  \vm=\vp=\vin .
+\end{equation}
+
+\textbf{Paso 3: corriente por $R_1$.} La ley de Ohm aplicada a $R_1$, entre $\vm$ y tierra, da
+\begin{equation}\label{eq:n-i1}
+  i_1=\frac{\vm-0}{R_1}\overset{\eqref{eq:n-vm}}{=}\frac{\vin}{R_1} .
+\end{equation}
+
+\textbf{Paso 4: ley de Kirchhoff de corrientes en el nudo inversor.} Entra $i_2$ y salen $i_1$ e $i_-$:
+\begin{equation}\label{eq:n-kcl}
+  i_2=i_1+i_- .
+\end{equation}
+Por (R1), $i_-=0$:
+\begin{equation}\label{eq:n-i2}
+  i_2=i_1\overset{\eqref{eq:n-i1}}{=}\frac{\vin}{R_1} .
+\end{equation}
+
+\textbf{Paso 5: tensión de salida.} La ley de Ohm aplicada a $R_2$, recorrida por $i_2$ desde la salida
+($\vout$) hasta el nudo inversor ($\vm$), da
+\begin{equation}\label{eq:n-ohm2}
+  \vout-\vm=R_2\,i_2 .
+\end{equation}
+Despejando $\vout$ y sustituyendo \eqref{eq:n-vm} y \eqref{eq:n-i2},
+\begin{equation}\label{eq:n-vout}
+  \vout=\vm+R_2\,i_2=\vin+R_2\,\frac{\vin}{R_1}=\Bigl(1+\frac{R_2}{R_1}\Bigr)\vin .
+\end{equation}
+
+\textbf{Resultado.} Dividiendo \eqref{eq:n-vout} por $\vin$:
+\begin{equation}\label{eq:n-Av}
+  \resultado{A_V=\frac{\vout}{\vin}=1+\frac{R_2}{R_1}}
+\end{equation}
+
+\textbf{Diseño.} Despejando $R_2$ de \eqref{eq:n-Av} y sustituyendo $A_V=11$ y $R_1=1\,\mathrm{k}\Omega$:
+\begin{equation}\label{eq:n-R2}
+  R_2=(A_V-1)\,R_1=(11-1)\cdot1\,\mathrm{k}\Omega\quad\Longrightarrow\quad
+  \resultado{R_2=10\,\mathrm{k}\Omega}
+\end{equation}
+
+\textbf{Comprobación.} Con estos valores, \eqref{eq:n-Av} da
+\begin{equation}\label{eq:n-check}
+  A_V=1+\frac{10\,\mathrm{k}\Omega}{1\,\mathrm{k}\Omega}=11 .
+\end{equation}
+
+\textbf{Comentario.} $A_V>0$: la salida está en fase con la entrada. Por \eqref{eq:n-Av}, $A_V\ge1$ para
+cualquier elección de resistencias. Como en el inversor, la ganancia no depende de la frecuencia, ni de $A$
+ni de $R_L$ (\cref{fig:ni-graficas}).
+\end{resolucion}
+
+\input{figuras/fig_ni_graficas}

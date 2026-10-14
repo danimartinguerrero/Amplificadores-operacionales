@@ -1,0 +1,48 @@
+\documentclass[a4paper,11pt,reqno]{amsart}
+
+% =========================================================================
+%  Instrumentación Electrónica — PreLab de la sesión 1 (amplificadores operacionales)
+%  Documento autocontenido para pasar a manuscrito. Compilar con: latexmk -pdf main.tex
+%  Ecuaciones numeradas de (1) en adelante, a la derecha.
+% =========================================================================
+\input{preambulo}
+
+% =========================================================================
+%                     VARIABLES PARA LA PORTADA
+% =========================================================================
+\newcommand{\Universidad}{Universidad de Salamanca}
+\newcommand{\Facultad}{Facultad de Ciencias}
+\newcommand{\Titulacion}{Grado en Física}
+\newcommand{\Asignatura}{Instrumentación Electrónica}
+\newcommand{\NumTema}{Laboratorio de circuitos, sesión 1}
+\newcommand{\TituloTema}{PreLab:\\amplificadores operacionales}
+\newcommand{\tipotrabajo}{PreLab. Cálculos de diseño}
+\newcommand{\miNombre}{Daniel Martín Guerrero}
+\newcommand{\miRotuloProfesor}{Profesores}
+\newcommand{\miProfesor}{Yahya Moubarak Meziani\\María Susana Pérez Santos\\Jesús Enrique Velázquez Pérez}
+\newcommand{\miDetalleProfesor}{Área de Electrónica}
+\newcommand{\SubtituloTema}{Amplificador inversor, amplificador no inversor\\y amplificador inversor generalizado como filtro paso bajo}
+\newcommand{\miUbicacion}{Salamanca, curso 2026/2027}
+
+\title{PreLab de la sesión 1: amplificadores operacionales}
+\author{Daniel Martín Guerrero}
+\address{Grado en Física, Facultad de Ciencias, Universidad de Salamanca,
+         Salamanca, España}
+\date{}
+
+\begin{document}
+\pagenumbering{alph}
+\input{portada}
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\maketitle
+
+\input{secciones/01_introduccion}
+\input{secciones/02_inversor}
+\input{secciones/03_no_inversor}
+\input{secciones/04_filtro}
+\input{secciones/05_resumen}
+
+\end{document}

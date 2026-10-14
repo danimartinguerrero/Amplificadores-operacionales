@@ -1,0 +1,59 @@
+% =========================================================================
+%  Estilos gráficos comunes: TikZ, circuitikz y pgfplots
+% =========================================================================
+
+% --- Estilos TikZ generales ------------------------------------------------
+\tikzset{
+  >=Stealth,
+  eje/.style={->, line width=0.6pt, grispizarra},
+  fino/.style={line width=0.4pt, grispizarra},
+  punteado/.style={densely dotted, line width=0.5pt, grispizarra},
+  etiq/.style={font=\small, text=black!85},
+  nota/.style={font=\scriptsize, text=grispizarra, align=center},
+  % corriente dibujada junto a un hilo (flecha verde con rótulo)
+  corr/.style={-{Stealth[length=4.5pt,width=4pt]}, line width=0.8pt, verdeteo},
+  % nudo con tensión anotada
+  tens/.style={font=\small, text=azulprof},
+}
+
+% --- circuitikz: trazo y colores sobrios -----------------------------------
+\ctikzset{
+  bipoles/thickness=1,
+  bipoles/length=1.15cm,
+  tripoles/op amp/width=1.5,
+  tripoles/op amp/height=1.35,
+  tripoles/op amp/font=\small,
+  current/distance=0.45,
+  label/align=smart,
+}
+\tikzset{
+  circuito/.style={line width=0.55pt, color=black!85, font=\small},
+  ao/.style={fill=opfondo},
+}
+
+% --- Estilo base de ejes pgfplots ------------------------------------------
+\pgfplotsset{
+  tema/.style={
+    tick label style={font=\scriptsize}, label style={font=\small},
+    axis lines=left, axis line style={grispizarra},
+    grid=major, grid style={grisclaro, line width=0.4pt},
+    every tick/.style={grispizarra},
+    legend style={font=\scriptsize, draw=none, fill=white, fill opacity=0.85,
+                  text opacity=1},
+    legend cell align=left,
+    /pgf/number format/use comma,
+  },
+  % ejes centrados (formas de onda y características de transferencia)
+  temacentro/.style={
+    tick label style={font=\scriptsize}, label style={font=\small},
+    axis lines=middle, axis line style={grispizarra, -{Stealth[length=4pt]}},
+    every tick/.style={grispizarra},
+    legend style={font=\scriptsize, draw=none, fill=white, fill opacity=0.85,
+                  text opacity=1},
+    legend cell align=left,
+    /pgf/number format/use comma,
+  },
+  senal entrada/.style={azulacero, line width=1.0pt},
+  senal salida/.style={rojoteo, line width=1.1pt},
+  asintota/.style={grispizarra, densely dashed, line width=0.6pt},
+}

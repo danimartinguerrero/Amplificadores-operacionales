@@ -1,0 +1,29 @@
+% Figura: representación del resultado del PreLab para el amplificador inversor ($A_V=-10$) (modelo ideal).
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \begin{axis}[tema, name=a, width=0.48\textwidth, height=4.6cm,
+      xmin=0, xmax=2, ymin=-6.5, ymax=6.5, ytick={-5,0,5},
+      xlabel={$t$ (ms)}, ylabel={Tensión (V)}, title style={font=\small},
+      title={(a) Formas de onda, $V_p=0{,}5\,\mathrm{V}$}]
+    \addplot[senal entrada, domain=0:2, samples=150] {0.5*sin(360*x)};
+    \addplot[senal salida, domain=0:2, samples=150] {-5*sin(360*x)};
+  \end{axis}
+  \begin{axis}[temacentro, at={(a.east)}, anchor=west, xshift=1.2cm,
+      width=0.40\textwidth, height=4.6cm, clip=false,
+      xmin=-0.6, xmax=0.6, ymin=-7, ymax=7, xtick={-0.5,0.5}, ytick={-5,5},
+      xticklabels={$-0{,}5$,$0{,}5$}, yticklabels={$-5$,$5$},
+      xlabel={$\vin$ (V)},
+      xlabel style={at={(axis description cs:1,0.5)}, anchor=south east, yshift=2pt, font=\scriptsize},
+      title style={font=\small, yshift=10pt}, title={(b) Característica $\vout(\vin)$}]
+    \addplot[senal salida, domain=-0.6:0.6, samples=2] {-10*x};
+    \node[font=\scriptsize, anchor=west] at (axis description cs:0.52,0.97) {$\vout$ (V)};
+    \node[font=\scriptsize, anchor=west, text=rojoteo] at (axis cs:0.08,4) {pendiente $-10$};
+  \end{axis}
+\end{tikzpicture}
+\caption{Representación del resultado para el amplificador inversor ($A_V=-10$), con el modelo ideal y
+$f=1\,\mathrm{kHz}$. (a) Para una entrada de $0{,}5\,\mathrm{V}$ de amplitud (azul), la salida (ámbar) tiene
+amplitud $\abs{A_V}\cdot0{,}5\,\mathrm{V}$ y está en contrafase. (b) Característica de transferencia: recta de
+pendiente $A_V=-10$ por el origen.}
+\label{fig:inv-graficas}
+\end{figure}

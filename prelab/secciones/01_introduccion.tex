@@ -1,0 +1,86 @@
+% =========================================================================
+\section{Introducción}\label{sec:introduccion}
+% =========================================================================
+% -------------------------------------------------------------------------
+\subsection{Qué vamos a calcular}
+% -------------------------------------------------------------------------
+El PreLab es la fase de diseño de la sesión. En él se obtienen, con el modelo ideal del amplificador
+operacional (AO), las ganancias de tres circuitos realimentados y se eligen sus componentes:
+\begin{enumerate}
+  \item \emph{amplificador inversor}: ganancia $A_V=\Vout/\Vin$ en función de las resistencias y valor de
+        $R_2$ para $A_V=-10$ con $R_1=1\,\mathrm{k}\Omega$;
+  \item \emph{amplificador no inversor}: lo mismo, para $A_V=+11$;
+  \item \emph{amplificador inversor generalizado}: ganancia con impedancias $Z_1$ y $Z_2$ arbitrarias y,
+        en el caso $Z_1=R$, $Z_2=R_F\parallel C$, demostración de que el circuito es un filtro paso bajo.
+\end{enumerate}
+
+% -------------------------------------------------------------------------
+\subsection{El modelo ideal del amplificador operacional}
+% -------------------------------------------------------------------------
+Un AO es un amplificador de tensión con dos entradas, la inversora ($-$) y la no inversora ($+$), que
+en su zona lineal amplifica su diferencia con una ganancia en lazo abierto $A$ muy grande:
+\[
+  \vout=A\,(\vp-\vm),\qquad -\Vsat\le\vout\le+\Vsat ,
+\]
+donde $\Vsat$ es algo menor que la tensión de alimentación (aquí, $\pm10\,\mathrm{V}$). Su circuito
+equivalente es una resistencia de entrada $\Rin$ entre las dos entradas y, a la salida, una fuente de
+tensión $A(\vp-\vm)$ en serie con una resistencia $\Rout$.
+
+\begin{definicion}[AO ideal]
+El AO ideal tiene
+\[
+  \Rin\to\infty,\qquad \Rout\to0,\qquad A\to\infty .
+\]
+\end{definicion}
+
+\begin{proposicion}[Reglas del AO ideal]
+Si el AO ideal trabaja en zona lineal gracias a una \emph{realimentación negativa} (una red que lleva
+parte de la salida a la entrada inversora), se cumplen:
+\begin{itemize}[leftmargin=3em]
+  \item[(R1)] \emph{corrientes de entrada nulas}: $i_+=i_-=0$;
+  \item[(R2)] \emph{cortocircuito virtual}: $\vp=\vm$.
+\end{itemize}
+Además, como $\Rout=0$, la tensión de salida no depende de la carga $R_L$ (\cref{fig:ao}).
+\end{proposicion}
+\begin{proof}
+(R1): entre las entradas solo hay $\Rin\to\infty$, de modo que no circula corriente. (R2): en zona lineal
+$\abs{\vout}\le\Vsat$ es finita, luego $\vp-\vm=\vout/A\to0$ cuando $A\to\infty$. La realimentación negativa
+mantiene esta situación estable: si $\vout$ aumenta, $\vm$ aumenta, $\vp-\vm$ disminuye y $\vout$ se corrige.
+\end{proof}
+
+\input{figuras/fig_ao}
+
+Con estas dos reglas, todo circuito con AO ideal se resuelve en cuatro pasos: (i) obtener $\vp$;
+(ii) imponer $\vm=\vp$; (iii) aplicar la ley de Kirchhoff de corrientes en el nudo inversor con $i_-=0$;
+(iv) despejar $\vout$ con la ley de Ohm.
+
+% -------------------------------------------------------------------------
+\subsection{Impedancias y transformada de Laplace}
+% -------------------------------------------------------------------------
+En el circuito~3 hay un condensador, cuya ley es diferencial, $i=C\,\dif v/\dif t$. La transformada
+de Laplace la convierte en algebraica. Para una señal $f(t)$, $t\ge0$,
+\[
+  F(s)=\Lt\{f\}(s)=\int_{0}^{\infty}f(t)\,\eul^{-st}\,\dif t,\qquad s=\sigma+\jj\omega\in\C ,
+\]
+y, integrando por partes,
+\[
+  \Lt\Bigl\{\frac{\dif f}{\dif t}\Bigr\}=\int_{0}^{\infty}\frac{\dif f}{\dif t}\,\eul^{-st}\,\dif t
+  =\bigl[f\,\eul^{-st}\bigr]_{0}^{\infty}+s\int_{0}^{\infty}f\,\eul^{-st}\,\dif t=sF(s)-f(0) .
+\]
+Con condiciones iniciales nulas, derivar en el tiempo equivale a multiplicar por $s$. Aplicado a cada
+elemento, la relación entre las transformadas de su tensión y su corriente, $V(s)=Z(s)\,I(s)$, define su
+\emph{impedancia}:
+\[
+  v=Ri\ \Rightarrow\ Z_R=R;\qquad
+  i=C\frac{\dif v}{\dif t}\ \Rightarrow\ I(s)=sC\,V(s)\ \Rightarrow\ Z_C(s)=\frac{1}{sC} .
+\]
+Como la transformada es lineal, las leyes de Kirchhoff se cumplen para las transformadas, y las
+impedancias se asocian como resistencias: en serie, $Z=Z_1+Z_2$; en paralelo, $1/Z=1/Z_1+1/Z_2$. El
+cociente $H(s)=\Vout(s)/\Vin(s)$ es la \emph{función de transferencia}. En régimen sinusoidal permanente,
+de pulsación $\omega=2\pi f$, basta tomar $s=\jj\omega$: si $\vin=V_p\cos\omega t$, entonces
+\[
+  \vout=\abs{H(\jj\omega)}\,V_p\cos\bigl(\omega t+\arg H(\jj\omega)\bigr),
+\]
+es decir, $\abs{H(\jj\omega)}$ es el cociente de amplitudes (la ganancia que se mide) y $\arg H(\jj\omega)$ el
+desfase. La ganancia se expresa en decibelios como $20\log_{10}\abs{H}$, y una \emph{década} es un factor
+$10$ en frecuencia.

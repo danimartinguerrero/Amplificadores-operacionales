@@ -1,0 +1,33 @@
+% Figura: Bode del filtro paso bajo activo, con las frecuencias características en forma simbólica.
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \begin{semilogxaxis}[tema, name=mod, width=0.48\textwidth, height=5.4cm,
+      xmin=10, xmax=1e6, ymin=-12, ymax=48, xtick={1001,100097}, xticklabels={$f_c$,$f_1$},
+      ytick={0,37,40}, yticklabels={$0$,,$20\log\frac{R_F}{R}$},
+      xlabel={$f$ (escala logarítmica)}, ylabel={$\abs{A_V}$ (dB)}, log basis x=10,
+      title style={font=\small}, title={(a) Módulo}, clip=false]
+    \addplot[asintota, domain=10:1001, samples=2] {40};
+    \addplot[asintota, domain=1001:100097, samples=2] {20*log10(100097/x)};
+    \addplot[azulacero, line width=1.1pt, domain=10:1e6, samples=300]
+      {40-10*log10(1+(x/1001)^2)};
+    \addplot[only marks, mark=*, mark size=1.6pt, rojoteo] coordinates {(1001,37)};
+    \node[font=\scriptsize, anchor=north east, text=rojoteo] at (axis cs:950,35) {$-3\dB$};
+    \node[font=\scriptsize, anchor=east, text=grispizarra] at (axis cs:2500,12) {$-20\dB$/década $\rightarrow$};
+  \end{semilogxaxis}
+  \begin{semilogxaxis}[tema, at={(mod.east)}, anchor=west, xshift=1.6cm,
+      width=0.48\textwidth, height=5.4cm,
+      xmin=10, xmax=1e6, ymin=80, ymax=190, ytick={90,135,180},
+      xtick={1001}, xticklabels={$f_c$},
+      xlabel={$f$ (escala logarítmica)}, ylabel={$\arg A_V$ (grados)}, log basis x=10,
+      title style={font=\small}, title={(b) Fase}]
+    \addplot[azulacero, line width=1.1pt, domain=10:1e6, samples=300] {180-atan(x/1001)};
+    \addplot[only marks, mark=*, mark size=1.6pt, rojoteo] coordinates {(1001,135)};
+  \end{semilogxaxis}
+\end{tikzpicture}
+\caption{Diagrama de Bode del filtro de la \figpanel{fig:generalizado}{b}. (a) Módulo, según
+\eqref{eq:f-dB}: meseta $20\log_{10}(R_F/R)$, corte a $-3\dB$ en $f_c=1/(2\pi R_FC)$ y caída de
+$-20\dB$/década (asíntota discontinua, que corta $0\dB$ en $f_1=1/(2\pi RC)$). (b) Fase, según
+\eqref{eq:f-mod}: de $180^{\circ}$ a $90^{\circ}$, con $135^{\circ}$ en $f_c$.}
+\label{fig:bode-filtro}
+\end{figure}
