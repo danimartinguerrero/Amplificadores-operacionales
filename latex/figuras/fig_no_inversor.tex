@@ -1,0 +1,24 @@
+% Figura: amplificador no inversor (circuito 2) con tensiones y corrientes del análisis.
+\begin{figure}[ht]
+\centering
+\begin{circuitikz}[circuito]
+  \draw (0,0) node[op amp, ao, noinv input up] (A) {};
+  % nudo inversor (abajo) y red de realimentación
+  \draw (A.out) -- ++(0.7,0) coordinate (O);
+  \draw (A.-) -- ++(-0.6,0) coordinate (N) -- ++(0,-1.0) coordinate (M);
+  \draw (M) -- ++(-1.0,0) coordinate (G1) to[R, l_=$R_1$, i>^=$i_1$] ++(0,-1.7) node[ground] {};
+  \draw (M) to[R, l_=$R_2$, i<_=$i_2$] (M -| O) -- (O);
+  % generador en la entrada no inversora
+  \draw (A.+) to[short, -o] ++(-2.0,0) coordinate (Ein) node[above, tens] {$\vin$};
+  \draw (Ein) -- ++(-0.8,0) to[sV, l_=$v_g$] ++(0,-2.0) node[ground] {};
+  % carga y salida
+  \draw (O) to[short, *-o] ++(1.0,0) node[right, tens] {$\vout$};
+  \draw (O) ++(0.5,0) to[R, l=$R_L$] ++(0,-2.0) node[ground] {};
+  \fill (M) circle (1.6pt);
+  \node[tens, anchor=east, font=\scriptsize] at ($(N)!0.5!(M)+(-0.08,0)$) {$\vm=\vin$};
+\end{circuitikz}
+\caption{Amplificador no inversor (figura~3 del guion~\cite{GUION-S1}), con $R_1=1\,\mathrm{k}\Omega$,
+$R_L=10\,\mathrm{k}\Omega$ y la alimentación omitida. La entrada $+$ no absorbe corriente; el nudo
+inversor sigue a la entrada ($\vm=\vin$) y $R_1$--$R_2$ forman un divisor de $\vout$.}
+\label{fig:no-inversor}
+\end{figure}

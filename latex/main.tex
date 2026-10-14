@@ -1,0 +1,100 @@
+\documentclass[a4paper,11pt,reqno]{amsart}
+
+% =========================================================================
+%  Instrumentación Electrónica — Sesión 1: Amplificadores operacionales
+%  Apuntes de fundamentos y PreLab. Compilar con: pdflatex + biber + pdflatex ×2
+%  (o latexmk -pdf main.tex).  Todo el preámbulo está en preambulo.tex.
+% =========================================================================
+\input{preambulo}
+
+% =========================================================================
+%                     VARIABLES PARA LA PORTADA
+% =========================================================================
+\newcommand{\Universidad}{Universidad de Salamanca}
+\newcommand{\Facultad}{Facultad de Ciencias}
+\newcommand{\Titulacion}{Grado en Física}
+\newcommand{\Asignatura}{Instrumentación Electrónica}
+\newcommand{\NumTema}{Laboratorio de circuitos, sesión 1}
+\newcommand{\TituloTema}{Amplificadores\\operacionales}
+\newcommand{\tipotrabajo}{Apuntes de fundamentos y PreLab}
+\newcommand{\miNombre}{Daniel Martín Guerrero}
+\newcommand{\miRotuloProfesor}{Departamento}
+\newcommand{\miProfesor}{Física Aplicada}
+\newcommand{\miDetalleProfesor}{Área de Electrónica}
+\newcommand{\SubtituloTema}{Amplificadores inversor y no inversor,\\amplificador inversor generalizado y filtro paso bajo de primer orden}
+\newcommand{\miUbicacion}{Salamanca, curso 2026/2027}
+
+% =========================================================================
+%                     DATOS DEL ARTÍCULO (cabecera)
+% =========================================================================
+\title{Amplificadores operacionales: fundamentos y PreLab}
+\author{Daniel Martín Guerrero}
+\address{Grado en Física, Facultad de Ciencias, Universidad de Salamanca,
+         Salamanca, España}
+\date{}
+
+% Separador de las dos partes del documento (entra también en el índice)
+\newcommand{\parte}[2]{%
+  \clearpage
+  \phantomsection
+  \addcontentsline{toc}{part}{Parte #1. #2}%
+  \begin{center}
+    {\color{azulacero}\rule{\textwidth}{0.5pt}}\\[6pt]
+    {\color{grispizarra}\scshape\small\textls[120]{Parte #1}}\\[2pt]
+    {\color{azulprof}\scshape\large\textls[80]{#2}}\\[2pt]
+    {\color{azulacero}\rule{\textwidth}{0.5pt}}
+  \end{center}
+  \vspace{4pt}}
+
+% =========================================================================
+%                                DOCUMENTO
+% =========================================================================
+\begin{document}
+% --- PORTADA ----------------------------------------------------------------
+\pagenumbering{alph}
+\input{portada}
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\begin{abstract}
+Reunimos, de forma sintética, los conceptos de electrónica analógica que exige
+la primera sesión del laboratorio de circuitos: señales y sus valores
+característicos, el amplificador como cuadripolo (impedancias de entrada y de
+salida, ganancias y decibelios), la impedancia compleja, la transformada de
+Laplace y la función de transferencia, el diagrama de Bode de una red de
+constante temporal única y, por último, el amplificador operacional con sus
+modelos ideal y real. Con estas herramientas resolvemos, paso a paso y con
+cada hipótesis justificada, los recuadros del PreLab: diseño de los
+amplificadores inversor ($A_V=-10$) y no inversor ($A_V=+11$), y obtención de la
+función de transferencia del amplificador inversor generalizado, que con
+$Z_1=R$ y $Z_2=R_F\parallel C$ se comporta como un filtro paso bajo de primer
+orden.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+% =========================================================================
+\parte{I}{Fundamentos}
+% =========================================================================
+\input{secciones/01_introduccion}
+\input{secciones/02_amplificadores}
+\input{secciones/03_impedancia_laplace}
+\input{secciones/04_operacional}
+
+% =========================================================================
+\parte{II}{PreLab}
+% =========================================================================
+\input{secciones/05_prelab_planteamiento}
+\input{secciones/06_prelab_inversor}
+\input{secciones/07_prelab_no_inversor}
+\input{secciones/08_prelab_filtro}
+\input{secciones/09_resumen}
+
+% =========================================================================
+%                              BIBLIOGRAFÍA
+% =========================================================================
+\printbibliography[title={Referencias}]
+
+\end{document}

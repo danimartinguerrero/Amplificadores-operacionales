@@ -1,0 +1,80 @@
+% =========================================================================
+\section{Señales y amplificadores}\label{sec:amplificadores}
+% =========================================================================
+% -------------------------------------------------------------------------
+\subsection{Valores característicos de una señal}\label{sec:senales}
+% -------------------------------------------------------------------------
+En el laboratorio una señal es una tensión $y(t)$ que el osciloscopio representa frente al tiempo.
+Para compararla con los cálculos se resume en unos pocos números~\cite{TEORIA-EA}.
+
+\begin{definicion}[Valores de una señal periódica]\label{def:valores}
+Sea $y(t)$ periódica de periodo $T=1/f$. Se definen el valor de pico, el valor pico a pico, el
+valor medio y el valor eficaz (\emph{root mean square}):
+\begin{gather}
+  y_{p}=\max_{t}\abs{y(t)},\qquad
+  y_{pp}=\max_{t}y(t)-\min_{t}y(t),\label{eq:pico}\\
+  y_{m}=\frac1T\int_{0}^{T}y(t)\,\dif t,\qquad
+  y_{\mathrm{rms}}=\biggl(\frac1T\int_{0}^{T}y^{2}(t)\,\dif t\biggr)^{1/2}.\label{eq:rms}
+\end{gather}
+\end{definicion}
+
+Para una señal simétrica de media nula, $y_{pp}=2y_{p}$, y el valor eficaz vale $y_p/\sqrt2$
+(sinusoide), $y_p$ (onda cuadrada) o $y_p/\sqrt3$ (onda triangular). El osciloscopio mide con
+comodidad $y_{pp}$; por eso, en lo que sigue, las ganancias se compararán como cocientes de
+amplitudes o de tensiones pico a pico, que coinciden para señales de la misma forma.
+
+% -------------------------------------------------------------------------
+\subsection{El amplificador como cuadripolo}\label{sec:cuadripolo}
+% -------------------------------------------------------------------------
+Cualquier amplificador lineal, visto desde sus dos puertos (entrada y salida, con un terminal
+común a tierra), se describe con el modelo de la \cref{fig:cuadripolo}: la entrada es una
+impedancia $\Zin$ y la salida, un equivalente de Thévenin formado por una fuente controlada
+$A_{vo}v_i$ y una impedancia $\Zout$~\cite{TEORIA-EA,TEORIA-ADICIONAL,SEDRA}.
+
+\input{figuras/fig_cuadripolo}
+
+\begin{definicion}[Parámetros de un amplificador]\label{def:parametros}
+Con las magnitudes de la \cref{fig:cuadripolo},
+\begin{equation}\label{eq:parametros}
+  \Zin=\frac{v_i}{i_i},\qquad
+  A_V=\frac{v_o}{v_i},\qquad
+  A_I=\frac{i_o}{i_i},\qquad
+  A_W=\frac{v_o\,i_o}{v_i\,i_i}=A_V\,A_I ,
+\end{equation}
+y $\Zout$ es la impedancia de Thévenin vista desde los terminales de salida con la fuente de
+entrada anulada ($v_s=0$).
+$A_{vo}$ es la ganancia en tensión \emph{en circuito abierto} ($R_L\to\infty$).
+\end{definicion}
+
+\begin{proposicion}[Efecto de carga]\label{prop:carga}
+Si el amplificador se excita con una fuente de resistencia interna $R_s$ y se carga con $R_L$, la
+ganancia efectiva desde la fuente es
+\begin{equation}\label{eq:carga}
+  \frac{v_o}{v_s}=\underbrace{\frac{\Rin}{\Rin+R_s}}_{\text{divisor de entrada}}\;A_{vo}\;
+                  \underbrace{\frac{R_L}{R_L+\Rout}}_{\text{divisor de salida}} .
+\end{equation}
+\end{proposicion}
+\begin{proof}
+En la entrada, $R_s$ y $\Rin$ forman un divisor de tensión: $v_i=v_s\Rin/(\Rin+R_s)$. En la salida, la
+fuente $A_{vo}v_i$ ve en serie $\Rout$ y $R_L$: $v_o=A_{vo}v_i\,R_L/(R_L+\Rout)$. Se multiplican ambas.
+\end{proof}
+
+\begin{corolario}[Amplificador de tensión ideal]\label{cor:ideal}
+La ganancia no depende de la fuente ni de la carga si y solo si $\Rin\gg R_s$ y $\Rout\ll R_L$; en el
+límite ideal, $\Rin\to\infty$ y $\Rout\to0$, y entonces $v_o/v_s=A_{vo}$.
+\end{corolario}
+
+Por eso hay que conocer \emph{las dos} impedancias además de una ganancia: la ganancia en potencia
+$A_W=A_V^{2}R_{\mathrm{in}}/R_L$ (con $i_o=v_o/R_L$, $i_i=v_i/\Rin$) depende de su cociente.
+
+\begin{definicion}[Ganancias en decibelios]\label{def:dB}
+\begin{equation}\label{eq:dB}
+  A_V(\mathrm{dB})=20\log_{10}\abs{A_V},\qquad
+  A_I(\mathrm{dB})=20\log_{10}\abs{A_I},\qquad
+  A_W(\mathrm{dB})=10\log_{10}A_W .
+\end{equation}
+\end{definicion}
+El factor $20$ aparece porque la potencia es cuadrática en la tensión: así, $A_W(\mathrm{dB})=A_V(\mathrm{dB})$
+cuando $\Rin=R_L$. Valores útiles: $\abs{A_V}=10\mapsto20\dB$, $100\mapsto40\dB$, $1\mapsto0\dB$ y
+$1/\sqrt2\mapsto-3{,}01\dB$. Las ganancias pueden ser negativas (inversión de fase), de ahí el módulo; y,
+salvo a baja frecuencia, son números complejos, de modo que hay que dar también su fase.

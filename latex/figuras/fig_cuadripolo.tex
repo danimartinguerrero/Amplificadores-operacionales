@@ -1,0 +1,28 @@
+% Figura: modelo de cuadripolo de un amplificador de tensión, con fuente y carga.
+\begin{figure}[ht]
+\centering
+\begin{circuitikz}[circuito, scale=0.95, transform shape]
+  % Recuadro del amplificador
+  \fill[azulfondo] (2.8,-0.45) rectangle (7.3,2.65);
+  \draw[azulclaro, line width=0.5pt, densely dashed] (2.8,-0.45) rectangle (7.3,2.65);
+  \node[nota, anchor=south] at (5.05,2.65) {amplificador};
+  % Fuente y resistencia interna
+  \draw (0,0) to[sV, l=$v_s$] (0,2) to[R, l=$R_s$] (2.2,2)
+        to[short, o-, i=$i_i$] (3.5,2) to[R, l=$\Rin$] (3.5,0) -- (2.2,0) to[short, -o] (2.2,0) -- (0,0);
+  \draw (2.2,2) to[open, v^=$v_i$] (2.2,0);
+  % Salida: equivalente de Thévenin
+  \draw (3.5,0) -- (5.3,0) to[cV, l_=$A_{vo}v_i$] (5.3,2) to[R, l=$\Rout$] (6.9,2)
+        to[short, -o, i=$i_o$] (7.9,2) -- (9.1,2) to[R, l=$R_L$] (9.1,0) -- (7.9,0)
+        to[short, o-] (7.9,0) -- (5.3,0);
+  \draw (7.9,2) to[open, v^=$v_o$] (7.9,0);
+  \draw (4.4,0) node[ground] {};
+  % Impedancias vistas desde cada puerto
+  \draw[->, azulacero, line width=0.6pt] (1.6,2.85) -- node[above, font=\scriptsize, text=azulacero] {$\Zin$} (2.6,2.85);
+  \draw[->, azulacero, line width=0.6pt] (8.5,2.85) -- node[above, font=\scriptsize, text=azulacero] {$\Zout$} (7.5,2.85);
+\end{circuitikz}
+\caption{Modelo de un amplificador de tensión como cuadripolo~\cite{TEORIA-EA,SEDRA}. La fuente
+$v_s$ tiene resistencia interna $R_s$ (en el generador del laboratorio, $50\,\Omega$) y el
+amplificador alimenta una carga $R_L$. $\Zin$ es la impedancia que ve la fuente y $\Zout$ la que ve
+la carga.}
+\label{fig:cuadripolo}
+\end{figure}

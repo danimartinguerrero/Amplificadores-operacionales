@@ -1,0 +1,41 @@
+% Figura: Bode del filtro paso bajo activo con R=1k, RF=100k, C=1,59 nF (fc=1 kHz).
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \begin{semilogxaxis}[tema, name=mod, width=0.86\textwidth, height=5.6cm,
+      xmin=10, xmax=1e6, ymin=-22, ymax=48, ytick={-20,0,20,37,40},
+      xlabel={$f$ (Hz)}, ylabel={$\abs{A_V}$ (dB)}, log basis x=10,
+      title style={font=\small}, title={(a) Módulo}, legend pos=south west]
+    \addplot[azulacero, line width=1.1pt, domain=10:1e6, samples=300]
+      {40-10*log10(1+(x/1001)^2)};
+    \addlegendentry{{set 1 ($R_F=100\,\mathrm{k}\Omega$)}}
+    \addplot[rojoteo, line width=0.9pt, densely dashed, domain=10:1e6, samples=2]
+      {20*log10(100097/x)};
+    \addlegendentry{{set 2 ($R_F\to\infty$, integrador)}}
+    \addplot[asintota, domain=10:1001, samples=2] {40};
+    \addplot[punteado] coordinates {(1001,-22) (1001,37)};
+    \addplot[punteado] coordinates {(100097,-22) (100097,0)};
+    \addplot[only marks, mark=*, mark size=1.6pt, azulacero] coordinates {(1001,37)};
+    \addplot[only marks, mark=*, mark size=1.6pt, rojoteo] coordinates {(100097,0)};
+    \node[font=\scriptsize, anchor=south west] at (axis cs:1150,37.5) {$-3\dB$ en $f_c\approx1\,\mathrm{kHz}$};
+    \node[font=\scriptsize, anchor=south west] at (axis cs:1.1e5,0.5) {$f_1\approx100\,\mathrm{kHz}$};
+    \node[font=\scriptsize, anchor=south west, text=grispizarra, rotate=-24] at (axis cs:6000,22) {$-20\dB$/década};
+  \end{semilogxaxis}
+  \begin{semilogxaxis}[tema, at={(mod.south)}, anchor=north, yshift=-1.4cm,
+      width=0.86\textwidth, height=4.2cm,
+      xmin=10, xmax=1e6, ymin=80, ymax=190, ytick={90,135,180},
+      xlabel={$f$ (Hz)}, ylabel={$\arg A_V$ (grados)}, log basis x=10,
+      title style={font=\small}, title={(b) Fase}]
+    \addplot[azulacero, line width=1.1pt, domain=10:1e6, samples=300] {180-atan(x/1001)};
+    \addplot[rojoteo, line width=0.9pt, densely dashed, domain=10:1e6, samples=2] {90};
+    \addplot[only marks, mark=*, mark size=1.6pt, azulacero] coordinates {(1001,135)};
+    \node[font=\scriptsize, anchor=west] at (axis cs:1200,137) {$135^{\circ}$};
+  \end{semilogxaxis}
+\end{tikzpicture}
+\caption{Diagrama de Bode del filtro de la \figpanel{fig:generalizado}{b} con los valores del set~1,
+según \cref{eq:pb-modulo}: meseta de $40\dB$ (ganancia $100$), corte a $-3\dB$ en $f_c\approx1\,\mathrm{kHz}$ y
+caída de $-20\dB$/década. En trazo discontinuo, el integrador ideal del set~2, que coincide con la
+asíntota de alta frecuencia y corta $0\dB$ en $f_1=1/(2\pi RC)\approx100\,\mathrm{kHz}$. La fase pasa de
+$180^{\circ}$ (inversión) a $90^{\circ}$ (integración), con $135^{\circ}$ en $f_c$.}
+\label{fig:bode-filtro}
+\end{figure}

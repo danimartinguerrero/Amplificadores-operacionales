@@ -1,0 +1,29 @@
+% Figura: estructura lógica de la sesión.
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    caja/.style={draw=azulclaro, fill=azulfondo, line width=0.5pt, align=center,
+                 inner sep=5pt, font=\small, minimum height=1.0cm},
+    final/.style={draw=azulacero, fill=white, line width=0.8pt, align=center,
+                  inner sep=5pt, font=\small, minimum height=1.0cm},
+    fl/.style={->, line width=0.7pt, azulacero, shorten >=2pt, shorten <=2pt},
+    nota/.style={font=\scriptsize, text=grispizarra, align=center}]
+  \node[caja] (M) at (0,0) {Modelo ideal del AO\\[-1pt]{\footnotesize $i_\pm=0,\ v_+=v_-$}};
+  \node[caja] (L) at (0,-1.9) {Impedancias\\[-1pt]{\footnotesize $Z_R=R,\ Z_C=1/(sC)$}};
+  \node[caja] (G) at (4.4,-0.95) {Inversor generalizado\\[-1pt]{\footnotesize $H(s)=-Z_2/Z_1$}};
+  \node[final] (I) at (9.3,-0.95) {Inversor\\[-1pt]{\footnotesize $A_V=-R_2/R_1$}};
+  \node[final] (N) at (9.3,0.85) {No inversor\\[-1pt]{\footnotesize $A_V=1+R_2/R_1$}};
+  \node[final] (F) at (9.3,-2.65) {Filtro paso bajo\\[-1pt]{\footnotesize $Z_2=R_F\parallel C$}};
+  \draw[fl] (M.east) -- (G.north west);
+  \draw[fl] (L.east) -- (G.south west);
+  \draw[fl] (G.east) -- (I.west);
+  \draw[fl] (G.east) -- (F.west);
+  \draw[fl] (M.east) ++(0,0.12) -- ($(N.west)+(0,0)$);
+  \node[nota] at (6.95,-0.72) {$Z_k=R_k$};
+  \node[nota] at (6.75,-2.25) {$Z_1=R$};
+\end{tikzpicture}
+\caption{Estructura lógica de la sesión. El modelo ideal del AO, junto con el concepto de
+impedancia, da la ganancia del amplificador inversor generalizado; el inversor y el filtro
+paso bajo son casos particulares. El no inversor se resuelve con las mismas reglas.}
+\label{fig:esquema}
+\end{figure}

@@ -1,0 +1,36 @@
+% Figura: (a) amplificador inversor generalizado; (b) caso Z1=R, Z2=RF||C (filtro paso bajo).
+\begin{figure}[ht]
+\centering
+\begin{minipage}[b]{0.46\textwidth}\centering
+\begin{circuitikz}[circuito, scale=0.88, transform shape]
+  \draw (0,0) node[op amp, ao] (A) {};
+  \draw (A.-) -- ++(-0.5,0) coordinate (N);
+  \draw (N) to[generic, l_=$Z_1$, i<^=$I_1$] ++(-2.2,0) to[short, -o] ++(-0.3,0) node[left, tens] {$\Vin$};
+  \draw (A.out) -- ++(0.6,0) coordinate (O);
+  \draw (N) -- ++(0,1.4) coordinate (T) to[generic, l=$Z_2$, i>^=$I_2$] (T -| O) -- (O);
+  \draw (O) to[short, *-o] ++(0.6,0) node[right, tens] {$\Vout$};
+  \draw (A.+) -- ++(-0.5,0) -- ++(0,-0.4) node[ground] {};
+  \fill (N) circle (1.6pt);
+\end{circuitikz}\\[2pt]
+{\small (a)}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.50\textwidth}\centering
+\begin{circuitikz}[circuito, scale=0.88, transform shape]
+  \draw (0,0) node[op amp, ao] (A) {};
+  \draw (A.-) -- ++(-0.5,0) coordinate (N);
+  \draw (N) to[R, l_=$R$] ++(-2.2,0) to[short, -o] ++(-0.3,0) node[left, tens] {$\Vin$};
+  \draw (A.out) -- ++(0.6,0) coordinate (O);
+  \draw (N) -- ++(0,1.2) coordinate (T1) to[C, l_=$C$] (T1 -| O) -- (O);
+  \draw (T1) -- ++(0,1.0) coordinate (T2) to[R, l=$R_F$] (T2 -| O) -- (T1 -| O);
+  \fill (T1) circle (1.6pt); \fill (T1 -| O) circle (1.6pt);
+  \draw (O) to[short, *-o] ++(0.6,0) node[right, tens] {$\Vout$};
+  \draw (A.+) -- ++(-0.5,0) -- ++(0,-0.4) node[ground] {};
+  \fill (N) circle (1.6pt);
+\end{circuitikz}\\[2pt]
+{\small (b)}
+\end{minipage}
+\caption{(a) Amplificador inversor generalizado (figura~4a del guion~\cite{GUION-S1}): $Z_1(s)$ y $Z_2(s)$
+son impedancias arbitrarias. (b) Caso $Z_1=R$, $Z_2=R_F\parallel C$ (figura~5a del guion), que es un
+filtro paso bajo activo y, para $R_F\to\infty$, un integrador.}
+\label{fig:generalizado}
+\end{figure}

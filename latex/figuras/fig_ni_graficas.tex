@@ -1,0 +1,32 @@
+% Figura: previsiones del amplificador no inversor (A_V=+11, Vsat=9 V, f=1 kHz).
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \begin{axis}[tema, name=a, width=0.45\textwidth, height=4.6cm,
+      xmin=0, xmax=2, ymin=-10.5, ymax=10.5, ytick={-9,-5.5,0,5.5,9},
+      xlabel={$t$ (ms)}, ylabel={Tensión (V)}, title style={font=\small},
+      title={(a) $V_p=0{,}5\,\mathrm{V}$}]
+    \addplot[asintota, domain=0:2, samples=2] {9};
+    \addplot[asintota, domain=0:2, samples=2] {-9};
+    \addplot[senal entrada, domain=0:2, samples=150] {0.5*sin(360*x)};
+    \addplot[senal salida, domain=0:2, samples=150] {5.5*sin(360*x)};
+  \end{axis}
+  \begin{axis}[temacentro, at={(a.east)}, anchor=west, xshift=1.2cm,
+      width=0.42\textwidth, height=4.6cm,
+      xmin=-1.6, xmax=1.6, ymin=-11, ymax=11, xtick={-0.82,0.82}, ytick={-9,9},
+      xticklabels={$-0{,}82$,$0{,}82$}, yticklabels={$-9$,$9$},
+      xlabel={$\vin$ (V)}, 
+      xlabel style={at={(axis description cs:1,0.5)}, anchor=south east, yshift=2pt, font=\scriptsize}, clip=false,
+      title style={font=\small, yshift=10pt}, title={(b) $\vout(\vin)$}]
+    \addplot[senal salida, domain=-1.6:1.6, samples=200] {max(-9,min(9,11*x))};
+    \addplot[punteado] coordinates {(0.818,0) (0.818,9)};
+    \addplot[punteado] coordinates {(-0.818,0) (-0.818,-9)};
+    \node[font=\scriptsize, anchor=west, text=rojoteo] at (axis cs:-1.55,5.8) {pendiente $+11$};
+    \node[font=\scriptsize, anchor=west] at (axis description cs:0.52,0.97) {$\vout$ (V)};
+  \end{axis}
+\end{tikzpicture}
+\caption{Previsiones para el amplificador no inversor ($A_V=+11$, $\Vsat\approx9\,\mathrm{V}$,
+$f=1\,\mathrm{kHz}$). (a) Entrada (azul) y salida (ámbar) en fase. (b) Característica de
+transferencia: pendiente $+11$ hasta $\abs{\vin}=\Vsat/11\approx0{,}82\,\mathrm{V}$ y saturación fuera.}
+\label{fig:ni-graficas}
+\end{figure}

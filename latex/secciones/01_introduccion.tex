@@ -1,0 +1,23 @@
+% =========================================================================
+\section{Introducción: qué estudiamos en la sesión}\label{sec:introduccion}
+% =========================================================================
+Un \emph{amplificador operacional} (AO) es un amplificador de tensión diferencial con una
+ganancia tan grande que, por sí solo, apenas es útil: cualquier diferencia de milivoltios
+entre sus entradas lo lleva a saturación. Su interés está en la \emph{realimentación
+negativa}: si se devuelve una fracción de la salida a la entrada inversora mediante una red
+pasiva, el comportamiento del conjunto deja de depender del AO y pasa a depender solo de esa
+red. La sesión~1 del laboratorio~\cite{GUION-S1} explota esta idea en tres circuitos
+(\cref{fig:esquema}):
+\begin{enumerate}
+  \item un \emph{amplificador inversor} de ganancia $A_V=-10$;
+  \item un \emph{amplificador no inversor} de ganancia $A_V=+11$;
+  \item un \emph{amplificador inversor generalizado}, en el que las resistencias se sustituyen
+        por impedancias. Si la red de realimentación contiene un condensador, la ganancia
+        depende de la frecuencia y el circuito es un \emph{filtro}; en el dominio del tiempo
+        integra o deriva la señal, y la transformada de Laplace enlaza ambas descripciones.
+\end{enumerate}
+La parte~I reúne las herramientas imprescindibles, con la notación de la teoría de la
+asignatura~\cite{TEORIA-EA,TEORIA-ADICIONAL,TEORIA-LAPLACE} y del texto de referencia
+de Sedra y Smith~\cite{SEDRA}; la parte~II resuelve los recuadros del PreLab.
+
+\input{figuras/fig_esquema}

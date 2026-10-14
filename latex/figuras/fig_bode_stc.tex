@@ -1,0 +1,35 @@
+% Figura: diagrama de Bode normalizado de una red STC paso bajo (K=1).
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \begin{semilogxaxis}[tema, name=mod, width=0.47\textwidth, height=5.2cm,
+      xmin=0.01, xmax=100, ymin=-42, ymax=6, ytick={-40,-30,-20,-10,-3,0},
+      xlabel={$\omega/\omega_0$}, ylabel={$\abs{H}/\abs{K}$ (dB)},
+      log basis x=10, title style={font=\small}, title={(a) Módulo}]
+    \addplot[asintota, domain=0.01:1] {0};
+    \addplot[asintota, domain=1:100, samples=2] {-20*log10(x)};
+    \addplot[azulacero, line width=1.1pt, domain=0.01:100, samples=200] {-10*log10(1+x^2)};
+    \addplot[only marks, mark=*, mark size=1.6pt, rojoteo] coordinates {(1,-3.01)};
+    \node[font=\scriptsize, anchor=south west, text=rojoteo] at (axis cs:1.15,-3) {$-3\dB$};
+    \node[font=\scriptsize, anchor=south west, text=grispizarra, rotate=-33] at (axis cs:4,-11) {$-20\dB$/década};
+  \end{semilogxaxis}
+  \begin{semilogxaxis}[tema, at={(mod.east)}, anchor=west, xshift=1.9cm,
+      width=0.47\textwidth, height=5.2cm,
+      xmin=0.01, xmax=100, ymin=-95, ymax=5, ytick={-90,-45,0},
+      xlabel={$\omega/\omega_0$}, ylabel={$\arg H-\arg K$ (grados)},
+      log basis x=10, title style={font=\small}, title={(b) Fase}]
+    \addplot[asintota, domain=0.01:0.1] {0};
+    \addplot[asintota, domain=0.1:10, samples=2] {-45-45*log10(x)};
+    \addplot[asintota, domain=10:100] {-90};
+    \addplot[azulacero, line width=1.1pt, domain=0.01:100, samples=200] {-atan(x)};
+    \addplot[only marks, mark=*, mark size=1.6pt, rojoteo] coordinates {(1,-45)};
+    \node[font=\scriptsize, anchor=south west, text=rojoteo] at (axis cs:1.15,-44) {$-45^{\circ}$};
+  \end{semilogxaxis}
+\end{tikzpicture}
+\caption{Diagrama de Bode de la red de constante temporal única paso bajo
+$H(s)=K/(1+s/\omega_0)$, normalizado. En trazo discontinuo, las asíntotas de
+\cref{eq:STC-asintotas} (en la fase, la aproximación usual de $-45^{\circ}$/década entre
+$\omega_0/10$ y $10\,\omega_0$). En la frecuencia de corte el módulo cae $3\dB$ y la fase se retrasa
+$45^{\circ}$.}
+\label{fig:bode-stc}
+\end{figure}

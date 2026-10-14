@@ -1,0 +1,55 @@
+% Figura: (a) símbolo del AO con alimentación, (b) circuito equivalente, (c) característica en lazo abierto.
+\begin{figure}[ht]
+\centering
+\begin{minipage}[b]{0.26\textwidth}\centering
+\begin{circuitikz}[circuito, scale=0.9, transform shape]
+  \draw (0,0) node[op amp, ao] (A) {};
+  \draw (A.-) to[short, -o] ++(-0.6,0) node[left] {$\vm$};
+  \draw (A.+) to[short, -o] ++(-0.6,0) node[left] {$\vp$};
+  \draw (A.out) to[short, -o] ++(0.5,0) node[right] {$\vout$};
+  \draw (A.up) -- ++(0,0.45) node[above, font=\scriptsize] {$+\Vcc$};
+  \draw (A.down) -- ++(0,-0.45) node[below, font=\scriptsize] {$-\Vee$};
+  \node[nota] at (-0.95,0.75) {2};
+  \node[nota] at (-0.95,-0.75) {3};
+  \node[nota] at (0.25,0.75) {7};
+  \node[nota] at (0.25,-0.75) {4};
+  \node[nota] at (1.15,0.2) {6};
+\end{circuitikz}\\[2pt]
+{\small (a)}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.38\textwidth}\centering
+\begin{circuitikz}[circuito, scale=0.8, transform shape]
+  \draw[azulclaro, fill=opfondo, line width=0.5pt] (-0.4,2.8) -- (-0.4,-0.8) -- (4.9,1.0) -- cycle;
+  \draw (-1.1,2.0) node[left] {$\vm$} to[short, o-] (0.6,2.0) to[R, l=$\Rin$] (0.6,0) -- (-1.1,0) to[short, -o] (-1.1,0) node[left] {$\vp$};
+  \draw (2.1,-1.1) node[ground] {} -- (2.1,0.1) to[cV, l_=\scriptsize$A(\vp-\vm)$] (2.1,1.9) to[R, l=$\Rout$] (4.4,1.9) to[short, -o] (5.2,1.9) node[right] {$\vout$};
+\end{circuitikz}\\[2pt]
+{\small (b)}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.30\textwidth}\centering
+\begin{tikzpicture}
+  \begin{axis}[temacentro, width=1.15\linewidth, height=4.2cm,
+      xmin=-1.6, xmax=1.6, ymin=-1.45, ymax=1.45,
+      xtick=\empty, ytick=\empty,
+      xlabel={$\vp-\vm$},
+      xlabel style={at={(axis description cs:1,0.5)}, anchor=south east, yshift=2pt, font=\scriptsize}]
+    \addplot[senal salida, samples=3, domain=-1.6:-0.35] {-1};
+    \addplot[senal salida, samples=2, domain=-0.35:0.35] {x/0.35};
+    \addplot[senal salida, samples=3, domain=0.35:1.6] {1};
+    \addplot[punteado] coordinates {(0.35,0) (0.35,1)};
+    \addplot[punteado] coordinates {(-0.35,0) (-0.35,-1)};
+    \node[font=\scriptsize, anchor=south] at (axis cs:1.0,1.0) {$+\Vsat$};
+    \node[font=\scriptsize, anchor=north] at (axis cs:-1.0,-1.0) {$-\Vsat$};
+    \node[font=\scriptsize, anchor=north] at (axis cs:0.42,0.0) {$\frac{\Vsat}{A}$};
+    \node[font=\scriptsize, anchor=east, text=rojoteo] at (axis cs:-0.08,0.6) {pendiente $A$};
+    \node[font=\scriptsize, anchor=west] at (axis description cs:0.52,0.97) {$\vout$};
+  \end{axis}
+\end{tikzpicture}\\[2pt]
+{\small (c)}
+\end{minipage}
+\caption{El amplificador operacional. (a) Símbolo, con las patillas del $\mu$A741 y la
+alimentación (que en los esquemas siguientes se omite). (b) Circuito equivalente: resistencia
+de entrada diferencial $\Rin$ y equivalente de Thévenin de salida~\cite{TEORIA-EA,SEDRA}. (c)
+Característica de transferencia en lazo abierto (escala horizontal muy ampliada: la zona lineal
+mide $2\Vsat/A\sim\SI{0.1}{\milli\volt}$).}
+\label{fig:ao}
+\end{figure}

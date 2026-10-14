@@ -1,0 +1,30 @@
+% Figura: amplificador inversor (circuito 1) con tensiones y corrientes del análisis.
+\begin{figure}[ht]
+\centering
+\begin{circuitikz}[circuito]
+  \draw (0,0) node[op amp, ao] (A) {};
+  % nudo inversor y red de realimentación
+  \draw (A.-) -- ++(-0.6,0) coordinate (N);
+  \draw (N) to[R, l_=$R_1$, i<^=$i_1$] ++(-2.4,0) coordinate (E);
+  \draw (N) |- ++(0,1.5) coordinate (T);
+  \draw (A.out) -- ++(0.7,0) coordinate (O);
+  \draw (T) to[R, l=$R_2$, i>^=$i_2$] (T -| O) -- (O);
+  % generador
+  \draw (E) to[short, -o] ++(-0.3,0) coordinate (Ein) node[above, tens] {$\vin$};
+  \draw (Ein) -- ++(-0.9,0) coordinate (G) to[sV, l_=$v_g$] ++(0,-2.0) node[ground] {};
+  % entrada no inversora a tierra
+  \draw (A.+) -- ++(-0.6,0) coordinate (P) -- ++(0,-0.45) node[ground] {};
+  % carga y salida
+  \draw (O) to[short, *-o] ++(1.0,0) coordinate (S) node[right, tens] {$\vout$};
+  \draw (O) ++(0.5,0) to[R, l=$R_L$] ++(0,-2.0) node[ground] {};
+  \fill (N) circle (1.6pt);
+  % anotaciones del análisis
+  \node[tens, anchor=east, font=\scriptsize] at ($(N)+(-0.08,0.75)$) {$\vm=0$};
+  \draw[azulprof, line width=0.3pt] ($(N)+(-0.08,0.72)$) -- ($(N)+(-0.02,0.06)$);
+  \node[tens, anchor=east, font=\scriptsize] at ($(P)+(-0.1,-0.25)$) {$\vp=0$};
+\end{circuitikz}
+\caption{Amplificador inversor (figura~2 del guion~\cite{GUION-S1}), con $R_1=1\,\mathrm{k}\Omega$,
+$R_L=10\,\mathrm{k}\Omega$ y la alimentación omitida. Se indican las magnitudes del análisis: el nudo
+inversor es una tierra virtual ($\vm=\vp=0$) y no absorbe corriente, de modo que $i_1=i_2$.}
+\label{fig:inversor}
+\end{figure}

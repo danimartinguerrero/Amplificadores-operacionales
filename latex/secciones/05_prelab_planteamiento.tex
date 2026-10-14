@@ -1,0 +1,28 @@
+% =========================================================================
+\section{Planteamiento del PreLab}\label{sec:pl-planteamiento}
+% =========================================================================
+El PreLab es la fase de diseño de la sesión~\cite{GUION-S1}: con el modelo ideal del AO se obtienen
+las ganancias de los tres circuitos en función de sus componentes y se eligen los valores que dan
+las ganancias pedidas. Los recuadros amarillos del guion son tres; cada uno se reproduce como
+\emph{PreLab~$n$} y va seguido de su resolución. Todos los cálculos comparten las hipótesis siguientes.
+
+\begin{hipotesis}[Hipótesis comunes]\label{hip:comunes}
+Salvo que se indique otra cosa, en todos los cálculos se supone que:
+\begin{enumerate}
+  \item El AO ($\mu$A741) es ideal (\cref{hip:ideal}) y trabaja en zona lineal gracias a la
+        realimentación negativa, de modo que valen las reglas (R1) y (R2) de la \cref{prop:reglas}.
+  \item Se alimenta con $\pm\Vcc=\pm10\,\mathrm{V}$, de modo que $\Vsat\approx9\,\mathrm{V}$ (\cref{eq:saturacion}).
+  \item La señal de entrada es sinusoidal de $f=1\,\mathrm{kHz}$ y el circuito está en régimen permanente
+        (en el circuito~3, frecuencia variable).
+  \item La carga de salida es $R_L=10\,\mathrm{k}\Omega$ y el generador tiene resistencia interna $R_s=50\,\Omega$.
+\end{enumerate}
+\end{hipotesis}
+
+\begin{observacion}[Cómo trasladar cada PreLab al manuscrito]\label{obs:manuscrito}
+Para cada recuadro: (i) copiar el enunciado; (ii) dibujar el esquema del circuito con los nudos,
+las tensiones y los sentidos de las corrientes que se usan en el cálculo; (iii) escribir cada paso
+con la regla que lo justifica (R1, R2, Kirchhoff, Ohm, impedancia), con las ecuaciones numeradas a la
+derecha; (iv) enmarcar el resultado general y el valor numérico del diseño; (v) añadir las gráficas,
+con los ejes rotulados y las unidades. Los esquemas y gráficas de este documento son los que deben
+reproducirse a mano.
+\end{observacion}

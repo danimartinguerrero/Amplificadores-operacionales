@@ -1,0 +1,33 @@
+% Figura: Bode del AO en lazo abierto (A0=2e5, fb=5 Hz, ft=1 MHz) y de las ganancias en lazo cerrado.
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \begin{semilogxaxis}[tema, width=0.82\textwidth, height=5.8cm,
+      xmin=1, xmax=1e7, ymin=-5, ymax=115, ytick={0,20,40,60,80,100},
+      xlabel={$f$ (Hz)}, ylabel={Módulo (dB)}, log basis x=10,
+      legend pos=north east]
+    \addplot[azulacero, line width=1.1pt, domain=1:1e7, samples=300]
+      {20*log10(2e5/sqrt(1+(x/5)^2))};
+    \addlegendentry{$\abs{A(\jj\omega)}$, lazo abierto}
+    \addplot[rojoteo, line width=1.1pt, domain=1:1e7, samples=300]
+      {20*log10(10/sqrt(1+(x/90909)^2))};
+    \addlegendentry{$\abs{A_V}$, inversor ($R_2/R_1=10$)}
+    \addplot[asintota, domain=1:1e7, samples=2] {20};
+    \addplot[punteado] coordinates {(90909,-5) (90909,17)};
+    \addplot[punteado] coordinates {(5,-5) (5,103)};
+    \addplot[only marks, mark=*, mark size=1.5pt, rojoteo] coordinates {(90909,17)};
+    \addplot[only marks, mark=*, mark size=1.5pt, azulacero] coordinates {(5,103) (1e6,0)};
+    \node[font=\scriptsize, anchor=south west] at (axis cs:6,103) {$f_b\approx5\,\mathrm{Hz}$};
+    \node[font=\scriptsize, anchor=south west] at (axis cs:1.1e6,1) {$f_t\approx1\,\mathrm{MHz}$};
+    \node[font=\scriptsize, anchor=west, text=rojoteo] (f3) at (axis cs:150,8) {$f_{3\mathrm{dB}}=f_t/(1+R_2/R_1)\approx91\,\mathrm{kHz}$};
+    \draw[->, rojoteo, line width=0.4pt] (f3.east) -- (axis cs:80000,15.5);
+    \node[font=\scriptsize, anchor=south, text=grispizarra, rotate=-27] at (axis cs:3000,58) {$-20\dB$/década};
+  \end{semilogxaxis}
+\end{tikzpicture}
+\caption{Diagrama de Bode (módulo) de la ganancia en lazo abierto de un AO de tipo 741, según
+\cref{eq:Areal} con $A_0=2\cdot10^{5}$ y $f_t=1\,\mathrm{MHz}$, y de la ganancia en lazo cerrado del
+amplificador inversor de la \cref{sec:pl-inversor}, según \cref{eq:lazo-cerrado,eq:f3dB}. La ganancia
+en lazo cerrado sigue la recta de $20\dB$ hasta cortar la de lazo abierto: a partir de ahí manda
+el AO.}
+\label{fig:gbw}
+\end{figure}

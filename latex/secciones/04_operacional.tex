@@ -1,0 +1,164 @@
+% =========================================================================
+\section{El amplificador operacional}\label{sec:ao}
+% =========================================================================
+% -------------------------------------------------------------------------
+\subsection{Definición, terminales y circuito equivalente}\label{sec:ao-def}
+% -------------------------------------------------------------------------
+\begin{definicion}[Amplificador operacional]\label{def:ao}
+Un amplificador operacional es un amplificador de tensión con dos entradas, la \emph{inversora}
+($-$) y la \emph{no inversora} ($+$), y una salida referida a tierra, que en su zona lineal
+amplifica la diferencia de las tensiones de entrada:
+\begin{equation}\label{eq:ao}
+  \vout=A\,(\vp-\vm),
+\end{equation}
+donde $A$ es la \emph{ganancia en lazo abierto}. Se alimenta con dos fuentes continuas simétricas,
+$+\Vcc$ y $-\Vee$, respecto de la tierra común (en el laboratorio, $\pm10\,\mathrm{V}$).
+\end{definicion}
+
+El circuito equivalente de la \figpanel{fig:ao}{b} es el modelo de cuadripolo de la
+\cref{sec:cuadripolo} con entrada diferencial: una resistencia de entrada $\Rin$ entre las dos
+entradas, y un equivalente de Thévenin $A(\vp-\vm)$ en serie con $\Rout$ a la salida~\cite{TEORIA-EA,SEDRA}.
+En el circuito integrado $\mu$A741~\cite{UA741} las patillas son: $2$ (entrada $-$), $3$ (entrada $+$),
+$6$ (salida), $7$ ($+\Vcc$), $4$ ($-\Vee$); la $1$ y la $5$ sirven para el ajuste de \emph{offset} y la $8$ no
+se conecta. Por simplicidad, los esquemas omiten la alimentación, pero el AO \emph{siempre} está
+alimentado: la corriente que entrega a la carga sale de las fuentes, no de la señal.
+
+\input{figuras/fig_ao}
+
+% -------------------------------------------------------------------------
+\subsection{Saturación}\label{sec:saturacion}
+% -------------------------------------------------------------------------
+La salida no puede exceder las tensiones de alimentación. En un AO como el 741 queda, además,
+un margen de en torno a $1$--$2\,\mathrm{V}$ con cada fuente~\cite{UA741}:
+\begin{equation}\label{eq:saturacion}
+  -\Vsat\le\vout\le+\Vsat,\qquad \Vsat\lesssim\Vcc-1\,\mathrm{V}
+  \quad(\Vsat\approx9\,\mathrm{V}\ \text{para}\ \Vcc=10\,\mathrm{V}).
+\end{equation}
+La característica de transferencia en lazo abierto, \cref{eq:ao} con \cref{eq:saturacion}, es
+la de la \figpanel{fig:ao}{c}: una recta de pendiente $A$ limitada por $\pm\Vsat$. Como $A\sim10^{5}$,
+la zona lineal es solo $\abs{\vp-\vm}<\Vsat/A\sim\SI{90}{\micro\volt}$: sin realimentación, el AO
+se comporta como un comparador. Valores concretos del 741 se recogen en la \cref{tab:741}.
+
+% -------------------------------------------------------------------------
+\subsection{Modelo ideal y realimentación negativa}\label{sec:ideal}
+% -------------------------------------------------------------------------
+\begin{hipotesis}[Amplificador operacional ideal]\label{hip:ideal}
+\begin{equation}\label{eq:ideal}
+  \Rin\to\infty,\qquad \Rout\to0,\qquad A\to\infty\quad(\text{e independiente de la frecuencia}).
+\end{equation}
+\end{hipotesis}
+
+\begin{proposicion}[Reglas del AO ideal]\label{prop:reglas}
+Si el AO ideal trabaja en su zona lineal, gracias a una realimentación negativa (una red que
+une la salida con la entrada inversora), se cumplen:
+\begin{align}
+  &\text{(R1) corrientes de entrada nulas:} && i_{+}=i_{-}=0, \label{eq:R1}\\
+  &\text{(R2) cortocircuito virtual:} && \vp=\vm . \label{eq:R2}
+\end{align}
+Además, por $\Rout=0$, la tensión de salida no depende de la carga conectada.
+\end{proposicion}
+\begin{proof}
+(R1) Entre las entradas solo hay $\Rin$; con $\Rin\to\infty$ no circula corriente por ella.
+(R2) En zona lineal, $\vout$ es finita ($\abs{\vout}\le\Vsat$), luego por \cref{eq:ao}
+$\vp-\vm=\vout/A\to0$ si $A\to\infty$. La realimentación negativa es la que hace que esta situación
+sea estable: si $\vout$ crece, $\vm$ crece con ella, $\vp-\vm$ disminuye y $\vout$ se corrige.
+Con la salida en vacío, $\Rout=0$ hace que el divisor de salida de \cref{eq:carga} valga $1$.
+\end{proof}
+
+\begin{observacion}[Tierra virtual]\label{obs:tierra-virtual}
+Si $\vp=0$ (entrada no inversora a tierra), (R2) da $\vm=0$: la entrada inversora está a potencial
+de tierra sin estar conectada a ella. Es una \emph{tierra virtual}: tiene tensión nula pero no absorbe
+corriente, por (R1). Las dos reglas son incompatibles con la saturación: si $\abs{\vout}=\Vsat$, el lazo
+ya no actúa y deja de cumplirse \cref{eq:R2}.
+\end{observacion}
+
+\begin{proposicion}[Método de análisis]\label{prop:metodo}
+Todo circuito con AO ideal y realimentación negativa se resuelve con cuatro pasos:
+\begin{enumerate}
+  \item obtener $\vp$ a partir del circuito conectado a la entrada no inversora (por (R1), sin carga);
+  \item imponer $\vm=\vp$ (R2);
+  \item aplicar la ley de Kirchhoff de corrientes en el nudo inversor con $i_{-}=0$ (R1), usando
+        impedancias si hay elementos reactivos;
+  \item despejar $\vout$ y comprobar que $\abs{\vout}<\Vsat$ (si no, el resultado no es válido).
+\end{enumerate}
+\end{proposicion}
+
+% -------------------------------------------------------------------------
+\subsection{Límites del modelo ideal}\label{sec:real}
+% -------------------------------------------------------------------------
+El modelo ideal es excelente a baja frecuencia y con resistencias de valor moderado
+($1$--$100\,\mathrm{k}\Omega$). Sus límites explican lo que se observa al forzar el circuito
+(amplitudes grandes o frecuencias de $100\,\mathrm{kHz}$).
+
+\begin{proposicion}[Ganancia en lazo abierto real]\label{prop:Areal}
+La ganancia del AO tiene un polo dominante a una frecuencia $f_b$ muy baja~\cite{TEORIA-EA}:
+\begin{equation}\label{eq:Areal}
+  A(s)=\frac{A_0}{1+s/\omega_b},\qquad
+  \abs{A(\jj\omega)}\simeq\frac{A_0\,\omega_b}{\omega}=\frac{\omega_t}{\omega}\quad(\omega\gg\omega_b),\qquad
+  f_t=A_0f_b ,
+\end{equation}
+donde $f_t$, la frecuencia de ganancia unidad, es el \emph{producto ganancia--ancho de banda} (GBW).
+\end{proposicion}
+\begin{proof}
+Es la red STC de la \cref{prop:STC} con $K=A_0$; por encima de $\omega_b$, $\abs{A}=A_0\omega_b/\omega$
+se anula ($0\dB$) en $\omega_t=A_0\omega_b$.
+\end{proof}
+
+\begin{proposicion}[Ancho de banda en lazo cerrado]\label{prop:BW}
+Con ganancia finita $A$, los amplificadores inversor y no inversor de las \cref{sec:pl-inversor,sec:pl-no-inversor} tienen
+\begin{equation}\label{eq:lazo-cerrado}
+  A_V^{\mathrm{inv}}=\frac{-R_2/R_1}{1+\dfrac{1+R_2/R_1}{A}},\qquad
+  A_V^{\mathrm{no\,inv}}=\frac{1+R_2/R_1}{1+\dfrac{1+R_2/R_1}{A}},
+\end{equation}
+que tienden a los valores ideales si $A\gg1+R_2/R_1$. Con \cref{eq:Areal}, ambos son redes STC paso bajo de frecuencia de corte
+\begin{equation}\label{eq:f3dB}
+  f_{3\mathrm{dB}}=\frac{f_t}{1+R_2/R_1} .
+\end{equation}
+\end{proposicion}
+\begin{proof}
+Con $i_-=0$, el nudo inversor es un divisor entre la entrada y la salida. Para el inversor,
+por superposición, $\vm=\vin\,R_2/(R_1+R_2)+\vout\,R_1/(R_1+R_2)$, y $\vout=-A\vm$. Llamando
+$\beta=R_1/(R_1+R_2)$, $\vout(1+A\beta)=-A(1-\beta)\vin$, y dividiendo por $A\beta$ se obtiene la
+primera expresión, pues $(1-\beta)/\beta=R_2/R_1$ y $1/\beta=1+R_2/R_1$. Para el no inversor,
+$\vm=\beta\vout$ y $\vout=A(\vin-\beta\vout)$, de donde $\vout/\vin=(1/\beta)/(1+1/(A\beta))$. Si
+$A=\omega_t/s$, el denominador común es $1+s/(\beta\omega_t)$: un polo en $\beta\omega_t$.
+\end{proof}
+
+Es decir, ganancia y ancho de banda se intercambian: el producto $\abs{A_V}\cdot f_{3\mathrm{dB}}\approx f_t$ es
+constante (\cref{fig:gbw}). Las otras limitaciones relevantes son:
+\begin{itemize}
+  \item \emph{Velocidad de subida} (\emph{slew rate}): $\abs{\dif\vout/\dif t}\le\mathrm{SR}$. Una sinusoide
+        $\vout=V_p\sen\omega t$ tiene pendiente máxima $\omega V_p$; para no deformarse en un
+        triángulo debe cumplir
+        \begin{equation}\label{eq:slew}
+          2\pi f\,V_p\le\mathrm{SR}.
+        \end{equation}
+  \item \emph{Corriente de salida limitada} (cortocircuito, $\sim\SI{25}{\milli\ampere}$): la salida no
+        puede alimentar cargas de pocos ohmios.
+  \item \emph{Corrientes de polarización} $I_B$ y \emph{tensión de offset} $V_{IO}$: no nulas; su efecto en
+        la salida crece con el valor de las resistencias (o, en un integrador, con el tiempo).
+\end{itemize}
+
+\input{figuras/fig_gbw}
+
+\begin{table}[ht]
+\centering\small
+\renewcommand{\arraystretch}{1.2}
+\caption{Parámetros típicos del $\mu$A741 a $25\,^{\circ}\mathrm{C}$~\cite{UA741} frente al modelo ideal.}
+\label{tab:741}
+\begin{tabular}{@{}llcc@{}}
+\toprule
+Parámetro & Símbolo & $\mu$A741 (típico) & Ideal\\
+\midrule
+Ganancia en lazo abierto (continua) & $A_0$ & $2\cdot10^{5}$ ($106\dB$) & $\infty$\\
+Producto ganancia--ancho de banda & $f_t$ & $\approx\SI{1}{\mega\hertz}$ & $\infty$\\
+Resistencia de entrada & $\Rin$ & $\SI{2}{\mega\ohm}$ & $\infty$\\
+Resistencia de salida & $\Rout$ & $\SI{75}{\ohm}$ & $0$\\
+Velocidad de subida & SR & $\SI{0.5}{\volt\per\micro\second}$ & $\infty$\\
+Corriente de polarización & $I_B$ & $\SI{80}{\nano\ampere}$ & $0$\\
+Tensión de \emph{offset} de entrada & $V_{IO}$ & $\SI{1}{\milli\volt}$ & $0$\\
+Corriente de salida en cortocircuito & $I_{OS}$ & $\pm\SI{25}{\milli\ampere}$ & $\infty$\\
+Excursión de salida ($R_L\ge\SI{10}{\kilo\ohm}$) & $\pm\Vsat$ & $\approx\pm(\Vcc-1\,\mathrm{V})$ & $\pm\Vcc$\\
+\bottomrule
+\end{tabular}
+\end{table}

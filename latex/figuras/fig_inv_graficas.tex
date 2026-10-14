@@ -1,0 +1,48 @@
+% Figura: previsiones del amplificador inversor (A_V=-10, Vsat=9 V, f=1 kHz).
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  % (a) zona lineal
+  \begin{axis}[tema, name=a, width=0.38\textwidth, height=4.6cm,
+      xmin=0, xmax=2, ymin=-10.5, ymax=10.5, ytick={-9,-5,0,5,9},
+      xlabel={$t$ (ms)}, ylabel={Tensión (V)}, title style={font=\small},
+      title={(a) $V_p=0{,}5\,\mathrm{V}$}]
+    \addplot[asintota, domain=0:2, samples=2] {9};
+    \addplot[asintota, domain=0:2, samples=2] {-9};
+    \addplot[senal entrada, domain=0:2, samples=150] {0.5*sin(360*x)};
+    \addplot[senal salida, domain=0:2, samples=150] {-5*sin(360*x)};
+  \end{axis}
+  % (b) característica de transferencia
+  \begin{axis}[temacentro, name=b, at={(a.east)}, anchor=west, xshift=0.9cm,
+      width=0.33\textwidth, height=4.6cm,
+      xmin=-1.6, xmax=1.6, ymin=-11, ymax=11, xtick={-0.9,0.9}, ytick={-9,9},
+      xticklabels={$-0{,}9$,$0{,}9$}, yticklabels={$-9$,$9$},
+      xlabel={$\vin$ (V)}, 
+      xlabel style={at={(axis description cs:1,0.5)}, anchor=south east, yshift=2pt, font=\scriptsize}, clip=false,
+      title style={font=\small, yshift=10pt}, title={(b) $\vout(\vin)$}]
+    \addplot[senal salida, domain=-1.6:1.6, samples=200] {max(-9,min(9,-10*x))};
+    \addplot[punteado] coordinates {(0.9,0) (0.9,-9)};
+    \addplot[punteado] coordinates {(-0.9,0) (-0.9,9)};
+    \node[font=\scriptsize, anchor=west, text=rojoteo] at (axis cs:0.1,6.6) {pendiente $-10$};
+    \node[font=\scriptsize, anchor=west] at (axis description cs:0.52,0.97) {$\vout$ (V)};
+  \end{axis}
+  % (c) recorte
+  \begin{axis}[tema, at={(b.east)}, anchor=west, xshift=0.7cm, width=0.38\textwidth, height=4.6cm,
+      xmin=0, xmax=2, ymin=-16, ymax=16, ytick={-15,-9,0,9,15}, yticklabels={},
+      xlabel={$t$ (ms)}, title style={font=\small},
+      title={(c) $V_p=1{,}5\,\mathrm{V}$}]
+    \addplot[gray!60, densely dashed, domain=0:2, samples=150] {-15*sin(360*x)};
+    \addplot[asintota, domain=0:2, samples=2] {9};
+    \addplot[asintota, domain=0:2, samples=2] {-9};
+    \addplot[senal entrada, domain=0:2, samples=150] {1.5*sin(360*x)};
+    \addplot[senal salida, domain=0:2, samples=300] {max(-9,min(9,-15*sin(360*x)))};
+    \node[font=\scriptsize, anchor=south east] at (axis cs:2,9) {$+\Vsat$};
+  \end{axis}
+\end{tikzpicture}
+\caption{Previsiones para el amplificador inversor ($A_V=-10$, $\Vsat\approx9\,\mathrm{V}$,
+$f=1\,\mathrm{kHz}$); en azul la entrada y en ámbar la salida. (a) En zona lineal la salida es la
+entrada multiplicada por $-10$ (contrafase). (b) Característica de transferencia: recta de pendiente
+$-10$ hasta $\abs{\vin}=\Vsat/10=0{,}9\,\mathrm{V}$ y saturación fuera. (c) Con $V_p=1{,}5\,\mathrm{V}$ la salida
+lineal, en gris, superaría $\Vsat$ y la salida real queda recortada en $\pm\Vsat$ (\emph{clipping}).}
+\label{fig:inv-graficas}
+\end{figure}

@@ -1,0 +1,84 @@
+% =========================================================================
+\section{Circuito 2: amplificador no inversor}\label{sec:pl-no-inversor}
+% =========================================================================
+\begin{prelab}[Amplificador no inversor]\label{pl:no-inversor}
+Usando un modelo de amplificador operacional ideal, encuéntrese la ganancia en tensión
+$A_V=\Vout/\Vin$ del circuito de la \cref{fig:no-inversor} en función de sus resistencias. Si
+imponemos $R_1=1\,\mathrm{k}\Omega$, determínese $R_2$ para conseguir $A_V=+11$ a $1\,\mathrm{kHz}$.
+\end{prelab}
+
+\input{figuras/fig_no_inversor}
+
+\begin{resolucion}
+Aplicamos de nuevo la \cref{prop:metodo}. Ahora la señal entra por la entrada no inversora y la
+red $R_1$--$R_2$ es un divisor de la tensión de salida.
+
+\textbf{Paso 1: entrada no inversora.} La fuente está conectada directamente a la entrada $+$ y, por
+(R1), no circula corriente hacia el AO, de modo que no hay caída de tensión:
+\begin{equation}\label{eq:ni-vp}
+  \vp=\vin .
+\end{equation}
+
+\textbf{Paso 2: cortocircuito virtual.} Por (R2),
+\begin{equation}\label{eq:ni-vm}
+  \vm=\vp=\vin .
+\end{equation}
+El nudo inversor ya \emph{no} es una tierra virtual: sigue a la entrada.
+
+\textbf{Paso 3: corriente por $R_1$.} $R_1$ une el nudo inversor ($\vm=\vin$) con tierra; con el sentido
+de la figura (del nudo hacia tierra),
+\begin{equation}\label{eq:ni-i1}
+  i_1=\frac{\vm-0}{R_1}=\frac{\vin}{R_1} .
+\end{equation}
+
+\textbf{Paso 4: Kirchhoff en el nudo inversor.} Al nudo llega $i_2$ desde la salida a través de $R_2$ y
+salen $i_1$ e $i_-=0$ (R1):
+\begin{equation}\label{eq:ni-kcl}
+  i_2=i_1+i_-=i_1=\frac{\vin}{R_1} .
+\end{equation}
+
+\textbf{Paso 5: tensión de salida.} La corriente $i_2$ recorre $R_2$ desde la salida hasta el nudo
+inversor, luego $\vout-\vm=i_2R_2$:
+\begin{equation}\label{eq:ni-vout}
+  \vout=\vm+i_2R_2=\vin+\frac{\vin}{R_1}\,R_2=\Bigl(1+\frac{R_2}{R_1}\Bigr)\vin .
+\end{equation}
+(Equivalentemente: $R_1$ y $R_2$ forman un divisor sin carga, $\vm=\vout\,R_1/(R_1+R_2)$, que con
+$\vm=\vin$ da el mismo resultado.)
+
+\textbf{Resultado.}
+\begin{equation}\label{eq:ni-Av}
+  \resultado{A_V=\frac{\vout}{\vin}=1+\frac{R_2}{R_1}}
+\end{equation}
+
+\textbf{Diseño.} Con $A_V=11$ y $R_1=1\,\mathrm{k}\Omega$,
+\begin{equation}\label{eq:ni-R2}
+  1+\frac{R_2}{R_1}=11\quad\Longrightarrow\quad
+  \resultado{R_2=(A_V-1)\,R_1=10\,\mathrm{k}\Omega}
+\end{equation}
+Son las mismas resistencias que en el inversor: basta con cambiar qué terminal se conecta a la
+fuente y cuál a tierra.
+\end{resolucion}
+
+\begin{observacion}[Lectura del resultado y comparación con el inversor]\label{obs:ni-lectura}
+Del resultado \cref{eq:ni-Av} se desprende lo siguiente.
+\begin{enumerate}
+  \item \emph{Signo.} $A_V>0$: salida en fase con la entrada. Además $A_V\ge1$ siempre; con $R_2=0$
+        (o $R_1\to\infty$) se obtiene el seguidor de tensión, $A_V=1$.
+  \item \emph{Impedancia de entrada.} El generador solo ve la entrada $+$, que no absorbe corriente:
+        \begin{equation}\label{eq:ni-Zin}
+          \Zin=\frac{\vin}{i_+}\to\infty,
+        \end{equation}
+        de modo que el divisor de entrada de \cref{eq:carga} vale $1$ y $\vin=v_g$, a diferencia del
+        inversor ($\Zin=R_1$). Es la configuración adecuada para no cargar la fuente.
+  \item \emph{Saturación.} El recorte empieza cuando $A_VV_p=\Vsat$:
+        \begin{equation}\label{eq:ni-umbral}
+          V_{p,\mathrm{umbral}}=\frac{\Vsat}{A_V}\approx\frac{9\,\mathrm{V}}{11}\approx0{,}82\,\mathrm{V},
+        \end{equation}
+        y la característica de transferencia es una recta de pendiente $+11$ entre $\pm0{,}82\,\mathrm{V}$
+        (\cref{fig:ni-graficas}).
+  \item \emph{Ancho de banda.} Por \cref{eq:f3dB}, $f_{3\mathrm{dB}}=f_t/(1+R_2/R_1)\approx91\,\mathrm{kHz}$, el
+        mismo que en el inversor: en ambos el factor que divide a $f_t$ es $1+R_2/R_1$.
+\end{enumerate}
+\end{observacion}
+
+\input{figuras/fig_ni_graficas}

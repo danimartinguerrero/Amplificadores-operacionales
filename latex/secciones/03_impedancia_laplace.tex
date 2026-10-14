@@ -1,0 +1,149 @@
+% =========================================================================
+\section{Impedancia, transformada de Laplace y respuesta en frecuencia}\label{sec:laplace}
+% =========================================================================
+El circuito~3 del guion contiene un condensador, cuya relación tensión--corriente es
+diferencial. Esta sección reúne las tres ideas que permiten tratarlo con la misma
+álgebra que una resistencia: la impedancia compleja, la transformada de Laplace y el
+diagrama de Bode~\cite{TEORIA-LAPLACE,TEORIA-ADICIONAL}.
+
+% -------------------------------------------------------------------------
+\subsection{Régimen sinusoidal e impedancia compleja}\label{sec:impedancia}
+% -------------------------------------------------------------------------
+En un circuito lineal excitado por una sinusoide de pulsación $\omega=2\pi f$, todas las
+tensiones y corrientes son, en régimen permanente, sinusoides de la misma pulsación. Cada una
+queda determinada por su amplitud y su fase, que se agrupan en un número complejo, el \emph{fasor}:
+\begin{equation}\label{eq:fasor}
+  v(t)=V_p\cos(\omega t+\varphi)=\Real\bigl\{\mathbf{V}\,\eul^{\jj\omega t}\bigr\},\qquad
+  \mathbf{V}=V_p\,\eul^{\jj\varphi}\in\C .
+\end{equation}
+Como $\frac{\dif}{\dif t}\eul^{\jj\omega t}=\jj\omega\,\eul^{\jj\omega t}$, \emph{derivar en el tiempo equivale a
+multiplicar el fasor por $\jj\omega$}.
+
+\begin{definicion}[Impedancia]\label{def:impedancia}
+La impedancia de un dipolo lineal es el cociente de los fasores de su tensión y su corriente,
+$Z(\jj\omega)=\mathbf{V}/\mathbf{I}$. Su módulo es el cociente de amplitudes y su argumento, el
+desfase de la tensión respecto de la corriente.
+\end{definicion}
+
+\begin{proposicion}[Impedancias elementales]\label{prop:impedancias}
+\begin{equation}\label{eq:impedancias}
+  Z_R=R,\qquad Z_C=\frac{1}{\jj\omega C},\qquad Z_L=\jj\omega L .
+\end{equation}
+\end{proposicion}
+\begin{proof}
+Ley de Ohm, $v=Ri\Rightarrow\mathbf{V}=R\mathbf{I}$. En el condensador, $i=C\,\dif v/\dif t\Rightarrow
+\mathbf{I}=\jj\omega C\,\mathbf{V}$. En la bobina, $v=L\,\dif i/\dif t\Rightarrow\mathbf{V}=\jj\omega L\,\mathbf{I}$.
+\end{proof}
+
+Las leyes de Kirchhoff son lineales, de modo que se cumplen también para los fasores; en
+consecuencia, las impedancias se asocian como resistencias: en serie se suman,
+$Z=Z_1+Z_2$, y en paralelo se suman sus inversas, $Z=Z_1Z_2/(Z_1+Z_2)$. En particular,
+\begin{equation}\label{eq:RC-paralelo}
+  Z_{R\parallel C}=\frac{R\cdot\frac{1}{\jj\omega C}}{R+\frac{1}{\jj\omega C}}=\frac{R}{1+\jj\omega RC} .
+\end{equation}
+El condensador es un circuito abierto en continua ($\abs{Z_C}\to\infty$ si $\omega\to0$) y un
+cortocircuito a alta frecuencia ($\abs{Z_C}\to0$ si $\omega\to\infty$).
+
+% -------------------------------------------------------------------------
+\subsection{Transformada de Laplace y función de transferencia}\label{sec:transformada}
+% -------------------------------------------------------------------------
+Los fasores solo describen el régimen sinusoidal permanente. La transformada de Laplace
+generaliza la idea a señales arbitrarias (cuadradas, triangulares, escalones), que son las que
+se usan en el laboratorio para comprobar la integración y la derivación.
+
+\begin{definicion}[Transformada de Laplace]\label{def:laplace}
+Para una señal $f(t)$ definida en $t\ge0$, su transformada de Laplace es
+\begin{equation}\label{eq:laplace}
+  F(s)=\Lt\{f\}(s)=\int_{0}^{\infty}f(t)\,\eul^{-st}\,\dif t,\qquad s=\sigma+\jj\omega\in\C,
+\end{equation}
+definida en el semiplano $\Real s>\sigma_0$ en que la integral converge.
+\end{definicion}
+
+\begin{proposicion}[Propiedades que usaremos]\label{prop:laplace}
+Si $f\leftrightarrow F$ y $g\leftrightarrow G$, con $a,b$ constantes:
+\begin{gather}
+  af(t)+bg(t)\;\longleftrightarrow\;aF(s)+bG(s),\label{eq:L-lineal}\\
+  \frac{\dif f}{\dif t}\;\longleftrightarrow\;sF(s)-f(0),\qquad
+  \int_{0}^{t}f(\tau)\,\dif\tau\;\longleftrightarrow\;\frac{F(s)}{s}.\label{eq:L-derivada}
+\end{gather}
+\end{proposicion}
+\begin{proof}
+La linealidad es la de la integral. Para la derivada se integra por partes:
+$\int_0^\infty f'\eul^{-st}\dif t=\bigl[f\eul^{-st}\bigr]_0^\infty+s\int_0^\infty f\eul^{-st}\dif t=sF(s)-f(0)$.
+Si $g(t)=\int_0^t f$, entonces $g'=f$ y $g(0)=0$, de modo que $F=sG$.
+\end{proof}
+
+Con condiciones iniciales nulas, \cref{eq:L-derivada} dice que \emph{derivar equivale a
+multiplicar por $s$ e integrar, a dividir por $s$}. Aplicado al condensador,
+$i=C\,\dif v/\dif t\Rightarrow I(s)=sC\,V(s)$, y se recupera \cref{eq:impedancias} con $\jj\omega\to s$:
+\begin{equation}\label{eq:Zs}
+  Z_R(s)=R,\qquad Z_C(s)=\frac{1}{sC},\qquad Z_L(s)=sL .
+\end{equation}
+Así, un circuito con condensadores se resuelve, en el dominio $s$, exactamente como uno resistivo.
+
+\begin{definicion}[Función de transferencia]\label{def:transferencia}
+Para un circuito lineal con condiciones iniciales nulas, la función de transferencia es el cociente
+\begin{equation}\label{eq:transferencia}
+  H(s)=\frac{V_{\mathrm{out}}(s)}{V_{\mathrm{in}}(s)} .
+\end{equation}
+Su restricción al eje imaginario, $H(\jj\omega)$, es la \emph{respuesta en frecuencia}.
+\end{definicion}
+
+\begin{proposicion}[Respuesta a una sinusoide]\label{prop:sinusoide}
+Si $H(s)$ es estable (polos en $\Real s<0$) y $\vin(t)=V_p\cos\omega t$, la salida en régimen
+permanente es
+\begin{equation}\label{eq:respuesta-sinusoide}
+  \vout(t)=\abs{H(\jj\omega)}\,V_p\cos\bigl(\omega t+\arg H(\jj\omega)\bigr).
+\end{equation}
+\end{proposicion}
+\begin{proof}
+La exponencial $\eul^{\jj\omega t}$ es autofunción de todo sistema lineal e invariante: si
+$\vin=\eul^{\jj\omega t}$, la salida forzada es $H(\jj\omega)\eul^{\jj\omega t}$ (los términos asociados a los
+polos de $H$ decaen como $\eul^{\Real(p)t}\to0$). Tomando la parte real, por linealidad, se obtiene el
+resultado.
+\end{proof}
+La ganancia medida con el osciloscopio para una sinusoide de frecuencia $f$ es, por tanto,
+$\abs{A_V}=\abs{H(\jj 2\pi f)}$, y el desfase entre los canales es $\arg H(\jj2\pi f)$.
+
+% -------------------------------------------------------------------------
+\subsection{Diagrama de Bode y red de constante temporal única}\label{sec:bode}
+% -------------------------------------------------------------------------
+\begin{definicion}[Diagrama de Bode]\label{def:bode}
+Es la representación de $\abs{H(\jj\omega)}$ en decibelios, $20\log_{10}\abs{H}$, y de la fase
+$\arg H(\jj\omega)$, ambas frente a la frecuencia en escala logarítmica. Una \emph{década} es un
+factor $10$ en frecuencia y una \emph{octava}, un factor $2$.
+\end{definicion}
+
+\begin{proposicion}[Red de constante temporal única paso bajo]\label{prop:STC}
+Sea
+\begin{equation}\label{eq:STC}
+  H(s)=\frac{K}{1+s/\omega_0},\qquad \omega_0=\frac1\tau .
+\end{equation}
+Entonces
+\begin{equation}\label{eq:STC-modulo}
+  \abs{H(\jj\omega)}=\frac{\abs{K}}{\sqrt{1+(\omega/\omega_0)^{2}}},\qquad
+  \arg H(\jj\omega)=\arg K-\arctg\frac{\omega}{\omega_0},
+\end{equation}
+y el diagrama de Bode tiene dos asíntotas que se cortan en $\omega_0$ (\cref{fig:bode-stc}):
+\begin{equation}\label{eq:STC-asintotas}
+  \omega\ll\omega_0:\ \abs{H}\simeq\abs{K};\qquad
+  \omega\gg\omega_0:\ \abs{H}\simeq\abs{K}\,\frac{\omega_0}{\omega},
+  \ \text{pendiente }-20\dB/\text{década}\ (-6\dB/\text{octava}).
+\end{equation}
+En $\omega=\omega_0$ el módulo es $\abs{K}/\sqrt2$, es decir, $3\dB$ por debajo de la meseta, y la fase
+se ha retrasado $45^{\circ}$: $\omega_0$ es la \emph{frecuencia de corte} a $-3\dB$.
+\end{proposicion}
+\begin{proof}
+Con $s=\jj\omega$, $\abs{1+\jj x}=\sqrt{1+x^{2}}$ y $\arg(1+\jj x)=\arctg x$, con $x=\omega/\omega_0$. Si $x\ll1$,
+$\sqrt{1+x^{2}}\simeq1$; si $x\gg1$, $\sqrt{1+x^{2}}\simeq x$, y $20\log_{10}(\abs{K}/x)$ disminuye
+$20\dB$ cada vez que $x$ se multiplica por $10$ ($20\log_{10}2\simeq6\dB$ por octava). En $x=1$,
+$20\log_{10}(1/\sqrt2)=-3{,}01\dB$ y $\arctg1=45^{\circ}$.
+\end{proof}
+
+Análogamente, $H(s)=K\,(s/\omega_0)/(1+s/\omega_0)$ es un \emph{paso alto}: crece a
+$+20\dB$/década por debajo de $\omega_0$ y es plano por encima. Los dos casos límite
+$H=K\omega_0/s$ (integrador, recta de $-20\dB$/década en todo el eje) y $H=Ks/\omega_0$
+(derivador, $+20\dB$/década) son las asíntotas de alta y de baja frecuencia, respectivamente,
+de estas dos redes.
+
+\input{figuras/fig_bode_stc}
