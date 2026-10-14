@@ -4,73 +4,44 @@
 \begin{prelab}[Amplificador inversor]
 Usando el modelo de amplificador operacional ideal visto en teoría, encuéntrese la ganancia en
 tensión $A_V=\Vout/\Vin$ en función de las resistencias del circuito de la \cref{fig:inversor}. Si
-imponemos un valor de $R_1=1\,\mathrm{k}\Omega$, determínese el valor de $R_2$ para conseguir la ganancia pedida,
-$A_V=-10$ a $1\,\mathrm{kHz}$.
+imponemos $R_1=1\,\mathrm{k}\Omega$, determínese el valor de $R_2$ para conseguir $A_V=-10$ a $1\,\mathrm{kHz}$.
 \end{prelab}
 
 \input{figuras/fig_inversor}
 
 \begin{resolucion}
-\textbf{Hipótesis.} AO ideal en zona lineal: la red $R_2$ une la salida con la entrada inversora
-(realimentación negativa), de modo que valen (R1), $i_+=i_-=0$, y (R2), $\vp=\vm$. Tomamos los sentidos de
-corriente de la \cref{fig:inversor}: $i_1$ por $R_1$ hacia el nudo inversor e $i_2$ por $R_2$ desde el nudo
-inversor hacia la salida.
+AO ideal con realimentación negativa a través de $R_2$; sentidos de corriente de la \cref{fig:inversor}.
 
-\textbf{Paso 1: tensión en la entrada no inversora.} La entrada $+$ está conectada directamente a tierra:
-\begin{equation}\label{eq:i-vp}
-  \vp=0 .
-\end{equation}
-
-\textbf{Paso 2: cortocircuito virtual.} Por (R2) y \eqref{eq:i-vp}, el nudo inversor está a potencial nulo
-sin estar conectado a tierra (\emph{tierra virtual}):
+\textbf{1. Tierra virtual.} La entrada $+$ está a tierra; por (R2),
 \begin{equation}\label{eq:i-vm}
   \vm=\vp=0 .
 \end{equation}
 
-\textbf{Paso 3: corriente por $R_1$.} La ley de Ohm aplicada a $R_1$, entre $\vin$ y $\vm$, da
+\textbf{2. Ley de Ohm en $R_1$}, entre $\vin$ y $\vm$:
 \begin{equation}\label{eq:i-i1}
-  i_1=\frac{\vin-\vm}{R_1}\overset{\eqref{eq:i-vm}}{=}\frac{\vin}{R_1} .
+  i_1=\frac{\vin-\vm}{R_1}=\frac{\vin}{R_1} .
 \end{equation}
 
-\textbf{Paso 4: ley de Kirchhoff de corrientes en el nudo inversor.} Entra $i_1$ y salen $i_2$ e $i_-$:
-\begin{equation}\label{eq:i-kcl}
-  i_1=i_2+i_- .
-\end{equation}
-Por (R1), $i_-=0$, de modo que toda la corriente de $R_1$ pasa por $R_2$:
+\textbf{3. Kirchhoff en el nudo inversor}, con $i_-=0$ por (R1):
 \begin{equation}\label{eq:i-i2}
-  i_2=i_1\overset{\eqref{eq:i-i1}}{=}\frac{\vin}{R_1} .
+  i_1=i_2+i_-\quad\Longrightarrow\quad i_2=i_1=\frac{\vin}{R_1} .
 \end{equation}
 
-\textbf{Paso 5: tensión de salida.} La ley de Ohm aplicada a $R_2$, recorrida por $i_2$ desde el nudo
-inversor ($\vm$) hasta la salida ($\vout$), da
-\begin{equation}\label{eq:i-ohm2}
-  \vm-\vout=R_2\,i_2 .
-\end{equation}
-Despejando $\vout$ y sustituyendo \eqref{eq:i-vm} y \eqref{eq:i-i2},
+\textbf{4. Ley de Ohm en $R_2$}, recorrida por $i_2$ del nudo inversor a la salida:
 \begin{equation}\label{eq:i-vout}
-  \vout=\vm-R_2\,i_2=0-R_2\,\frac{\vin}{R_1}=-\frac{R_2}{R_1}\,\vin .
+  \vm-\vout=R_2\,i_2\quad\Longrightarrow\quad \vout=-\frac{R_2}{R_1}\,\vin .
 \end{equation}
 
-\textbf{Resultado.} Dividiendo \eqref{eq:i-vout} por $\vin$:
+\textbf{Resultado.}
 \begin{equation}\label{eq:i-Av}
   \resultado{A_V=\frac{\vout}{\vin}=-\frac{R_2}{R_1}}
 \end{equation}
 
-\textbf{Diseño.} Despejando $R_2$ de \eqref{eq:i-Av} y sustituyendo $A_V=-10$ y $R_1=1\,\mathrm{k}\Omega$:
+\textbf{Diseño.} Con $A_V=-10$ y $R_1=1\,\mathrm{k}\Omega$ en \eqref{eq:i-Av}:
 \begin{equation}\label{eq:i-R2}
-  R_2=-A_V\,R_1=-(-10)\cdot1\,\mathrm{k}\Omega\quad\Longrightarrow\quad
-  \resultado{R_2=10\,\mathrm{k}\Omega}
+  R_2=-A_V\,R_1=10\cdot1\,\mathrm{k}\Omega\quad\Longrightarrow\quad\resultado{R_2=10\,\mathrm{k}\Omega}
 \end{equation}
 
-\textbf{Comprobación.} Con estos valores, \eqref{eq:i-Av} da
-\begin{equation}\label{eq:i-check}
-  A_V=-\frac{10\,\mathrm{k}\Omega}{1\,\mathrm{k}\Omega}=-10 .
-\end{equation}
-
-\textbf{Comentario.} El signo negativo indica que la salida está en contrafase con la entrada (desfase de
-$180^{\circ}$). La ganancia \eqref{eq:i-Av} no depende de la frecuencia, de modo que el diseño vale a
-$1\,\mathrm{kHz}$; tampoco depende de $A$ ni de la carga $R_L$, solo del cociente $R_2/R_1$
-(\cref{fig:inv-graficas}).
+El signo menos indica contrafase ($180^{\circ}$). La ganancia no depende de la frecuencia, de modo que el
+diseño vale a $1\,\mathrm{kHz}$, ni de $A$ ni de $R_L$: solo del cociente $R_2/R_1$.
 \end{resolucion}
-
-\input{figuras/fig_inv_graficas}

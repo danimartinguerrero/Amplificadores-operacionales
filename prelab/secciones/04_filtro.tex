@@ -14,125 +14,86 @@ la ganancia en tensión es constante, mientras que para frecuencias suficienteme
 \input{figuras/fig_generalizado}
 
 % -------------------------------------------------------------------------
-\subsection{Ganancia del amplificador inversor generalizado}
+\subsection{Herramienta: impedancia y transformada de Laplace}
+% -------------------------------------------------------------------------
+La ley del condensador, $i=C\,\dif v/\dif t$, es diferencial. La transformada de Laplace,
+$F(s)=\int_{0}^{\infty}f(t)\,\eul^{-st}\,\dif t$, la convierte en algebraica: integrando por partes, con
+condiciones iniciales nulas,
+\begin{equation}\label{eq:L-deriv}
+  \Lt\Bigl\{\frac{\dif f}{\dif t}\Bigr\}=sF(s)
+  \quad\Longrightarrow\quad I(s)=sC\,V(s) .
+\end{equation}
+Cada elemento cumple así una «ley de Ohm» $V(s)=Z(s)\,I(s)$, con impedancias
+\begin{equation}\label{eq:L-Z}
+  Z_R=R,\qquad Z_C(s)=\frac{1}{sC},
+\end{equation}
+que se asocian como resistencias. Por linealidad, Kirchhoff, (R1) y (R2) valen para las transformadas, y en
+régimen sinusoidal de pulsación $\omega=2\pi f$ basta tomar $s=\jj\omega$: $\abs{H(\jj\omega)}$ es el cociente de
+amplitudes $\Vout/\Vin$ y $\arg H(\jj\omega)$ el desfase.
+
+% -------------------------------------------------------------------------
+\subsection{Ganancia del inversor generalizado}
 % -------------------------------------------------------------------------
 \begin{resolucion}
-\textbf{Hipótesis.} AO ideal en zona lineal, (R1) $i_\pm=0$ y (R2) $\vp=\vm$, con realimentación negativa a
-través de $Z_2$. Como $Z_1$ y $Z_2$ pueden contener condensadores, trabajamos con las transformadas de
-Laplace de tensiones y corrientes, $V(s)=\Lt\{v(t)\}$ e $I(s)=\Lt\{i(t)\}$, con condiciones iniciales nulas.
-En el dominio $s$ cada elemento cumple
-\begin{equation}\label{eq:g-ohm}
-  V(s)=Z(s)\,I(s),
-\end{equation}
-y, por linealidad de la transformada, las leyes de Kirchhoff y las reglas (R1) y (R2), que se cumplen en
-cada instante, valen también para las transformadas. Los sentidos de corriente son los de la
-\figpanel{fig:generalizado}{a}.
+Se repite el cálculo del inversor con $R_k\to Z_k(s)$ (sentidos de la \figpanel{fig:generalizado}{a}).
 
-\textbf{Paso 1: tierra virtual.} La entrada $+$ está a tierra, y por (R2):
+\textbf{1. Tierra virtual} (R2): la entrada $+$ está a tierra,
 \begin{equation}\label{eq:g-vm}
-  V_+(s)=0\quad\Longrightarrow\quad V_-(s)=V_+(s)=0 .
+  V_-(s)=V_+(s)=0 .
 \end{equation}
 
-\textbf{Paso 2: corriente por $Z_1$.} Por \eqref{eq:g-ohm} aplicada a $Z_1$ y \eqref{eq:g-vm},
-\begin{equation}\label{eq:g-I1}
-  I_1(s)=\frac{\Vin(s)-V_-(s)}{Z_1(s)}=\frac{\Vin(s)}{Z_1(s)} .
+\textbf{2. Ohm en $Z_1$ y Kirchhoff en el nudo inversor}, con $I_-=0$ (R1):
+\begin{equation}\label{eq:g-I}
+  I_2(s)=I_1(s)=\frac{\Vin(s)-V_-(s)}{Z_1(s)}=\frac{\Vin(s)}{Z_1(s)} .
 \end{equation}
 
-\textbf{Paso 3: Kirchhoff en el nudo inversor}, con $I_-(s)=0$ por (R1):
-\begin{equation}\label{eq:g-I2}
-  I_2(s)=I_1(s)-I_-(s)=\frac{\Vin(s)}{Z_1(s)} .
-\end{equation}
-
-\textbf{Paso 4: tensión de salida.} Por \eqref{eq:g-ohm} aplicada a $Z_2$, recorrida por $I_2$ desde el nudo
-inversor hasta la salida, y con \eqref{eq:g-vm} y \eqref{eq:g-I2},
+\textbf{3. Ohm en $Z_2$}, del nudo inversor a la salida:
 \begin{equation}\label{eq:g-vout}
-  V_-(s)-\Vout(s)=Z_2(s)\,I_2(s)\quad\Longrightarrow\quad
-  \Vout(s)=-Z_2(s)\,I_2(s)=-\frac{Z_2(s)}{Z_1(s)}\,\Vin(s) .
+  V_-(s)-\Vout(s)=Z_2(s)\,I_2(s)\quad\Longrightarrow\quad\Vout(s)=-\frac{Z_2(s)}{Z_1(s)}\,\Vin(s) .
 \end{equation}
 
-\textbf{Resultado.} La función de transferencia es
+\textbf{Resultado.}
 \begin{equation}\label{eq:g-H}
-  \resultado{H(s)=\frac{\Vout(s)}{\Vin(s)}=-\frac{Z_2(s)}{Z_1(s)}}
+  \resultado{H(s)=\frac{\Vout(s)}{\Vin(s)}=-\frac{Z_2(s)}{Z_1(s)}},\qquad
+  A_V(\jj\omega)=-\frac{Z_2(\jj\omega)}{Z_1(\jj\omega)} .
 \end{equation}
-y, en régimen sinusoidal de pulsación $\omega=2\pi f$ ($s=\jj\omega$), la ganancia en tensión es
-\begin{equation}\label{eq:g-Av}
-  A_V(\jj\omega)=H(\jj\omega)=-\frac{Z_2(\jj\omega)}{Z_1(\jj\omega)} .
-\end{equation}
-
-\textbf{Comentario.} Si las dos impedancias son resistivas, $Z_1=R_1$ y $Z_2=R_2$, \eqref{eq:g-Av} se reduce a
-$A_V=-R_2/R_1$, real e independiente de $\omega$: es el amplificador inversor. Si alguna contiene un
-condensador, $Z_C(\jj\omega)=1/(\jj\omega C)$ depende de $\omega$, y con ella la ganancia: el circuito es un filtro.
+Si $Z_1=R_1$ y $Z_2=R_2$, $A_V=-R_2/R_1$ es real y no depende de $\omega$; si hay un condensador,
+$Z_C=1/(\jj\omega C)$ introduce la dependencia en frecuencia.
 \end{resolucion}
 
 % -------------------------------------------------------------------------
 \subsection{Caso $Z_1=R$, $Z_2=R_F\parallel C$: filtro paso bajo}
 % -------------------------------------------------------------------------
 \begin{resolucion}
-\textbf{Paso 1: impedancias.} $Z_1$ es la resistencia $R$. $Z_2$ es el paralelo de $R_F$ y del condensador,
-$Z_C(s)=1/(sC)$; sumando las inversas,
-\begin{equation}\label{eq:f-Z2inv}
-  \frac{1}{Z_2(s)}=\frac{1}{R_F}+\frac{1}{Z_C(s)}=\frac{1}{R_F}+sC=\frac{1+sR_FC}{R_F},
-\end{equation}
-de donde
-\begin{equation}\label{eq:f-Z}
-  Z_1(s)=R,\qquad Z_2(s)=\frac{R_F}{1+sR_FC} .
+\textbf{1. Impedancias.} Por \eqref{eq:L-Z}, sumando las inversas del paralelo,
+\begin{equation}\label{eq:f-Z2}
+  \frac{1}{Z_2}=\frac{1}{R_F}+sC=\frac{1+sR_FC}{R_F}\quad\Longrightarrow\quad
+  Z_1=R,\qquad Z_2(s)=\frac{R_F}{1+sR_FC} .
 \end{equation}
 
-\textbf{Paso 2: función de transferencia.} Sustituyendo \eqref{eq:f-Z} en \eqref{eq:g-H}:
+\textbf{2. Función de transferencia.} Sustituyendo \eqref{eq:f-Z2} en \eqref{eq:g-H}:
 \begin{equation}\label{eq:f-H}
-  \resultado{H(s)=-\frac{R_F}{R}\,\frac{1}{1+sR_FC}}
-\end{equation}
-Definimos la constante de tiempo y la frecuencia de corte
-\begin{equation}\label{eq:f-fc}
-  \tau=R_FC,\qquad \omega_c=\frac{1}{R_FC},\qquad f_c=\frac{\omega_c}{2\pi}=\frac{1}{2\pi R_FC} .
+  \resultado{H(s)=-\frac{R_F}{R}\,\frac{1}{1+sR_FC}},\qquad
+  f_c=\frac{1}{2\pi R_FC} .
 \end{equation}
 
-\textbf{Paso 3: respuesta en frecuencia.} Con $s=\jj\omega$ en \eqref{eq:f-H} y \eqref{eq:f-fc},
-\begin{equation}\label{eq:f-Ajw}
-  A_V(\jj\omega)=-\frac{R_F}{R}\,\frac{1}{1+\jj\,\omega/\omega_c} .
-\end{equation}
-Como $\abs{1+\jj x}=\sqrt{1+x^{2}}$ y $\arg(1+\jj x)=\arctg x$, y el signo menos equivale a un factor
-$\eul^{\jj\pi}$, el módulo y la fase son
+\textbf{3. Módulo de la ganancia.} Con $s=\jj\omega=\jj2\pi f$ y $\abs{1+\jj x}=\sqrt{1+x^{2}}$,
 \begin{equation}\label{eq:f-mod}
-  \abs{A_V(\omega)}=\frac{R_F/R}{\sqrt{1+(\omega/\omega_c)^{2}}},\qquad
-  \arg A_V(\omega)=180^{\circ}-\arctg\frac{\omega}{\omega_c} .
-\end{equation}
-En decibelios,
-\begin{equation}\label{eq:f-dB}
-  G(\omega)=20\log_{10}\abs{A_V(\omega)}=20\log_{10}\frac{R_F}{R}-10\log_{10}\Bigl[1+\Bigl(\frac{\omega}{\omega_c}\Bigr)^{2}\Bigr] .
+  \abs{A_V(f)}=\frac{R_F/R}{\sqrt{1+(f/f_c)^{2}}},\qquad
+  \arg A_V(f)=180^{\circ}-\arctg\frac{f}{f_c} .
 \end{equation}
 
-\textbf{Paso 4: baja frecuencia} ($\omega\ll\omega_c$, es decir, $f\ll f_c$). Entonces $(\omega/\omega_c)^{2}\ll1$, y
-\eqref{eq:f-mod} y \eqref{eq:f-dB} dan
-\begin{equation}\label{eq:f-baja}
-  \abs{A_V}\simeq\frac{R_F}{R},\qquad G\simeq20\log_{10}\frac{R_F}{R},\qquad \arg A_V\simeq180^{\circ},
-\end{equation}
-una ganancia \emph{constante}. Físicamente, $\abs{Z_C}=1/(\omega C)\gg R_F$: el condensador es un circuito abierto y
-el circuito es un inversor de ganancia $-R_F/R$.
+\textbf{4. Límites.} De \eqref{eq:f-mod}:
+\begin{align}
+  f\ll f_c:&\quad \abs{A_V}\simeq\frac{R_F}{R}\quad\text{(constante; $C$ actúa como circuito abierto)},\label{eq:f-baja}\\
+  f\gg f_c:&\quad \abs{A_V}\simeq\frac{R_F}{R}\,\frac{f_c}{f}=\frac{1}{2\pi fRC}\quad\text{(decrece como $1/f$; $C$ cortocircuita a $R_F$)}.\label{eq:f-alta}
+\end{align}
+En decibelios, por \eqref{eq:f-alta}, cada década de frecuencia resta
+$20\log_{10}10=20\dB$; y en $f=f_c$, $\abs{A_V}=(R_F/R)/\sqrt2$, es decir, $3\dB$ por debajo de la meseta.
 
-\textbf{Paso 5: alta frecuencia} ($\omega\gg\omega_c$). Entonces $\sqrt{1+(\omega/\omega_c)^{2}}\simeq\omega/\omega_c$ y
-\begin{equation}\label{eq:f-alta}
-  \abs{A_V}\simeq\frac{R_F}{R}\,\frac{\omega_c}{\omega}=\frac{1}{\omega RC},\qquad
-  G\simeq20\log_{10}\frac{R_F}{R}-20\log_{10}\frac{\omega}{\omega_c},\qquad \arg A_V\simeq90^{\circ},
-\end{equation}
-una ganancia que \emph{disminuye} con la frecuencia. Al multiplicar la frecuencia por $10$ (una década),
-\begin{equation}\label{eq:f-decada}
-  G(10\,\omega)-G(\omega)=-20\log_{10}10=-20\dB .
-\end{equation}
-Físicamente, $\abs{Z_C}\ll R_F$: el condensador cortocircuita a $R_F$ y $Z_2\simeq1/(\jj\omega C)$.
-
-\textbf{Paso 6: frecuencia de corte.} En $\omega=\omega_c$, \eqref{eq:f-mod} y \eqref{eq:f-dB} dan
-\begin{equation}\label{eq:f-corte}
-  \abs{A_V(\omega_c)}=\frac{R_F/R}{\sqrt2},\qquad
-  G(\omega_c)=20\log_{10}\frac{R_F}{R}-10\log_{10}2\simeq20\log_{10}\frac{R_F}{R}-3\dB,
-\end{equation}
-y la fase vale $\arg A_V(\omega_c)=180^{\circ}-\arctg1=135^{\circ}$.
-
-\textbf{Conclusión.} Por \eqref{eq:f-baja}, la ganancia es constante e igual a $R_F/R$ para $f\ll f_c$; por
-\eqref{eq:f-alta} y \eqref{eq:f-decada}, disminuye a razón de $20\dB$ por década para $f\gg f_c$; y por
-\eqref{eq:f-corte}, la transición se produce en $f_c=1/(2\pi R_FC)$, donde la ganancia ha caído $3\dB$. Es la
-dependencia de la figura~4b del guion (\cref{fig:bode-filtro}): el circuito es un \emph{filtro paso bajo de
-primer orden}.
+\textbf{Conclusión.} La ganancia es constante a baja frecuencia \eqref{eq:f-baja} y disminuye a
+$-20\dB$/década a alta frecuencia \eqref{eq:f-alta}, con la transición en $f_c$: el circuito es un
+\emph{filtro paso bajo de primer orden}, como en la figura~4b del guion (\cref{fig:bode-filtro}).
 \end{resolucion}
 
 \input{figuras/fig_bode_filtro}
