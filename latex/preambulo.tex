@@ -53,7 +53,7 @@
 \usepackage{needspace}
 \usepackage{array}
 \usepackage{multirow}
-\usepackage{enumitem}
+\usepackage[inline]{enumitem}
 \setlist[itemize]{leftmargin=1.6em, itemsep=2pt, topsep=4pt}
 \setlist[enumerate]{leftmargin=1.8em, itemsep=2pt, topsep=4pt}
 
@@ -180,7 +180,7 @@
 % recuadros amarillos del guion), para distinguir lo pedido de lo resuelto.
 \newcounter{prelab}
 \newtcolorbox{prelabbox}[1]{%
-  enhanced, breakable, sharp corners,
+  enhanced, sharp corners,
   colback=white, colframe=acento!70, boxrule=0.5pt, leftrule=2.2pt,
   left=9pt, right=9pt, top=5pt, bottom=5pt,
   before skip=12pt, after skip=10pt,

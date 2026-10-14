@@ -3,12 +3,13 @@
 % =========================================================================
 \begin{prelab}[Inversor generalizado y filtro]\label{pl:filtro}
 Sea el circuito de la \figpanel{fig:generalizado}{a}, en el que las impedancias $Z_1$ y $Z_2$ pueden
-ser no resistivas y, por tanto, depender de la frecuencia: obténgase su ganancia en tensión.
-Esta ganancia será función de la frecuencia salvo que ambas impedancias sean puramente resistivas.
-Considérese el caso $Z_1=R$ real y $Z_2$ la asociación en paralelo de una resistencia $R_F$ y un
-condensador $C$ (\figpanel{fig:generalizado}{b}). Demuéstrese que la dependencia de la función de
-transferencia con la frecuencia $f$ es la de un filtro paso bajo: para frecuencias suficientemente
-bajas la ganancia es constante y para frecuencias suficientemente altas disminuye.
+ser no resistivas y, por lo tanto, tener dependencia en frecuencia: obténgase la ganancia en voltaje
+del circuito. Esta ganancia será función de la frecuencia salvo que ambas impedancias sean puramente
+resistivas. Considérese el caso de que $Z_1=R$ sea real y $Z_2$ una composición en paralelo de una
+resistencia $R_F$ y un condensador $C$ (\figpanel{fig:generalizado}{b}). Demuéstrese que la dependencia
+de la función de transferencia con la frecuencia $f$ es la de un filtro paso bajo: para frecuencias
+suficientemente bajas la ganancia en tensión es constante, mientras que para frecuencias
+suficientemente altas disminuye.
 \end{prelab}
 
 \input{figuras/fig_generalizado}
@@ -17,139 +18,68 @@ bajas la ganancia es constante y para frecuencias suficientemente altas disminuy
 \subsection{Ganancia del inversor generalizado}\label{sec:pl-generalizado}
 % -------------------------------------------------------------------------
 \begin{resolucion}
-Como $Z_1$ y $Z_2$ pueden contener condensadores, trabajamos con las transformadas de Laplace de
-tensiones y corrientes y condiciones iniciales nulas (\cref{sec:transformada}): cada elemento
-cumple la «ley de Ohm» $V(s)=Z(s)\,I(s)$, \cref{eq:Zs}, y las leyes de Kirchhoff se conservan por linealidad,
-\cref{eq:L-lineal}. Las reglas (R1) y (R2) valen igual en el dominio $s$, pues son relaciones
-lineales que se cumplen en cada instante. El razonamiento es, por tanto, el del inversor, con
-$R_k\to Z_k(s)$.
+Trabajamos en el dominio de Laplace con condiciones iniciales nulas: cada elemento cumple
+$V(s)=Z(s)\,I(s)$, \cref{eq:Zs}, y Kirchhoff, (R1) y (R2) se mantienen por linealidad. El cálculo es
+el del inversor con $R_k\to Z_k(s)$.
 
-\textbf{Pasos 1 y 2: tierra virtual.} La entrada $+$ está a tierra; por (R1) y (R2),
+\textbf{1. Tierra virtual} (R2):
 \begin{equation}\label{eq:gen-vm}
-  V_+(s)=0\quad\Longrightarrow\quad V_-(s)=0 .
+  V_-(s)=V_+(s)=0 .
 \end{equation}
 
-\textbf{Paso 3: corriente por $Z_1$.}
-\begin{equation}\label{eq:gen-I1}
-  I_1(s)=\frac{\Vin(s)-V_-(s)}{Z_1(s)}=\frac{\Vin(s)}{Z_1(s)} .
+\textbf{2. Ohm en $Z_1$ y Kirchhoff en el nudo inversor} ($I_-=0$, R1):
+\begin{equation}\label{eq:gen-I}
+  I_2(s)=I_1(s)=\frac{\Vin(s)}{Z_1(s)} .
 \end{equation}
 
-\textbf{Paso 4: Kirchhoff en el nudo inversor}, con $I_-=0$ (R1):
-\begin{equation}\label{eq:gen-kcl}
-  I_2(s)=I_1(s) .
-\end{equation}
-
-\textbf{Paso 5: tensión de salida.} $V_-(s)-\Vout(s)=Z_2(s)\,I_2(s)$, luego
+\textbf{3. Ohm en $Z_2$:}
 \begin{equation}\label{eq:gen-vout}
-  \Vout(s)=-Z_2(s)\,I_2(s)=-\frac{Z_2(s)}{Z_1(s)}\,\Vin(s) .
+  \Vout(s)=V_-(s)-Z_2(s)\,I_2(s)=-\frac{Z_2(s)}{Z_1(s)}\,\Vin(s) .
 \end{equation}
 
-\textbf{Resultado.} La función de transferencia y, con $s=\jj\omega$, la ganancia en régimen sinusoidal son
+\textbf{Resultado.} Con $s=\jj\omega$ se obtiene la ganancia en régimen sinusoidal (\cref{prop:sinusoide}):
 \begin{equation}\label{eq:gen-H}
   \resultado{H(s)=\frac{\Vout(s)}{\Vin(s)}=-\frac{Z_2(s)}{Z_1(s)}},\qquad
-  A_V(\jj\omega)=H(\jj\omega)=-\frac{Z_2(\jj\omega)}{Z_1(\jj\omega)} .
+  A_V(\jj\omega)=-\frac{Z_2(\jj\omega)}{Z_1(\jj\omega)} .
 \end{equation}
-Si $Z_1=R_1$ y $Z_2=R_2$, \cref{eq:gen-H} se reduce a \cref{eq:inv-Av} y no depende de $\omega$. En cuanto
-alguna impedancia contiene un condensador (o una bobina), $Z_k$ depende de $\omega$ por
-\cref{eq:impedancias}, y con ella la ganancia: el circuito es un filtro.
+Si $Z_1=R_1$ y $Z_2=R_2$ se recupera \cref{eq:inv-Av}, independiente de $\omega$; si alguna impedancia
+contiene un condensador, $Z_C=1/(\jj\omega C)$ introduce la dependencia en frecuencia.
 \end{resolucion}
 
 % -------------------------------------------------------------------------
 \subsection{Caso $Z_1=R$, $Z_2=R_F\parallel C$: filtro paso bajo}\label{sec:pl-pasobajo}
 % -------------------------------------------------------------------------
 \begin{resolucion}
-\textbf{Paso 1: impedancias.} $Z_1$ es la resistencia; $Z_2$, el paralelo de $R_F$ y $Z_C=1/(sC)$,
-como en \cref{eq:RC-paralelo}:
+\textbf{1. Impedancias} (paralelo, \cref{eq:RC-paralelo}):
 \begin{equation}\label{eq:pb-Z}
-  Z_1(s)=R,\qquad
+  Z_1=R,\qquad
   Z_2(s)=\frac{R_F\cdot\frac{1}{sC}}{R_F+\frac{1}{sC}}=\frac{R_F}{1+sR_FC} .
 \end{equation}
 
-\textbf{Paso 2: función de transferencia.} Sustituyendo \cref{eq:pb-Z} en \cref{eq:gen-H},
+\textbf{2. Función de transferencia}, sustituyendo \cref{eq:pb-Z} en \cref{eq:gen-H}:
 \begin{equation}\label{eq:pb-H}
   \resultado{H(s)=-\frac{R_F}{R}\,\frac{1}{1+sR_FC}}
 \end{equation}
-
-\textbf{Paso 3: identificación.} \Cref{eq:pb-H} es una red de constante temporal única paso bajo,
-\cref{eq:STC}, con
+Es una red de constante temporal única paso bajo, \cref{eq:STC}, con
 \begin{equation}\label{eq:pb-K}
-  K=-\frac{R_F}{R},\qquad \tau=R_FC,\qquad \omega_c=\frac{1}{R_FC},\qquad f_c=\frac{1}{2\pi R_FC} .
+  K=-\frac{R_F}{R},\qquad \tau=R_FC,\qquad f_c=\frac{1}{2\pi R_FC} .
 \end{equation}
 
-\textbf{Paso 4: respuesta en frecuencia.} Con $s=\jj\omega=\jj2\pi f$ y \cref{eq:STC-modulo},
+\textbf{3. Respuesta en frecuencia} ($s=\jj2\pi f$, \cref{eq:STC-modulo}):
 \begin{equation}\label{eq:pb-modulo}
   \abs{A_V(f)}=\frac{R_F/R}{\sqrt{1+(f/f_c)^{2}}},\qquad
-  \arg A_V(f)=180^{\circ}-\arctg\frac{f}{f_c} ,
+  \arg A_V(f)=180^{\circ}-\arctg\frac{f}{f_c} .
 \end{equation}
-donde los $180^{\circ}$ proceden del signo menos ($\arg K=180^{\circ}$, la inversión) y el segundo término es el
-retraso que introduce el condensador.
 
-\textbf{Paso 5: límites de baja y de alta frecuencia.}
-\begin{itemize}
-  \item Si $f\ll f_c$ ($\omega R_FC\ll1$): $\abs{Z_C}=1/(\omega C)\gg R_F$, el condensador es prácticamente un
-        circuito abierto, $Z_2\simeq R_F$, y
-        \begin{equation}\label{eq:pb-baja}
-          A_V\simeq-\frac{R_F}{R}\qquad\text{(constante: inversor de ganancia $R_F/R$)}.
-        \end{equation}
-  \item Si $f\gg f_c$ ($\omega R_FC\gg1$): $\abs{Z_C}\ll R_F$, el condensador «cortocircuita» a $R_F$,
-        $Z_2\simeq1/(\jj\omega C)$, y
-        \begin{equation}\label{eq:pb-alta}
-          A_V\simeq-\frac{1}{\jj\omega RC},\qquad
-          \abs{A_V}\simeq\frac{1}{2\pi fRC}=\frac{R_F}{R}\,\frac{f_c}{f},
-        \end{equation}
-        que disminuye en un factor $10$ ($-20\dB$) por cada década de frecuencia.
-\end{itemize}
-Además, en $f=f_c$, $\abs{A_V}=(R_F/R)/\sqrt2$: la ganancia ha caído $3\dB$ respecto de la meseta.
-Esta es exactamente la dependencia de la figura~4b del guion: una meseta a baja frecuencia, un codo
-de $-3\dB$ en $f_c$ y una caída de $-20\dB$/década a alta frecuencia. Queda así demostrado que el
-circuito es un \emph{filtro paso bajo de primer orden}.
+\textbf{4. Límites.}
+\begin{align}
+  f\ll f_c:&\quad \abs{A_V}\simeq\frac{R_F}{R}
+     &&\text{($C$ abierto: constante)},\label{eq:pb-baja}\\
+  f\gg f_c:&\quad \abs{A_V}\simeq\frac{R_F}{R}\,\frac{f_c}{f}=\frac{1}{2\pi fRC}
+     &&\text{($C$ cortocircuita a $R_F$: decrece, $-20\dB$/década)},\label{eq:pb-alta}
+\end{align}
+y en $f=f_c$, $\abs{A_V}=(R_F/R)/\sqrt2$ ($-3\dB$). Es la dependencia de la figura~4b del guion
+(\cref{fig:bode-filtro}): el circuito es un \emph{filtro paso bajo de primer orden}.
 \end{resolucion}
 
-% -------------------------------------------------------------------------
-\subsection{Valores numéricos del laboratorio}\label{sec:pl-numeros}
-% -------------------------------------------------------------------------
-Con el set~1 del guion, $R=1\,\mathrm{k}\Omega$, $R_F=100\,\mathrm{k}\Omega$ y $C=1{,}59\,\mathrm{nF}$
-(elegido para que $2\pi\cdot1{,}59\simeq10$ y las frecuencias salgan redondas):
-\begin{gather}
-  \abs{A_V(0)}=\frac{R_F}{R}=100\ (40\dB),\label{eq:num-K}\\
-  f_c=\frac{1}{2\pi R_FC}=\frac{1}{2\pi\cdot10^{5}\,\Omega\cdot1{,}59\cdot10^{-9}\,\mathrm{F}}\approx1{,}00\,\mathrm{kHz},\label{eq:num-fc}\\
-  f_1=\frac{1}{2\pi RC}=\frac{R_F}{R}\,f_c\approx100\,\mathrm{kHz}\quad(\text{donde la asíntota de alta frecuencia corta }0\dB).\label{eq:num-f1}
-\end{gather}
-Evaluando \cref{eq:pb-modulo}:
-\begin{center}\small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}lccccc@{}}
-\toprule
-$f$ & $10\,\mathrm{Hz}$ & $100\,\mathrm{Hz}$ & $1\,\mathrm{kHz}$ & $10\,\mathrm{kHz}$ & $100\,\mathrm{kHz}$\\
-\midrule
-$\abs{A_V}$ & $100{,}0$ & $99{,}5$ & $70{,}7$ & $9{,}96$ & $1{,}00$\\
-$\abs{A_V}$ (dB) & $40{,}0$ & $40{,}0$ & $37{,}0$ & $20{,}0$ & $0{,}0$\\
-$\arg A_V$ & $179{,}4^{\circ}$ & $174{,}3^{\circ}$ & $135{,}0^{\circ}$ & $95{,}7^{\circ}$ & $90{,}6^{\circ}$\\
-\bottomrule
-\end{tabular}
-\end{center}
-El diagrama de Bode correspondiente es el de la \cref{fig:bode-filtro}.
-
 \input{figuras/fig_bode_filtro}
-
-\begin{observacion}[Integrador y derivador: enlace con el dominio del tiempo]\label{obs:integrador}
-Las medidas del circuito~3 se hacen en el tiempo; la transformada de Laplace las conecta con lo anterior.
-\begin{enumerate}
-  \item \emph{Integrador (set~2, $R_F\to\infty$).} \Cref{eq:pb-H} pasa a $H(s)=-1/(sRC)$ y, por
-        \cref{eq:L-derivada} (dividir por $s$ es integrar),
-        \begin{equation}\label{eq:integrador}
-          \vout(t)=-\frac{1}{RC}\int_{0}^{t}\vin(\tau)\,\dif\tau+\vout(0),\qquad
-          \abs{A_V}=\frac{f_1}{f}.
-        \end{equation}
-        Es la asíntota de alta frecuencia \cref{eq:pb-alta}: el set~1 integra para $f\gg f_c=1\,\mathrm{kHz}$.
-        Sin $R_F$ la ganancia en continua es infinita y cualquier \emph{offset} ($V_{IO}$, $I_B$) se integra hasta
-        saturar la salida; $R_F$ la limita a $R_F/R=100$.
-  \item \emph{Derivador} (figura~5b del guion: $Z_1=1/(sC)$, $Z_2=R$). Por \cref{eq:gen-H}, $H(s)=-sRC$ y
-        (multiplicar por $s$ es derivar)
-        \begin{equation}\label{eq:derivador}
-          \vout(t)=-RC\,\frac{\dif\vin}{\dif t},\qquad \abs{A_V}=\frac{f}{f_1},
-        \end{equation}
-        con pendiente $+20\dB$/década y ganancia unidad, también, en $f_1\approx100\,\mathrm{kHz}$. Por eso, en el laboratorio, la integración se reconoce con una onda cuadrada (da una triangular) y la derivación con una triangular (da una cuadrada).
-\end{enumerate}
-\end{observacion}
-

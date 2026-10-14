@@ -1,34 +1,27 @@
 % =========================================================================
 \section{Resumen de resultados del PreLab}\label{sec:resumen}
 % =========================================================================
-La \cref{tab:resumen} reúne los resultados que deben figurar, enmarcados, en el PreLab manuscrito,
-junto con las previsiones que se contrastarán en el laboratorio.
+La \cref{tab:resumen} reúne los resultados que deben figurar, enmarcados, en el PreLab manuscrito.
 
 \begin{table}[ht]
-\centering\footnotesize
-\renewcommand{\arraystretch}{1.35}\setlength{\tabcolsep}{4pt}
-\caption{Resultados del PreLab con el modelo ideal del AO ($\pm\Vcc=\pm10\,\mathrm{V}$, $\Vsat\approx9\,\mathrm{V}$);
-las ganancias son \cref{eq:inv-Av,eq:ni-Av,eq:pb-H}.}
+\centering\small
+\renewcommand{\arraystretch}{1.45}
+\caption{Resultados de los tres PreLab con el modelo ideal del AO.}
 \label{tab:resumen}
 \begin{tabular}{@{}lccc@{}}
 \toprule
- & Inversor & No inversor & Filtro paso bajo\\
+ & Inversor & No inversor & Inversor generalizado\\
 \midrule
-Ganancia & $-\dfrac{R_2}{R_1}$ & $1+\dfrac{R_2}{R_1}$
-         & $-\dfrac{R_F}{R}\,\dfrac{1}{1+sR_FC}$\\
-Diseño & $R_1=1\,\mathrm{k}\Omega$, $R_2=10\,\mathrm{k}\Omega$ & $R_1=1\,\mathrm{k}\Omega$, $R_2=10\,\mathrm{k}\Omega$
-       & $R=1\,\mathrm{k}\Omega$, $R_F=100\,\mathrm{k}\Omega$\\ & & & $C=1{,}59\,\mathrm{nF}$\\
-Ganancia numérica & $-10$ ($20\dB$, $180^{\circ}$) & $+11$ ($20{,}8\dB$, $0^{\circ}$) & $-100$ ($40\dB$) para $f\ll f_c$\\
-$\Zin$ & $R_1=1\,\mathrm{k}\Omega$ & $\to\infty$ & $R=1\,\mathrm{k}\Omega$\\
-Umbral de recorte & $V_p\approx0{,}9\,\mathrm{V}$ & $V_p\approx0{,}82\,\mathrm{V}$ & $V_p\approx90\,\mathrm{mV}$ para $f\ll f_c$\\
-Frecuencias & $f_{3\mathrm{dB}}\approx91\,\mathrm{kHz}$ (AO real) & $f_{3\mathrm{dB}}\approx91\,\mathrm{kHz}$ (AO real)
-            & $f_c\approx1\,\mathrm{kHz}$, $f_1\approx100\,\mathrm{kHz}$\\
+Ganancia & $A_V=-\dfrac{R_2}{R_1}$ \ \eqref{eq:inv-Av} & $A_V=1+\dfrac{R_2}{R_1}$ \ \eqref{eq:ni-Av}
+         & $H(s)=-\dfrac{Z_2}{Z_1}$ \ \eqref{eq:gen-H}\\
+Diseño ($R_1=1\,\mathrm{k}\Omega$) & $R_2=10\,\mathrm{k}\Omega$ \ \eqref{eq:inv-R2} & $R_2=10\,\mathrm{k}\Omega$ \ \eqref{eq:ni-R2}
+       & $Z_1=R$, $Z_2=R_F\parallel C$\\
+Resultado & $A_V=-10$ & $A_V=+11$ & $H(s)=-\dfrac{R_F}{R}\,\dfrac{1}{1+sR_FC}$ \ \eqref{eq:pb-H}\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Los tres circuitos se resuelven con las mismas dos reglas del AO ideal: corrientes de entrada nulas
-y cortocircuito virtual. La ganancia la fija la red pasiva de realimentación y no el AO, siempre que la
-salida no sature y que la frecuencia quede muy por debajo de $f_t/(1+R_2/R_1)$. Si la red contiene un condensador, la misma deducción, hecha con
-impedancias en el dominio de Laplace, da un filtro: paso bajo con ganancia $R_F/R$ por debajo de
-$f_c=1/(2\pi R_FC)$ e integrador por encima.
+y cortocircuito virtual. La ganancia la fija la red pasiva de realimentación, no el AO. Si la red
+contiene un condensador, la misma deducción, hecha con impedancias en el dominio de Laplace, da un
+filtro paso bajo: ganancia $R_F/R$ por debajo de $f_c=1/(2\pi R_FC)$ y caída de $-20\dB$/década por encima.

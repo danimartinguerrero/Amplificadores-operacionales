@@ -3,100 +3,48 @@
 % =========================================================================
 \begin{prelab}[Amplificador inversor]\label{pl:inversor}
 Usando el modelo de amplificador operacional ideal visto en teoría, encuéntrese la ganancia en
-tensión $A_V=\Vout/\Vin$ del circuito de la \cref{fig:inversor} en función de sus resistencias. Si
-imponemos $R_1=1\,\mathrm{k}\Omega$, determínese $R_2$ para conseguir $A_V=-10$ a $1\,\mathrm{kHz}$.
+tensión $A_V=\Vout/\Vin$ en función de las resistencias del circuito (\cref{fig:inversor}). Si
+imponemos $R_1=1\,\mathrm{k}\Omega$, determínese el valor de $R_2$ para conseguir $A_V=-10$ a $1\,\mathrm{kHz}$.
 \end{prelab}
 
 \input{figuras/fig_inversor}
 
 \begin{resolucion}
-Seguimos el método de la \cref{prop:metodo} sobre el esquema de la \cref{fig:inversor}, con
-los sentidos de corriente que allí se indican.
+Con los sentidos de corriente de la \cref{fig:inversor}:
 
-\textbf{Paso 1: entrada no inversora.} La entrada $+$ está unida a tierra y, por (R1), no
-circula corriente por esa conexión:
-\begin{equation}\label{eq:inv-vp}
-  \vp=0 .
-\end{equation}
-
-\textbf{Paso 2: cortocircuito virtual.} Por la regla (R2), \cref{eq:R2}, el nudo inversor está al
-mismo potencial; es una \emph{tierra virtual} (\cref{obs:tierra-virtual}):
+\textbf{1. Tierra virtual.} La entrada $+$ está a tierra; por (R2),
 \begin{equation}\label{eq:inv-vm}
   \vm=\vp=0 .
 \end{equation}
 
-\textbf{Paso 3: corriente por $R_1$.} La resistencia $R_1$ tiene en sus extremos $\vin$ y $\vm=0$;
-por la ley de Ohm,
+\textbf{2. Ley de Ohm en $R_1$.}
 \begin{equation}\label{eq:inv-i1}
   i_1=\frac{\vin-\vm}{R_1}=\frac{\vin}{R_1} .
 \end{equation}
 
-\textbf{Paso 4: Kirchhoff en el nudo inversor.} Al nudo llega $i_1$ y salen $i_2$ (por $R_2$) e
-$i_-$ (hacia el AO), que es nula por (R1):
+\textbf{3. Kirchhoff en el nudo inversor}, con $i_-=0$ por (R1):
 \begin{equation}\label{eq:inv-kcl}
-  i_1=i_2+i_-=i_2\quad\Longrightarrow\quad i_2=\frac{\vin}{R_1} .
+  i_2=i_1-i_-=\frac{\vin}{R_1} .
 \end{equation}
 
-\textbf{Paso 5: tensión de salida.} La corriente $i_2$ recorre $R_2$ desde el nudo inversor hasta la
-salida, de modo que, de nuevo por la ley de Ohm, $\vm-\vout=i_2R_2$:
+\textbf{4. Ley de Ohm en $R_2$} ($i_2$ va del nudo inversor a la salida):
 \begin{equation}\label{eq:inv-vout}
-  \vout=\vm-i_2R_2=0-\frac{\vin}{R_1}\,R_2=-\frac{R_2}{R_1}\,\vin .
+  \vout=\vm-i_2R_2=-\frac{R_2}{R_1}\,\vin .
 \end{equation}
 
-\textbf{Resultado.} La ganancia en tensión es
+\textbf{Resultado.}
 \begin{equation}\label{eq:inv-Av}
   \resultado{A_V=\frac{\vout}{\vin}=-\frac{R_2}{R_1}}
 \end{equation}
 
-\textbf{Diseño.} Imponiendo $A_V=-10$ con $R_1=1\,\mathrm{k}\Omega$ en \cref{eq:inv-Av},
+\textbf{Diseño.} Con $A_V=-10$ y $R_1=1\,\mathrm{k}\Omega$ en \cref{eq:inv-Av}:
 \begin{equation}\label{eq:inv-R2}
-  -\frac{R_2}{R_1}=-10\quad\Longrightarrow\quad
-  \resultado{R_2=10\,R_1=10\,\mathrm{k}\Omega}
+  R_2=\abs{A_V}\,R_1\quad\Longrightarrow\quad\resultado{R_2=10\,\mathrm{k}\Omega}
 \end{equation}
-que es un valor normalizado (serie E12), de modo que no hace falta combinar resistencias.
+
+\textbf{Comentario.} El signo indica contrafase ($180^{\circ}$). En el modelo ideal $A_V$ no depende de la
+frecuencia (vale igual a $1\,\mathrm{kHz}$), ni de $A$ ni de $R_L$: solo del cociente de resistencias
+(\cref{fig:inv-graficas}).
 \end{resolucion}
 
-\begin{observacion}[Lectura del resultado]\label{obs:inv-lectura}
-\Cref{eq:inv-Av} admite cuatro comentarios.
-\begin{enumerate}
-  \item \emph{Signo.} $A_V<0$: la salida está en contrafase con la entrada (desfase de $180^{\circ}$).
-  \item \emph{Frecuencia.} \Cref{eq:inv-Av} no depende de $f$: en el modelo ideal la ganancia es la misma
-        a $1\,\mathrm{kHz}$ que a cualquier otra frecuencia (con el AO real, solo hasta $f_{3\mathrm{dB}}\approx91\,\mathrm{kHz}$, \cref{eq:f3dB}).
-  \item \emph{Independencia del AO y de la carga.} $A_V$ solo depende del cociente $R_2/R_1$, y no de $A$ ni de
-        $R_L$ (por $\Rout=0$): es la consecuencia de la realimentación negativa.
-  \item \emph{Impedancia de entrada.} El generador ve $R_1$ en serie con una tierra virtual:
-        \begin{equation}\label{eq:inv-Zin}
-          \Zin=\frac{\vin}{i_1}=R_1=1\,\mathrm{k}\Omega,
-        \end{equation}
-        de modo que, por el divisor de \cref{eq:carga}, $\vin=v_g\,R_1/(R_1+R_s)\approx0{,}95\,v_g$.
-        Por eso $\vin$ debe medirse en la entrada del circuito (canal X), y no leerse en el generador.
-\end{enumerate}
-\end{observacion}
-
-\begin{observacion}[Saturación: previsiones para las medidas]\label{obs:inv-clipping}
-\Cref{eq:inv-vout} solo vale mientras $\abs{\vout}<\Vsat$ (\cref{prop:metodo}). Con $\vin=V_p\sen\omega t$, la
-salida empieza a recortarse (\emph{clipping}) cuando $\abs{A_V}V_p$ alcanza $\Vsat$:
-\begin{equation}\label{eq:inv-umbral}
-  V_{p,\mathrm{umbral}}=\frac{\Vsat}{\abs{A_V}}\approx\frac{9\,\mathrm{V}}{10}=0{,}9\,\mathrm{V}.
-\end{equation}
-La característica de transferencia $\vout(\vin)$ es, por tanto, una recta de pendiente $-10$ entre
-$\vin=\pm0{,}9\,\mathrm{V}$ y dos tramos horizontales en $\mp\Vsat$ (\figpanel{fig:inv-graficas}{b}).
-Para las amplitudes del guion se espera:
-\begin{center}\small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}lccccc@{}}
-\toprule
-Amplitud de entrada $V_p$ (V) & $0{,}1$ & $0{,}2$ & $0{,}5$ & $1{,}0$ & $1{,}5$\\
-\midrule
-$\abs{A_V}V_p$ (V), modelo lineal & $1$ & $2$ & $5$ & $10$ & $15$\\
-Amplitud de salida esperada (V) & $1$ & $2$ & $5$ & $\approx9$, recortada & $\approx9$, recortada\\
-\bottomrule
-\end{tabular}
-\end{center}
-(El guion indica $1{,}5\,\mathrm{mV}$ en la última amplitud; por la progresión de valores se ha
-supuesto $1{,}5\,\mathrm{V}$.) La corriente máxima que entrega la salida en zona lineal es
-$\Vsat/R_2+\Vsat/R_L=0{,}9+0{,}9=1{,}8\,\mathrm{mA}$, muy por debajo del límite de $25\,\mathrm{mA}$.
-\end{observacion}
-
 \input{figuras/fig_inv_graficas}
-
