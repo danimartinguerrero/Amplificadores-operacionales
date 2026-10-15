@@ -16,12 +16,28 @@ la ganancia en tensión es constante, mientras que para frecuencias suficienteme
 % -------------------------------------------------------------------------
 \subsection{Herramienta: impedancia y transformada de Laplace}
 % -------------------------------------------------------------------------
-La ley del condensador, $i=C\,\dif v/\dif t$, es diferencial. La transformada de Laplace,
-$F(s)=\int_{0}^{\infty}f(t)\,\eul^{-st}\,\dif t$, la convierte en algebraica: integrando por partes, con
-condiciones iniciales nulas,
+La ley del condensador, $i=C\,\dif v/\dif t$, es diferencial. La transformada de Laplace de una señal
+$f(t)$, definida para $t\ge0$,
+\begin{equation}\label{eq:L-def}
+  F(s)=\Lt\{f\}(s)=\int_{0}^{\infty}f(t)\,\eul^{-st}\,\dif t ,
+\end{equation}
+la convierte en algebraica. Para demostrarlo, calculamos la transformada de la derivada integrando por
+partes con $u=\eul^{-st}$ y $\dif w=\frac{\dif f}{\dif t}\,\dif t$, es decir, $\dif u=-s\,\eul^{-st}\dif t$ y $w=f(t)$:
+\begin{equation}\label{eq:L-partes}
+  \Lt\Bigl\{\frac{\dif f}{\dif t}\Bigr\}=\int_{0}^{\infty}\frac{\dif f}{\dif t}\,\eul^{-st}\,\dif t
+  =\Bigl[f(t)\,\eul^{-st}\Bigr]_{0}^{\infty}-\int_{0}^{\infty}f(t)\,\bigl(-s\,\eul^{-st}\bigr)\,\dif t .
+\end{equation}
+En el límite superior, $f(t)\,\eul^{-st}\to0$ cuando $t\to\infty$ (las señales del circuito están acotadas y
+$\Real s>0$); en el inferior, $\eul^{0}=1$. El término de contorno vale, por tanto, $0-f(0)$, y la integral
+restante es $s$ veces \eqref{eq:L-def}:
+\begin{equation}\label{eq:L-deriv0}
+  \Lt\Bigl\{\frac{\dif f}{\dif t}\Bigr\}=s\int_{0}^{\infty}f(t)\,\eul^{-st}\,\dif t-f(0)=sF(s)-f(0) .
+\end{equation}
+Con condición inicial nula, $f(0)=0$ (condensador descargado), derivar equivale a multiplicar por $s$.
+Aplicando la transformada, que es lineal, a los dos miembros de $i=C\,\dif v/\dif t$ con $f=v$:
 \begin{equation}\label{eq:L-deriv}
-  \Lt\Bigl\{\frac{\dif f}{\dif t}\Bigr\}=sF(s)
-  \quad\Longrightarrow\quad I(s)=sC\,V(s) .
+  I(s)=C\,\Lt\Bigl\{\frac{\dif v}{\dif t}\Bigr\}=C\,\bigl[sV(s)-v(0)\bigr]
+  \overset{v(0)=0}{=}sC\,V(s) .
 \end{equation}
 Cada elemento cumple así una «ley de Ohm» $V(s)=Z(s)\,I(s)$, con impedancias
 \begin{equation}\label{eq:L-Z}
