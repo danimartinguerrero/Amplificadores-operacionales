@@ -1,0 +1,112 @@
+% =========================================================================
+\section{Ejercicio 1: función de transferencia}\label{sec:transferencia}
+% =========================================================================
+\begin{prelab}[Función de transferencia]
+Obtener la función de transferencia $T(s)=\Vout/\Vin$ del circuito de la \cref{fig:filtro} y demostrar que
+adopta la forma
+\[
+  T(s)=\frac{\Vout}{\Vin}=\frac{T_0}{\omega_0^{2}+\dfrac{\omega_0\,s}{Q}+s^{2}} ,
+\]
+asumiendo que el amplificador operacional es ideal. Obtener las expresiones de $T_0$, $\omega_0$ y $Q$ en función
+de $R_1$, $C_1$, $R_2$, $C_2$, $R_A$ y $R_B$.
+\end{prelab}
+
+\input{figuras/fig_sallen_key}
+
+\begin{resolucion}
+Trabajamos en el dominio de Laplace con condiciones iniciales nulas, de modo que los condensadores tienen
+impedancias $1/(sC_1)$ y $1/(sC_2)$, y aplicamos al AO ideal las reglas (R1) y (R2); la realimentación negativa
+la proporciona la red $R_A$--$R_B$. Planteamos la ley de Kirchhoff de corrientes en los nudos $V_-$, $V_+$ y
+$V_x$, con los sentidos de la \cref{fig:filtro}.
+
+\textbf{1. Nudo inversor: divisor $R_A$--$R_B$.} Como $I_-=0$ (R1), por $R_A$ y $R_B$ circula la misma
+corriente, y forman un divisor de tensión de la salida:
+\begin{equation}\label{eq:vm}
+  V_-(s)=\frac{R_B}{R_A+R_B}\,\Vout(s) .
+\end{equation}
+Por (R2), $V_+=V_-$. Definiendo la ganancia del amplificador no inversor,
+\begin{equation}\label{eq:K}
+  K\equiv1+\frac{R_A}{R_B}=\frac{R_A+R_B}{R_B},
+\end{equation}
+la tensión en la entrada no inversora queda ligada a la salida:
+\begin{equation}\label{eq:vp}
+  V_+(s)=V_-(s)=\frac{\Vout(s)}{K} .
+\end{equation}
+
+\textbf{2. Nudo $V_+$.} Como $I_+=0$ (R1), toda la corriente que llega por $R_2$ se va por $C_2$ a tierra:
+\begin{equation}\label{eq:nudoP}
+  I_2=I_{C2}\quad\Longrightarrow\quad\frac{V_x-V_+}{R_2}=sC_2\,V_+ .
+\end{equation}
+Despejamos $V_x$ y sustituimos \eqref{eq:vp}:
+\begin{equation}\label{eq:vx}
+  V_x=(1+sR_2C_2)\,V_+=\frac{1+sR_2C_2}{K}\,\Vout .
+\end{equation}
+
+\textbf{3. Nudo $V_x$.} La corriente que entra por $R_1$ sale por $R_2$ y por $C_1$ (hacia la salida):
+\begin{equation}\label{eq:nudoX}
+  I_1=I_2+I_{C1}\quad\Longrightarrow\quad\frac{\Vin-V_x}{R_1}=\frac{V_x-V_+}{R_2}+sC_1\,(V_x-\Vout) .
+\end{equation}
+Por \eqref{eq:nudoP} y \eqref{eq:vp}, el primer sumando del segundo miembro vale $sC_2V_+=sC_2\Vout/K$.
+Multiplicando por $R_1$ y despejando $\Vin$:
+\begin{equation}\label{eq:vin1}
+  \Vin=(1+sR_1C_1)\,V_x+\frac{sR_1C_2}{K}\,\Vout-sR_1C_1\,\Vout .
+\end{equation}
+
+\textbf{4. Sustitución.} Llevamos \eqref{eq:vx} a \eqref{eq:vin1} y sacamos factor común $\Vout/K$:
+\begin{equation}\label{eq:vin2}
+  \Vin=\frac{\Vout}{K}\Bigl[(1+sR_1C_1)(1+sR_2C_2)+sR_1C_2-sK R_1C_1\Bigr] .
+\end{equation}
+Desarrollando el producto, $(1+sR_1C_1)(1+sR_2C_2)=1+s(R_1C_1+R_2C_2)+s^{2}R_1R_2C_1C_2$, y agrupando por
+potencias de $s$:
+\begin{equation}\label{eq:vin3}
+  \Vin=\frac{\Vout}{K}\Bigl[s^{2}R_1R_2C_1C_2+s\bigl(R_1C_2+R_2C_2+(1-K)R_1C_1\bigr)+1\Bigr] .
+\end{equation}
+
+\textbf{5. Función de transferencia.} Dividiendo $\Vout$ entre $\Vin$ en \eqref{eq:vin3}:
+\begin{equation}\label{eq:T1}
+  T(s)=\frac{\Vout}{\Vin}=\frac{K}{s^{2}R_1R_2C_1C_2+s\bigl(R_1C_2+R_2C_2+(1-K)R_1C_1\bigr)+1} .
+\end{equation}
+Para llevarla a la forma pedida, dividimos numerador y denominador por $R_1R_2C_1C_2$, de modo que el
+coeficiente de $s^{2}$ sea $1$:
+\begin{equation}\label{eq:T2}
+  \resultado{T(s)=\frac{\dfrac{K}{R_1R_2C_1C_2}}{s^{2}+s\Bigl(\dfrac{1}{R_1C_1}+\dfrac{1}{R_2C_1}+\dfrac{1-K}{R_2C_2}\Bigr)+\dfrac{1}{R_1R_2C_1C_2}}}
+\end{equation}
+que tiene exactamente la forma del enunciado: una constante en el numerador y un polinomio de segundo grado
+en $s$ en el denominador. Es, por tanto, un filtro paso bajo de segundo orden.
+
+\textbf{6. Identificación de los parámetros.} Comparando \eqref{eq:T2} término a término con la forma
+del enunciado, $T_0/(s^{2}+\omega_0 s/Q+\omega_0^{2})$:
+\begin{align}
+  \omega_0^{2}&=\frac{1}{R_1R_2C_1C_2}
+  &&\Longrightarrow\quad \resultado{\omega_0=\frac{1}{\sqrt{R_1R_2C_1C_2}}}\label{eq:w0}\\
+  T_0&=\frac{K}{R_1R_2C_1C_2}=K\,\omega_0^{2}
+  &&\Longrightarrow\quad \resultado{T_0=\frac{1+R_A/R_B}{R_1R_2C_1C_2}}\label{eq:T0}\\
+  \frac{\omega_0}{Q}&=\frac{1}{R_1C_1}+\frac{1}{R_2C_1}+\frac{1-K}{R_2C_2}. &&\label{eq:w0Q}
+\end{align}
+Despejando $Q$ de \eqref{eq:w0Q} con \eqref{eq:w0}, y multiplicando numerador y denominador por
+$R_1R_2C_1C_2$:
+\begin{equation}\label{eq:Q}
+  Q=\frac{\omega_0}{\dfrac{1}{R_1C_1}+\dfrac{1}{R_2C_1}+\dfrac{1-K}{R_2C_2}}
+   =\frac{\sqrt{R_1R_2C_1C_2}}{R_1C_2+R_2C_2+(1-K)\,R_1C_1} ,
+\end{equation}
+y, como $1-K=-R_A/R_B$ por \eqref{eq:K},
+\begin{equation}\label{eq:Qfinal}
+  \resultado{Q=\frac{\sqrt{R_1R_2C_1C_2}}{(R_1+R_2)\,C_2-\dfrac{R_A}{R_B}\,R_1C_1}}
+\end{equation}
+
+\textbf{7. Comprobaciones y comentarios.}
+\begin{itemize}
+  \item \emph{Límites físicos.} Para $s\to0$ los condensadores son circuitos abiertos: no circula corriente por
+        $R_1$ ni $R_2$, $V_+=\Vin$ y el circuito es un no inversor, $\Vout=K\Vin$. En efecto, \eqref{eq:T1} da
+        $T(0)=K$. Para $s\to\infty$, $C_2$ cortocircuita $V_+$ a tierra y $\Vout\to0$; en efecto,
+        $T(s)\simeq T_0/s^{2}\to0$.
+  \item \emph{Papel de cada componente.} $\omega_0$ \eqref{eq:w0} solo depende de las resistencias y
+        condensadores de la red RC; la ganancia $K$ solo entra en $T_0$ \eqref{eq:T0} y en $Q$ \eqref{eq:Qfinal}.
+        Aumentar $R_A/R_B$ reduce el denominador de \eqref{eq:Qfinal} y, por tanto, \emph{aumenta} $Q$: $C_1$
+        devuelve parte de la salida al nudo $V_x$ (realimentación positiva), que realza la respuesta cerca de
+        $\omega_0$.
+  \item \emph{Estabilidad.} Los polos tienen parte real negativa si $Q>0$, es decir, si el denominador de
+        \eqref{eq:Qfinal} es positivo: $R_A/R_B<(R_1+R_2)C_2/(R_1C_1)$. Si se supera ese valor, el circuito
+        deja de ser un filtro y oscila.
+\end{itemize}
+\end{resolucion}

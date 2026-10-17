@@ -1,0 +1,86 @@
+% =========================================================================
+\section{Ejercicio 2: respuesta en frecuencia}\label{sec:respuesta}
+% =========================================================================
+\begin{prelab}[Respuesta en frecuencia]
+Obténgase: (a) el valor de la función de transferencia para $\omega=0$; (b) la expresión del módulo de
+$T(s)$; (c) la frecuencia $\omega_{-3\mathrm{dB}}$. ¿Cuántos máximos tiene la función $\abs{T(s)}$? ¿A qué
+frecuencia(s) está(n) localizado(s) y qué valor(es) adopta $\abs{T(s)}$ a esas frecuencias?
+\end{prelab}
+
+\begin{resolucion}
+Partimos de la forma canónica obtenida en el ejercicio 1, \eqref{eq:T2}, con los parámetros \eqref{eq:w0},
+\eqref{eq:T0} y \eqref{eq:Qfinal}. En régimen sinusoidal tomamos $s=\jj\omega$; como $s^{2}=-\omega^{2}$,
+\begin{equation}\label{eq:Tjw}
+  T(\jj\omega)=\frac{T_0}{(\omega_0^{2}-\omega^{2})+\jj\,\dfrac{\omega_0\,\omega}{Q}} .
+\end{equation}
+
+\textbf{(a) Ganancia en continua.} Con $\omega=0$ en \eqref{eq:Tjw} y $T_0=K\omega_0^{2}$ \eqref{eq:T0}:
+\begin{equation}\label{eq:T0dc}
+  T(0)=\frac{T_0}{\omega_0^{2}}\quad\Longrightarrow\quad\resultado{T(0)=K=1+\frac{R_A}{R_B}}
+\end{equation}
+Es real y positiva: en continua los condensadores son circuitos abiertos y el circuito se reduce a un
+amplificador no inversor, sin desfase.
+
+\textbf{(b) Módulo.} El módulo de un cociente es el cociente de los módulos, y $\abs{a+\jj b}=\sqrt{a^{2}+b^{2}}$:
+\begin{equation}\label{eq:mod}
+  \resultado{\abs{T(\jj\omega)}=\frac{T_0}{\sqrt{(\omega_0^{2}-\omega^{2})^{2}+\Bigl(\dfrac{\omega_0\,\omega}{Q}\Bigr)^{2}}}}
+\end{equation}
+Conviene normalizarlo. Dividiendo numerador y denominador por $\omega_0^{2}$, con $T_0/\omega_0^{2}=K$ y la
+pulsación reducida $u=\omega/\omega_0$:
+\begin{equation}\label{eq:modn}
+  \abs{T(\jj\omega)}=\frac{K}{\sqrt{(1-u^{2})^{2}+u^{2}/Q^{2}}},\qquad u=\frac{\omega}{\omega_0} .
+\end{equation}
+Para $u\ll1$, $\abs{T}\to K$; para $u\gg1$, $\abs{T}\simeq K/u^{2}$, que cae $40\dB$ por década: es un paso bajo de
+segundo orden. En $u=1$, $\abs{T(\jj\omega_0)}=KQ$.
+
+\textbf{(c) Frecuencia de corte.} La definimos como la pulsación a la que el módulo cae a $1/\sqrt2$ de su
+valor en continua \eqref{eq:T0dc}. Igualando \eqref{eq:modn} a $K/\sqrt2$ y elevando al cuadrado:
+\begin{equation}\label{eq:c1}
+  (1-u^{2})^{2}+\frac{u^{2}}{Q^{2}}=2 .
+\end{equation}
+Con $x=u^{2}\ge0$, \eqref{eq:c1} es una ecuación de segundo grado:
+\begin{equation}\label{eq:c2}
+  x^{2}-\Bigl(2-\frac{1}{Q^{2}}\Bigr)x-1=0 .
+\end{equation}
+El producto de sus raíces es $-1$, de modo que tiene una raíz positiva y otra negativa; solo la positiva es
+físicamente válida:
+\begin{equation}\label{eq:c3}
+  x_{-3\mathrm{dB}}=1-\frac{1}{2Q^{2}}+\sqrt{\Bigl(1-\frac{1}{2Q^{2}}\Bigr)^{2}+1} .
+\end{equation}
+Deshaciendo el cambio, $\omega=\omega_0\sqrt{x}$:
+\begin{equation}\label{eq:w3dB}
+  \resultado{\omega_{-3\mathrm{dB}}=\omega_0\,\sqrt{1-\frac{1}{2Q^{2}}+\sqrt{\Bigl(1-\frac{1}{2Q^{2}}\Bigr)^{2}+1}}}
+\end{equation}
+En el caso $Q=1/\sqrt2$, $1-1/(2Q^{2})=0$ y \eqref{eq:w3dB} da $\omega_{-3\mathrm{dB}}=\omega_0$: la frecuencia
+natural coincide con la de corte.
+
+\textbf{Máximos de $\abs{T}$.} Por \eqref{eq:modn}, $\abs{T}$ es máximo donde es mínima la función
+\begin{equation}\label{eq:D}
+  D(x)=(1-x)^{2}+\frac{x}{Q^{2}},\qquad x=u^{2}\ge0 .
+\end{equation}
+Derivando e igualando a cero:
+\begin{equation}\label{eq:dD}
+  \frac{\dif D}{\dif x}=-2(1-x)+\frac{1}{Q^{2}}=0\quad\Longrightarrow\quad x_p=1-\frac{1}{2Q^{2}},
+\end{equation}
+y, como $\dif^{2}D/\dif x^{2}=2>0$, $D$ es una parábola con un único mínimo en $x_p$. Hay dos casos:
+\begin{itemize}
+  \item \emph{$Q>1/\sqrt2$}: $x_p>0$, y $\abs{T}$ crece desde $K$ hasta un único máximo (pico de resonancia) en
+        \begin{equation}\label{eq:wp}
+          \resultado{\omega_p=\omega_0\sqrt{1-\frac{1}{2Q^{2}}}}
+        \end{equation}
+        Sustituyendo $x_p$ en \eqref{eq:D}, $D(x_p)=\dfrac{1}{4Q^{4}}+\dfrac{1}{Q^{2}}-\dfrac{1}{2Q^{4}}=\dfrac{4Q^{2}-1}{4Q^{4}}$,
+        y por \eqref{eq:modn}:
+        \begin{equation}\label{eq:Tmax}
+          \resultado{\abs{T}_{\max}=\frac{K}{\sqrt{D(x_p)}}=\frac{2KQ^{2}}{\sqrt{4Q^{2}-1}}=\frac{KQ}{\sqrt{1-\dfrac{1}{4Q^{2}}}}}
+        \end{equation}
+        que es mayor que $K$. En $\omega=0$ no hay máximo, porque $D$ todavía decrece ($\dif D/\dif x=-2+1/Q^{2}<0$).
+  \item \emph{$Q\le1/\sqrt2$}: $x_p\le0$, de modo que $D$ es creciente para todo $x\ge0$ y $\abs{T}$ decrece
+        monótonamente. El único máximo está en $\omega=0$, con valor $\abs{T}_{\max}=T(0)=K$ \eqref{eq:T0dc}.
+\end{itemize}
+
+\textbf{Conclusión.} $\abs{T(\jj\omega)}$ tiene \emph{un único máximo}: en $\omega=0$, con valor $K=1+R_A/R_B$, si
+$Q\le1/\sqrt2$; o en $\omega_p$ \eqref{eq:wp}, con valor \eqref{eq:Tmax}, si $Q>1/\sqrt2$. El valor
+$Q=1/\sqrt2$ es la frontera: la respuesta más plana posible sin pico (\cref{fig:modulo}).
+\end{resolucion}
+
+\input{figuras/fig_modulo}

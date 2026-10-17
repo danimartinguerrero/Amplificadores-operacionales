@@ -1,0 +1,60 @@
+% =========================================================================
+\section{Introducción}\label{sec:introduccion}
+% =========================================================================
+En la sesión anterior vimos que un condensador en la realimentación convierte un amplificador en un
+filtro de primer orden, cuya ganancia cae a $-20\dB$/década. En este PreLab damos un paso más:
+analizamos un filtro activo paso bajo de \emph{segundo orden}, con dos condensadores y un único
+amplificador operacional, cuya caída es el doble de abrupta. Obtendremos su función de transferencia
+$T(s)$, la escribiremos en forma canónica para leer sus parámetros $T_0$, $\omega_0$ y $Q$, y estudiaremos
+su respuesta en frecuencia: ganancia en continua, módulo, frecuencia de corte y posibles máximos.
+Antes, reunimos brevemente las herramientas que vamos a utilizar.
+
+% -------------------------------------------------------------------------
+\subsection{Amplificador operacional ideal}
+% -------------------------------------------------------------------------
+Tratamos el AO como ideal: resistencia de entrada infinita, resistencia de salida nula y ganancia en lazo
+abierto $A$ infinita. Si una red lleva parte de la salida a la entrada inversora (realimentación negativa),
+la salida permanece finita y de $\vout=A(\vp-\vm)$ se siguen dos reglas:
+\begin{itemize}[leftmargin=3em]
+  \item[(R1)] no entra corriente por las entradas, $i_+=i_-=0$;
+  \item[(R2)] ambas entradas están al mismo potencial, $\vp=\vm$ (cortocircuito virtual).
+\end{itemize}
+
+% -------------------------------------------------------------------------
+\subsection{Impedancias y función de transferencia}
+% -------------------------------------------------------------------------
+Con la transformada de Laplace, $F(s)=\int_0^\infty f(t)\,\eul^{-st}\,\dif t$, y condiciones iniciales nulas,
+derivar en el tiempo equivale a multiplicar por $s$: $\Lt\{\dif f/\dif t\}=sF(s)$. Así, cada elemento cumple una
+«ley de Ohm» $V(s)=Z(s)\,I(s)$, con
+\[
+  Z_R=R,\qquad Z_C(s)=\frac{1}{sC},
+\]
+y las leyes de Kirchhoff, (R1) y (R2), por linealidad, valen para las transformadas: el circuito se resuelve
+con álgebra. La \emph{función de transferencia} es el cociente $T(s)=\Vout(s)/\Vin(s)$; en régimen sinusoidal de
+pulsación $\omega=2\pi f$ basta tomar $s=\jj\omega$, y entonces $\abs{T(\jj\omega)}$ es el cociente de amplitudes de
+salida y entrada y $\arg T(\jj\omega)$, su desfase.
+
+% -------------------------------------------------------------------------
+\subsection{Filtro paso bajo de segundo orden}
+% -------------------------------------------------------------------------
+\begin{definicion}[Forma canónica]
+Un filtro paso bajo de segundo orden tiene una función de transferencia de la forma
+\[
+  T(s)=\frac{T_0}{s^{2}+\dfrac{\omega_0}{Q}\,s+\omega_0^{2}},
+\]
+donde $\omega_0>0$ es la \emph{frecuencia natural} (o característica), $Q>0$ el \emph{factor de calidad} y $T_0$
+una constante que fija la ganancia: en continua, $T(0)=T_0/\omega_0^{2}$.
+\end{definicion}
+
+Los tres parámetros tienen un significado claro. A baja frecuencia ($\omega\ll\omega_0$) domina $\omega_0^{2}$ en el
+denominador y la ganancia es constante, $T_0/\omega_0^{2}$; a alta frecuencia ($\omega\gg\omega_0$) domina $s^{2}$ y
+$\abs{T}\simeq T_0/\omega^{2}$, que cae $40\dB$ por década, el doble que un filtro de primer orden. Entre ambos
+regímenes, $Q$ controla la forma del codo: los polos,
+\[
+  s_{\pm}=-\frac{\omega_0}{2Q}\pm\omega_0\sqrt{\frac{1}{4Q^{2}}-1},
+\]
+tienen parte real negativa (filtro estable) si $Q>0$, y son complejos conjugados si $Q>1/2$. Cuanto mayor es
+$Q$, más se acercan al eje imaginario y más pronunciado es el pico de $\abs{T}$ cerca de $\omega_0$; el caso
+$Q=1/\sqrt2$ separa las respuestas con pico de las que no lo tienen (filtro de Butterworth, máximamente
+plano). Por último, la \emph{frecuencia de corte} $\omega_{-3\mathrm{dB}}$ es aquella en la que $\abs{T}$ cae a
+$1/\sqrt2$ de su valor en continua, es decir, $3\dB$ por debajo.

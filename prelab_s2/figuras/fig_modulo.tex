@@ -1,0 +1,28 @@
+% Figura: módulo normalizado |T|/K frente a omega/omega_0 para varios Q.
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \begin{semilogxaxis}[tema, width=0.8\textwidth, height=6.2cm,
+      xmin=0.1, xmax=10, ymin=-40, ymax=10, ytick={-40,-30,-20,-10,-3,0,6},
+      xtick={0.1,1,10}, xticklabels={$0{,}1$,$1$,$10$},
+      xlabel={$\omega/\omega_0$}, ylabel={$\abs{T}/K$ (dB)}, log basis x=10,
+      legend pos=south west]
+    \addplot[noche, line width=1.1pt, domain=0.1:10, samples=250] {-10*log10((1-x^2)^2+x^2/4)};
+    \addlegendentry{{$Q=2$}}
+    \addplot[indigo, line width=1.1pt, domain=0.1:10, samples=250] {-10*log10((1-x^2)^2+x^2)};
+    \addlegendentry{{$Q=1$}}
+    \addplot[acento, line width=1.1pt, domain=0.1:10, samples=250] {-10*log10((1-x^2)^2+2*x^2)};
+    \addlegendentry{{$Q=1/\sqrt2$}}
+    \addplot[lila, line width=1.1pt, domain=0.1:10, samples=250] {-10*log10((1-x^2)^2+4*x^2)};
+    \addlegendentry{{$Q=1/2$}}
+    \addplot[asintota, domain=0.1:10, samples=2] {-3};
+    \addplot[only marks, mark=*, mark size=1.6pt, noche] coordinates {(0.9354,6.30)};
+    \addplot[only marks, mark=*, mark size=1.6pt, indigo] coordinates {(0.7071,1.25)};
+    \node[font=\scriptsize, anchor=south west, text=grispizarra, rotate=-38] at (axis cs:2.2,-14) {$-40\dB$/década};
+  \end{semilogxaxis}
+\end{tikzpicture}
+\caption{Módulo normalizado $\abs{T}/K$, según \eqref{eq:modn}, para varios valores de $Q$. Para $Q>1/\sqrt2$ aparece
+un máximo en $\omega_p<\omega_0$ \eqref{eq:wp}, de altura \eqref{eq:Tmax} (puntos); para $Q\le1/\sqrt2$ el máximo
+está en $\omega=0$. Con $Q=1/\sqrt2$ la curva corta la recta de $-3\dB$ justo en $\omega=\omega_0$.}
+\label{fig:modulo}
+\end{figure}
