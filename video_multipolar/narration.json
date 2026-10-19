@@ -1,0 +1,57 @@
+{
+  "S01_Intro": {
+    "a": "Imagina una nube de carga eléctrica: una distribución cualquiera, con una densidad que cambia de un punto a otro. Queremos saber cuánto vale el potencial en un punto P del espacio.",
+    "b": "La receta la conocemos: dividimos la nube en trocitos de carga, cada uno contribuye como una carga puntual, y sumamos todas las contribuciones. Es decir, integramos.",
+    "c": "Pero esta integral es engañosa. Para cada punto P distinto hay que rehacerla entera, y salvo en casos muy simétricos, no tiene una solución cerrada.",
+    "d": "Sin embargo, la intuición nos dice algo: si nos alejamos lo suficiente, los detalles de la nube dejan de importar. Desde muy lejos, toda ella parece una simple carga puntual.",
+    "e": "La pregunta es qué hay entre esos dos extremos. ¿Podemos describir la distribución con unos pocos números, calculados una sola vez, que basten para conocer el potencial lejos, con la precisión que queramos? La respuesta es que sí. Y se llama desarrollo multipolar."
+  },
+  "S02_Geometria": {
+    "a": "Empecemos por la geometría. Ponemos el origen dentro de la distribución. El trocito de carga está en la posición r prima; el punto P, en la posición r; y entre los dos vectores forman un ángulo theta prima.",
+    "b": "Lo único de la integral que mezcla ambos puntos es la distancia R entre ellos. Por el teorema del coseno, R al cuadrado es r al cuadrado, más r prima al cuadrado, menos dos r, r prima, coseno de theta prima.",
+    "c": "Sacamos factor común r, y aparece una cantidad clave: el cociente t, igual a r prima entre r. Lejos de la distribución, t es pequeño. Y cuando algo es pequeño, lo natural es desarrollar en serie de potencias."
+  },
+  "S03_Legendre": {
+    "a": "Esta función, uno entre la raíz de uno menos dos x t más t cuadrado, tiene nombre propio: es la función generatriz de los polinomios de Legendre. Si la desarrollamos en potencias de t, el coeficiente de cada potencia es un polinomio en x.",
+    "b": "P cero es uno. P uno es x. P dos es tres x cuadrado menos uno, entre dos. Y así sucesivamente. Curiosamente, Legendre los introdujo estudiando la atracción gravitatoria de cuerpos extensos, que es, matemáticamente, nuestro mismo problema.",
+    "c": "Fíjate en una propiedad importante: en el intervalo entre menos uno y uno, ningún polinomio de Legendre supera la unidad en valor absoluto.",
+    "d": "Con ellos, uno entre R queda escrito como una suma: r prima elevado a ele, entre r elevado a ele más uno, por el polinomio de Legendre de orden ele, evaluado en el coseno de theta prima.",
+    "e": "Veamos cómo converge. Fijamos r prima igual a un tercio de r, y representamos uno entre R en función del ángulo. El primer término es una constante. Añadimos el segundo. El tercero. El cuarto. Con solo cuatro términos, la aproximación ya es prácticamente indistinguible de la curva exacta: cada término nuevo es unas tres veces más pequeño que el anterior."
+  },
+  "S04_Desarrollo": {
+    "a": "Ahora basta sustituir este desarrollo dentro de la integral del potencial. Como la serie converge uniformemente, podemos intercambiar la suma y la integral, y el factor uno entre r elevado a ele más uno, que no depende del punto fuente, sale fuera.",
+    "b": "El resultado es el desarrollo multipolar del potencial. Y fíjate: no es una aproximación. Es una reescritura exacta, válida fuera de la esfera que contiene a la carga. La aproximación consiste en truncarla.",
+    "c": "Aquí está la clave: el término de orden ele decae como uno entre r elevado a ele más uno. A grandes distancias, cada término es mucho más pequeño que el anterior.",
+    "d": "Se llaman término monopolar, dipolar, cuadrupolar, octupolar... El término de orden ele corresponde a un dos elevado a ele polo. Vamos a mirarlos uno a uno, porque cada uno esconde una propiedad física de la distribución."
+  },
+  "S05_Monopolo": {
+    "a": "Para ele igual a cero, el polinomio de Legendre vale uno, y la integral es simplemente la carga total, Q. El término monopolar es el potencial de una carga puntual Q situada en el origen.",
+    "b": "Es la formalización de nuestra intuición inicial: suficientemente lejos, toda distribución con carga neta parece una carga puntual. Sus equipotenciales son esferas. Y la carga total, como es lógico, no depende del origen que elijamos."
+  },
+  "S06_Dipolo": {
+    "a": "Para ele igual a uno, aparece r prima por el coseno de theta prima. El truco para separar variables es reconocer ahí un producto escalar: el vector r prima, por el vector unitario en la dirección de P.",
+    "b": "Ese vector unitario no depende del punto fuente, así que sale de la integral. Y lo que queda dentro es un vector que solo depende de la distribución: el momento dipolar, p.",
+    "c": "Para dos cargas iguales y opuestas, más q y menos q, separadas por un vector ele, el momento dipolar es simplemente q por ele, y la carga total es cero. Así que, lejos, el término dominante es el dipolar, que decae como uno entre r cuadrado.",
+    "d": "Si p apunta según el eje z, el potencial es proporcional al coseno de theta: positivo en el hemisferio hacia el que apunta p, negativo en el opuesto, y nulo en todo el plano ecuatorial.",
+    "e": "Las equipotenciales son las curvas r cuadrado proporcional a coseno de theta. Y las líneas de campo, las curvas r proporcional a seno cuadrado de theta. Las dos familias se cortan en ángulo recto en cada punto.",
+    "f": "Un detalle sutil: el momento dipolar depende del origen. Si lo desplazamos, p cambia en menos Q por el desplazamiento. Por eso, si la carga neta es cero, p es una propiedad intrínseca de la distribución. Y si no lo es, siempre podemos colocar el origen en el centro de carga, y el término dipolar desaparece."
+  },
+  "S07_Cuadrupolo": {
+    "a": "Para ele igual a dos, el polinomio es tres coseno cuadrado menos uno, entre dos. Ahora el coseno aparece al cuadrado, así que al separar variables ya no obtenemos un vector, sino una matriz: el tensor momento cuadrupolar.",
+    "b": "Sus componentes son la integral de la densidad por tres x j prima, x k prima, menos delta j k por r prima cuadrado. Y el término cuadrupolar es una forma cuadrática en los cosenos directores del punto campo, que decae como uno entre r al cubo.",
+    "c": "En principio son nueve números. Pero el tensor es simétrico, lo que deja seis. Y además su traza es nula, lo que deja cinco. En general, el término de orden ele tiene dos ele más uno componentes independientes: una para la carga, tres para el dipolo, cinco para el cuadrupolo.",
+    "d": "Un ejemplo: dos dipolos opuestos, pegados. Más q arriba y abajo, y menos dos q en el centro. La carga total es cero, el momento dipolar también, y el primer término que sobrevive es el cuadrupolar, con Q z z igual a cuatro q d cuadrado.",
+    "e": "Su potencial tiene cuatro lóbulos, separados por un cono nodal en el que tres coseno cuadrado de theta vale uno: a unos cincuenta y cinco grados del eje.",
+    "f": "Y el signo de Q z z tiene una lectura geométrica preciosa. Si es positivo, la carga está alargada a lo largo del eje, como un cigarro. Si es negativo, está achatada, como un disco. Y si es cero, no hay deformación cuadrupolar, como en una esfera."
+  },
+  "S08_Resumen": {
+    "a": "Juntándolo todo, a grandes distancias el potencial de cualquier distribución se escribe así: la carga entre r, más p escalar u r entre r cuadrado, más la forma cuadrática del tensor cuadrupolar entre dos r al cubo, y así sucesivamente.",
+    "b": "Una integral distinta para cada punto del espacio se ha convertido en unos pocos momentos, calculados una sola vez. Esferas, dos lóbulos, cuatro lóbulos: cada capa, más débil y más rica en estructura que la anterior."
+  },
+  "S09_Error": {
+    "a": "Queda una pregunta práctica: ¿cuántos términos hay que tomar? Si toda la carga tiene el mismo signo y cabe en una esfera de radio a, existe una cota muy sencilla.",
+    "b": "Como los polinomios de Legendre nunca superan la unidad, y r prima nunca supera a, el término n-ésimo es, como mucho, a entre r elevado a n, veces el término monopolar.",
+    "c": "Por ejemplo: si estamos a diez veces el tamaño de la distribución y queremos un error menor que el uno por ciento, basta con que a entre r elevado a n sea menor que una centésima. Es decir, n igual a dos: monopolo, dipolo y cuadrupolo.",
+    "d": "Y esa es la idea del desarrollo multipolar: lejos de una distribución de carga, toda su complejidad se ordena en capas, cada una más débil que la anterior, y cada una descrita por unos pocos números con significado físico propio."
+  }
+}
