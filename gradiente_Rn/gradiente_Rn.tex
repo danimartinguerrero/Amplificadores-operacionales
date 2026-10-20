@@ -22,8 +22,6 @@
 
 \newtcolorbox{hilo}{colback=gray!7,colframe=gray!30,boxrule=0.5pt,arc=1pt,
   left=8pt,right=8pt,top=5pt,bottom=5pt,fontupper=\small}
-\newtcolorbox{resultado}{colback=RoyalBlue!4,colframe=RoyalBlue!45,boxrule=0.5pt,
-  arc=2pt,left=6pt,right=6pt,top=2pt,bottom=2pt}
 
 % --- Notación ---------------------------------------------------------------
 \newcommand{\vc}[1]{\vec{#1}}
@@ -68,12 +66,9 @@ El vector relativo, su módulo y su versor son
   \uR=\frac{\vc{R}}{R}\quad\bigl(\vc{R}=R\,\uR\bigr). \label{eq:Rmod}
 \end{align}
 Queremos demostrar que, para cualquier $n$ real y $R\neq0$,
-\begin{resultado}
-\vspace{-8pt}
 \begin{equation}\label{eq:objetivo}
   \nab(R^{n})=-\nab'(R^{n})=n\,R^{n-1}\,\uR=n\,R^{n-2}\,\vc{R}.
 \end{equation}
-\end{resultado}
 
 % ===========================================================================
 \section{Las piezas}
@@ -178,13 +173,10 @@ perpendicular a las superficies de nivel, así que \emph{tiene} que ser radial,
 $\propto\uR$; y su módulo es la derivada en la dirección radial,
 $\mathrm d(R^{n})/\mathrm dR=nR^{n-1}$. La cuenta en cartesianas solo confirma
 esto componente a componente:
-\begin{resultado}
-\vspace{-8pt}
 \begin{equation}\label{eq:general}
   \nab f(R)=f'(R)\,\uR,\qquad \nab' f(R)=-f'(R)\,\uR
   \qquad\text{para cualquier } f \text{ derivable}.
 \end{equation}
-\end{resultado}
 La demostración de arriba es exactamente esta con $f(R)=R^{n}$: el único
 ingrediente fue $\partial R/\partial x=R_x/R$, que no depende de $f$.
 
@@ -195,14 +187,11 @@ Un dieléctrico polarizado ocupa una región $V'$ limitada por la superficie
 cerrada $S'=\partial V'$, de normal exterior $\hat n$. Su estado se describe con
 la \emph{polarización} $\vc{P}(\vc{r}\,')$: el momento dipolar por unidad de
 volumen. Queremos ver por qué su potencial es el de unas cargas
-\begin{resultado}
-\vspace{-8pt}
 \begin{equation}\label{eq:rhoP-sigmaP}
   \phi(\vc{r})=\frac{1}{4\pi\varepsilon_0}\int_{V'}\frac{\rho_P}{R}\,\mathrm dV'
   +\frac{1}{4\pi\varepsilon_0}\oint_{S'}\frac{\sigma_P}{R}\,\mathrm dS',
   \qquad \rho_P=-\nab'\cdot\vc{P},\quad \sigma_P=\vc{P}\cdot\hat n .
 \end{equation}
-\end{resultado}
 
 \subsection{Paso 1: del dipolo a $\nab'(1/R)$}
 Un dipolo $\vc{p}$ en $\vc{r}\,'$ crea en $\vc{r}$ el potencial
