@@ -35,7 +35,8 @@
 \newcommand{\uR}{\hat u_R}
 
 \title{\vspace{-1.5cm}\textbf{Gradiente de $R^{n}$}\\[4pt]
-  \large\normalfont Regla de la cadena, el factor $nR^{n-2}$ y por qué $\nab=-\nab'$}
+  \large\normalfont Regla de la cadena, por qué $\nab=-\nab'$ y su uso en las
+  cargas de polarización}
 \author{}
 \date{\vspace{-0.8cm}\small Apuntes del 20 de octubre de 2026}
 
@@ -49,7 +50,10 @@ $R$, y $R$ depende de ellas solo a través de las \emph{diferencias}
 $x-x'$, $y-y'$, $z-z'$. De lo primero sale (i) que el gradiente es radial y se
 calcula con la regla de la cadena; de lo segundo, (ii) que derivar respecto
 del punto fuente solo cambia el signo. El caso $n=-1$ es el paso del potencial
-de Coulomb $1/R$ a su campo $\vc{R}/R^{3}$.
+de Coulomb $1/R$ a su campo $\vc{R}/R^{3}$; su versión con $\nab'$,
+$\nab'(1/R)=\uR/R^{2}$, es la llave que convierte el potencial de un material
+polarizado en el de unas cargas $\rho_P$ y $\sigma_P$
+(sección~\ref{sec:polarizacion}).
 \end{hilo}
 
 % ===========================================================================
@@ -183,5 +187,128 @@ esto componente a componente:
 \end{resultado}
 La demostración de arriba es exactamente esta con $f(R)=R^{n}$: el único
 ingrediente fue $\partial R/\partial x=R_x/R$, que no depende de $f$.
+
+% ===========================================================================
+\section{Aplicación: cargas de polarización}\label{sec:polarizacion}
+% ===========================================================================
+Un dieléctrico polarizado ocupa una región $V'$ limitada por la superficie
+cerrada $S'=\partial V'$, de normal exterior $\hat n$. Su estado se describe con
+la \emph{polarización} $\vc{P}(\vc{r}\,')$: el momento dipolar por unidad de
+volumen. Queremos ver por qué su potencial es el de unas cargas
+\begin{resultado}
+\vspace{-8pt}
+\begin{equation}\label{eq:rhoP-sigmaP}
+  \phi(\vc{r})=\frac{1}{4\pi\varepsilon_0}\int_{V'}\frac{\rho_P}{R}\,\mathrm dV'
+  +\frac{1}{4\pi\varepsilon_0}\oint_{S'}\frac{\sigma_P}{R}\,\mathrm dS',
+  \qquad \rho_P=-\nab'\cdot\vc{P},\quad \sigma_P=\vc{P}\cdot\hat n .
+\end{equation}
+\end{resultado}
+
+\subsection{Paso 1: del dipolo a $\nab'(1/R)$}
+Un dipolo $\vc{p}$ en $\vc{r}\,'$ crea en $\vc{r}$ el potencial
+$\phi=\dfrac{1}{4\pi\varepsilon_0}\dfrac{\vc{p}\cdot\uR}{R^{2}}$. El trozo
+$\mathrm dV'$ del material es un dipolo $\mathrm d\vc{p}=\vc{P}\,\mathrm dV'$, y
+sumando (superposición)
+\begin{equation}\label{eq:pot-dip}
+  \phi(\vc{r})=\frac{1}{4\pi\varepsilon_0}\int_{V'}
+  \frac{\vc{P}\cdot\uR}{R^{2}}\,\mathrm dV'.
+\end{equation}
+Ahora entra \eqref{eq:objetivo}. Con $n=-1$ y en su versión con $\nab'$:
+\begin{equation}\label{eq:nabla-prima-1R}
+  \nab'\!\left(\frac1R\right)=-\nab\!\left(\frac1R\right)
+  =-\bigl(-1\bigr)R^{-2}\,\uR=+\frac{\uR}{R^{2}} .
+\end{equation}
+Por tanto el integrando es
+$\dfrac{\vc{P}\cdot\uR}{R^{2}}=\vc{P}\cdot\nab'\!\left(\dfrac1R\right)$.
+
+\textbf{Por qué $\nab'$ y no $\nab$.} Integramos en $\vc{r}\,'$, que es donde vive
+$\vc{P}$. Para mover derivadas de un factor a otro dentro de la integral (paso
+2) y luego usar Gauss (paso 3), las derivadas tienen que ser respecto de la
+\emph{variable de integración}. Con $\nab$ no se podría: $\vc{P}$ no depende
+de $\vc{r}$.
+
+\textbf{Signo.} $\uR$ apunta de la fuente al punto campo. Desplazar la
+fuente $\vc{r}\,'$ en la dirección $+\uR$ la acerca a $\vc{r}$: $R$ decrece y
+$1/R$ crece. Por eso $\nab'(1/R)$ apunta según $+\uR$, al revés que
+$\nab(1/R)$.
+
+\subsection{Paso 2: regla del producto (integración por partes en 3D)}
+Para un escalar $f$ y un vector $\vc{A}$,
+\begin{equation}\label{eq:producto}
+  \nab'\cdot(f\vc{A})=f\,\nab'\cdot\vc{A}+\vc{A}\cdot\nab' f .
+\end{equation}
+Basta mirar una componente: $\partial_{x'}(fA_x)=f\,\partial_{x'}A_x+A_x\,\partial_{x'}f$
+(regla del producto de una variable) y sumar las tres. Con $f=1/R$ y
+$\vc{A}=\vc{P}$, y despejando el término que aparece en \eqref{eq:pot-dip}:
+\begin{equation}\label{eq:despeje}
+  \frac{\vc{P}\cdot\uR}{R^{2}}=\vc{P}\cdot\nab'\!\left(\frac1R\right)
+  =-\frac{\nab'\cdot\vc{P}}{R}+\nab'\cdot\!\left(\frac{\vc{P}}{R}\right).
+\end{equation}
+La idea es la de integrar por partes: pasamos la derivada de $1/R$ a
+$\vc{P}$ a cambio de una \emph{derivada total}, que se integrará en el borde.
+Aquí se necesita que $\vc{P}$ sea de clase $C^{1}$ en $V'$.
+
+\subsection{Paso 3: teorema de la divergencia}
+Integrando \eqref{eq:despeje} en $V'$,
+\begin{equation}\label{eq:integrado}
+  \phi(\vc{r})=\frac{1}{4\pi\varepsilon_0}\left[
+  \int_{V'}\frac{-\nab'\cdot\vc{P}}{R}\,\mathrm dV'
+  +\int_{V'}\nab'\cdot\!\left(\frac{\vc{P}}{R}\right)\mathrm dV'\right].
+\end{equation}
+El teorema de la divergencia, $\int_{V'}\nab'\cdot\vc{F}\,\mathrm dV'
+=\oint_{S'}\vc{F}\cdot\hat n\,\mathrm dS'$, aplicado a $\vc{F}=\vc{P}/R$, da
+\begin{equation}\label{eq:gauss}
+  \int_{V'}\nab'\cdot\!\left(\frac{\vc{P}}{R}\right)\mathrm dV'
+  =\oint_{S'}\frac{\vc{P}\cdot\hat n}{R}\,\mathrm dS' .
+\end{equation}
+Cada término tiene ya la forma de un potencial de Coulomb,
+$\frac{1}{4\pi\varepsilon_0}\int\frac{(\text{carga})}{R}$: llamando $\rho_P$ y
+$\sigma_P$ a los numeradores se obtiene \eqref{eq:rhoP-sigmaP}.
+
+\subsection{Paso 4: el punto $R=0$ (si $\vc{r}\in V'$)}
+Si el punto campo está dentro del material, $1/R$ explota en $\vc{r}\,'=\vc{r}$
+y el teorema de la divergencia no se puede aplicar directamente. Se excluye una
+bola $B_\varepsilon$ de radio $\varepsilon$ alrededor de $\vc{r}$, se repiten los
+pasos 2--3 en $V'\setminus B_\varepsilon$ (allí todo es regular) y se hace
+$\varepsilon\to0$. Llamando $M=\max|\vc{P}|$ y $M'=\max|\nab'\cdot\vc{P}|$:
+\begin{itemize}
+  \item \textbf{Integrales de volumen.} Los integrandos son $O(1/R^{2})$ y
+        $O(1/R)$, y en esféricas $\mathrm dV'=R^{2}\,\mathrm dR\,\mathrm d\Omega$
+        anula la singularidad. Por ejemplo,
+        $\bigl|\int_{B_\varepsilon}\frac{\nab'\cdot\vc{P}}{R}\,\mathrm dV'\bigr|
+        \le M'\!\int_0^{\varepsilon}\frac{4\pi R^{2}}{R}\,\mathrm dR=2\pi M'\varepsilon^{2}\to0$.
+  \item \textbf{Superficie de la bola} (aparece como borde extra):
+        $\bigl|\oint_{\partial B_\varepsilon}\frac{\vc{P}\cdot\hat n}{R}\,\mathrm dS'\bigr|
+        \le M\,\frac{4\pi\varepsilon^{2}}{\varepsilon}=4\pi M\varepsilon\to0$.
+\end{itemize}
+Todo lo que se añade o quita al excluir la bola tiende a cero, y el
+resultado se mantiene.
+
+\subsection{Interpretación: cargas ligadas}
+\begin{itemize}
+  \item \textbf{$\sigma_P=\vc{P}\cdot\hat n$.} En el interior, la carga
+        positiva de un dipolo se compensa con la negativa del vecino. En la
+        superficie no hay vecino: «asoma» carga, positiva donde $\vc{P}$ sale
+        ($\vc{P}\cdot\hat n>0$) y negativa donde entra.
+  \item \textbf{$\rho_P=-\nab'\cdot\vc{P}$.} Si $\vc{P}$ no es uniforme, la
+        compensación interior falla: donde las flechas de $\vc{P}$ divergen
+        sale más carga positiva de la que entra y queda un defecto negativo.
+        Si $\vc{P}$ es constante, $\rho_P=0$ y solo hay carga superficial.
+  \item \textbf{Carga total nula.} Con $\mathrm d\vc{S}\,'=\hat n\,\mathrm dS'$
+        y otra vez el teorema de la divergencia,
+        \begin{equation}\label{eq:QP}
+          Q_P=-\int_{V'}\nab'\cdot\vc{P}\,\mathrm dV'
+          +\oint_{S'}\vc{P}\cdot\hat n\,\mathrm dS'
+          =-\oint_{S'}\vc{P}\cdot\mathrm d\vc{S}\,'
+          +\oint_{S'}\vc{P}\cdot\mathrm d\vc{S}\,'=0 .
+        \end{equation}
+        Es lo esperable: cada dipolo es neutro, y por tanto también cualquier
+        conjunto de ellos.
+\end{itemize}
+
+\textbf{Resumen del enlace.} La única pieza «de cálculo» que hizo falta fue
+\eqref{eq:nabla-prima-1R}, el caso $n=-1$ de \eqref{eq:objetivo} con $\nab'$.
+Gracias a ella, el integrando dipolar se escribe como un gradiente respecto
+de la fuente, y el resto es regla del producto más teorema de la divergencia.
 
 \end{document}
