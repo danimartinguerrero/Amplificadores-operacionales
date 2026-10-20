@@ -366,10 +366,10 @@ class C06_Circulacion(VClip):
         eqs = VGroup(*[Circle(r, color=C_NEG, stroke_width=1.5, stroke_opacity=0.35).move_to(c) for r in (1, 1.8, 2.8, 4)])
         self.play(FadeIn(field), FadeIn(q), Create(eqs), run_time=0.8)
         # camino cerrado
-        ts = np.linspace(0, TAU, 400)
+        ts = np.linspace(0, TAU, 400, endpoint=False)
         loop_pts = [c + np.array([0.4 + 2.6 * np.cos(t) + 0.6 * np.cos(2 * t), 0.3 + 2.2 * np.sin(t) - 0.5 * np.sin(3 * t), 0]) for t in ts]
         loop = VMobject(color=YELLOW, stroke_width=3, stroke_opacity=0.5)
-        loop.set_points_smoothly(loop_pts)
+        loop.set_points_smoothly([*loop_pts, loop_pts[0]])
         s = ValueTracker(0)
         r0 = np.linalg.norm(loop_pts[0] - c)
 

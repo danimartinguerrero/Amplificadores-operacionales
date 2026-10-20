@@ -117,12 +117,12 @@ class C08_Tangencial(VClip):
         self.play(FadeOut(VGroup(L, lt, lb)), FadeOut(cap), run_time=0.4)
         P0 = np.array([0.3, y0, 0])
         Et = 1.8
-        E2 = Arrow(P0, P0 + np.array([Et, 2.8, 0]), buff=0, color=YELLOW, stroke_width=6)
+        E2 = Arrow(P0, P0 + np.array([Et, 2.1, 0]), buff=0, color=YELLOW, stroke_width=6)
         E1 = Arrow(P0 + np.array([-Et, -1.0, 0]), P0, buff=0, color=C_NEG, stroke_width=6)
         self.play(GrowArrow(E1), run_time=0.5)
         self.play(GrowArrow(E2), run_time=0.5)
         t2 = Arrow(P0, P0 + np.array([Et, 0, 0]) + UP * 0.02, buff=0, color=C_GREEN, stroke_width=6)
-        n2 = DashedLine(P0 + np.array([Et, 0, 0]), P0 + np.array([Et, 2.8, 0]), color=YELLOW)
+        n2 = DashedLine(P0 + np.array([Et, 0, 0]), P0 + np.array([Et, 2.1, 0]), color=YELLOW)
         t1 = Arrow(P0 + np.array([-Et, -0.02, 0]), P0 + DOWN * 0.02, buff=0, color=C_GREEN, stroke_width=6)
         n1 = DashedLine(P0 + np.array([-Et, -1.0, 0]), P0 + np.array([-Et, 0, 0]), color=C_NEG)
         self.play(GrowArrow(t1), GrowArrow(t2), Create(n1), Create(n2), run_time=0.7)
@@ -133,7 +133,7 @@ class C08_Tangencial(VClip):
         self.play(FadeIn(lbls), run_time=0.5)
         cap2 = VGroup(T("el campo se «quiebra»", 30, WHITE),
                       M(r"E_t\ \text{igual},\quad E_n\ \text{salta}\ \sigma/\varepsilon_0", 40)).arrange(DOWN, buff=0.2)
-        cap2.move_to(UP * 3.1)
+        cap2.move_to(UP * 3.35)
         self.play(FadeIn(cap2), Indicate(VGroup(t1, t2), color=C_GREEN), run_time=0.8)
         self.outro(1.8)
 
@@ -338,7 +338,7 @@ class C11_Disco(VClip):
                      ).arrange(RIGHT, buff=0.6).next_to(ax, UP, buff=0.2)
         self.play(Create(pl_l), Create(pl_r), Create(disc_l), Create(disc_r), FadeIn(leg), run_time=1.4)
         jump = DoubleArrow(ax.c2p(-0.3, -1), ax.c2p(-0.3, 1), buff=0, color=WHITE, stroke_width=3, tip_length=0.18)
-        jl = M(r"\text{salto }\frac{\sigma}{\varepsilon_0}", 40).next_to(jump, LEFT, buff=0.1)
+        jl = M(r"\text{salto }\frac{\sigma}{\varepsilon_0}", 40).move_to(ax.c2p(-2.6, 0.75))
         self.play(GrowFromCenter(jump), FadeIn(jl), run_time=0.6)
         cap3 = T("la condición de contorno, en acción", 28, C_GREY).move_to(DOWN * 4.9)
         self.play(FadeIn(cap3), run_time=0.4)
