@@ -177,7 +177,7 @@ class C03_Gauss(VClip):
         S = smooth_closed(shapes[0], color=C_NEG, stroke_width=3).set_fill(C_NEG, 0.1)
 
         def hits():
-            poly = np.array([S.point_from_proportion(k / 300) for k in range(300)])
+            poly = S.get_anchors()[::2]
             g = VGroup()
             for d in dirs:
                 for t in ray_hits(c, d, poly):
@@ -201,7 +201,7 @@ class C03_Gauss(VClip):
         ext = VGroup(*[Line(c2 + 0.25 * d, c2 + 7.5 * d, color=C_GOLD, stroke_width=2) for d in dirs2])
 
         def hits2():
-            poly = np.array([S.point_from_proportion(k / 300) for k in range(300)])
+            poly = S.get_anchors()[::2]
             g = VGroup()
             for d in dirs2:
                 ts = ray_hits(c2, d, poly)
@@ -225,8 +225,9 @@ class C03_Gauss(VClip):
         box = SurroundingRectangle(law, color=YELLOW, buff=0.3, stroke_width=5, corner_radius=0.12)
         lbg = BackgroundRectangle(box, fill_color=BG, fill_opacity=1.0, buff=0.0)
         # atenúa el dibujo y pone la fórmula delante de todo
-        scene_mobs = VGroup(lines, tips, S, dots, d2, ext, q, q2)
-        self.play(FadeOut(cap), FadeOut(flux), FadeOut(fbg), scene_mobs.animate.set_opacity(0.35), run_time=0.6)
+        scene_mobs = VGroup(lines, tips, dots, d2, ext, q, q2)
+        self.play(FadeOut(cap), FadeOut(flux), FadeOut(fbg), scene_mobs.animate.set_opacity(0.35),
+                  S.animate.set_stroke(opacity=0.35).set_fill(opacity=0.05), run_time=0.6)
         self.add(lbg, law, box)
         self.remove(law, box)
         self.play(FadeIn(lbg), Write(law), run_time=1.0)
