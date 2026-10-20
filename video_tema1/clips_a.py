@@ -219,12 +219,18 @@ class C03_Gauss(VClip):
                   run_time=1.0)
         self.wait(0.4)
         dots.clear_updaters(); d2.clear_updaters()
-        law = M(r"\oint_S\vec E\cdot\mathrm d\vec S=\frac{Q_{\text{enc}}}{\varepsilon_0}", 70)
-        law.move_to(DOWN * 5.0)
-        box = SurroundingRectangle(law, color=YELLOW, buff=0.25)
-        lbg = BackgroundRectangle(box, fill_color=BG, fill_opacity=0.92, buff=0.05)
-        self.play(FadeOut(cap), FadeIn(lbg), ReplacementTransform(flux, law), run_time=0.9)
-        self.play(Create(box), run_time=0.5)
+        law = M(r"\oint_S\vec E\cdot\mathrm d\vec S=\frac{Q_{\text{enc}}}{\varepsilon_0}", 80, WHITE)
+        law[0][-6:].set_color(YELLOW)  # Q_enc / ε0
+        law.move_to(DOWN * 5.4)
+        box = SurroundingRectangle(law, color=YELLOW, buff=0.3, stroke_width=5, corner_radius=0.12)
+        lbg = BackgroundRectangle(box, fill_color=BG, fill_opacity=1.0, buff=0.0)
+        # atenúa el dibujo y pone la fórmula delante de todo
+        scene_mobs = VGroup(lines, tips, S, dots, d2, ext, q, q2)
+        self.play(FadeOut(cap), FadeOut(flux), FadeOut(fbg), scene_mobs.animate.set_opacity(0.35), run_time=0.6)
+        self.add(lbg, law, box)
+        self.remove(law, box)
+        self.play(FadeIn(lbg), Write(law), run_time=1.0)
+        self.play(Create(box), Circumscribe(law, color=YELLOW, buff=0.35), run_time=0.9)
         self.outro(2.4)
 
 
