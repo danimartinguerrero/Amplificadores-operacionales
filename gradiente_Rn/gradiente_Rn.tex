@@ -1,0 +1,187 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=RoyalBlue,citecolor=RoyalBlue]{hyperref}
+
+% --- Estilo -----------------------------------------------------------------
+\numberwithin{equation}{section}
+\setlist[itemize]{label=\scriptsize$\blacksquare$, leftmargin=1.8em, itemsep=3pt}
+\titleformat{\section}{\large\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\newtcolorbox{hilo}{colback=gray!7,colframe=gray!30,boxrule=0.5pt,arc=1pt,
+  left=8pt,right=8pt,top=5pt,bottom=5pt,fontupper=\small}
+\newtcolorbox{resultado}{colback=RoyalBlue!4,colframe=RoyalBlue!45,boxrule=0.5pt,
+  arc=2pt,left=6pt,right=6pt,top=2pt,bottom=2pt}
+
+% --- Notación ---------------------------------------------------------------
+\newcommand{\vc}[1]{\vec{#1}}
+\newcommand{\nab}{\vec{\nabla}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ux}{\hat u_x}
+\newcommand{\uy}{\hat u_y}
+\newcommand{\uz}{\hat u_z}
+\newcommand{\uR}{\hat u_R}
+
+\title{\vspace{-1.5cm}\textbf{Gradiente de $R^{n}$}\\[4pt]
+  \large\normalfont Regla de la cadena, el factor $nR^{n-2}$ y por qué $\nab=-\nab'$}
+\author{}
+\date{\vspace{-0.8cm}\small Apuntes del 20 de octubre de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{hilo}
+\textbf{Hilo conductor.} Todo descansa en una observación: $R^{n}$ depende de
+las seis coordenadas $(x,y,z,x',y',z')$ \emph{solo a través de la distancia}
+$R$, y $R$ depende de ellas solo a través de las \emph{diferencias}
+$x-x'$, $y-y'$, $z-z'$. De lo primero sale (i) que el gradiente es radial y se
+calcula con la regla de la cadena; de lo segundo, (ii) que derivar respecto
+del punto fuente solo cambia el signo. El caso $n=-1$ es el paso del potencial
+de Coulomb $1/R$ a su campo $\vc{R}/R^{3}$.
+\end{hilo}
+
+% ===========================================================================
+\section{Planteamiento}
+% ===========================================================================
+El punto fuente es $\vc{r}\,'=(x',y',z')$ y el punto campo $\vc{r}=(x,y,z)$.
+El vector relativo, su módulo y su versor son
+\begin{align}
+  \vc{R}&=\vc{r}-\vc{r}\,'=R_x\,\ux+R_y\,\uy+R_z\,\uz,
+  \qquad R_x=x-x',\; R_y=y-y',\; R_z=z-z', \label{eq:Rvec}\\
+  R&=\bigl[R_x^{2}+R_y^{2}+R_z^{2}\bigr]^{1/2},\qquad
+  \uR=\frac{\vc{R}}{R}\quad\bigl(\vc{R}=R\,\uR\bigr). \label{eq:Rmod}
+\end{align}
+Queremos demostrar que, para cualquier $n$ real y $R\neq0$,
+\begin{resultado}
+\vspace{-8pt}
+\begin{equation}\label{eq:objetivo}
+  \nab(R^{n})=-\nab'(R^{n})=n\,R^{n-1}\,\uR=n\,R^{n-2}\,\vc{R}.
+\end{equation}
+\end{resultado}
+
+% ===========================================================================
+\section{Las piezas}
+% ===========================================================================
+\subsection{$R^{n}$ es una función compuesta}
+Definimos $h(u)=u^{n}$. Entonces $R^{n}=h\bigl(R(x,y,z)\bigr)$: la dependencia
+en $x$ pasa \emph{entera} por $R$. La regla de la cadena da
+\begin{equation}\label{eq:cadena}
+  \pd{R^{n}}{x}=h'(R)\,\pd{R}{x}=\pd{R^{n}}{R}\,\pd{R}{x}.
+\end{equation}
+El problema se reduce a dos derivadas de una variable.
+
+\subsection{Derivada exterior: $\partial R^{n}/\partial R$}
+Es la regla de la potencia, $\frac{\mathrm d}{\mathrm du}u^{n}=nu^{n-1}$:
+\begin{equation}\label{eq:exterior}
+  \pd{R^{n}}{R}=n\,R^{n-1}.
+\end{equation}
+Vale para \textbf{cualquier} $n\in\mathbb{R}$ (negativo, fraccionario\dots)
+porque $R>0$. De ahí la hipótesis $R\neq0$:
+\begin{itemize}
+  \item si $n<1$, $R^{n-1}$ no está definido en $R=0$;
+  \item además $R$ no es derivable en $\vc{r}=\vc{r}\,'$: su gráfica tiene allí
+        un vértice en forma de cono (como $|x|$ en una dimensión).
+\end{itemize}
+
+\subsection{Derivada interior: $\partial R/\partial x$}
+Derivamos $R=\bigl[(x-x')^{2}+(y-y')^{2}+(z-z')^{2}\bigr]^{1/2}$ respecto de
+$x$, con todo lo demás fijo. Es otra regla de la cadena (raíz de un polinomio):
+\begin{equation}\label{eq:dR}
+  \pd{R}{x}
+  =\tfrac12\bigl[\cdots\bigr]^{-1/2}\cdot 2(x-x')\cdot\underbrace{\pd{(x-x')}{x}}_{=\,1}
+  =\frac{x-x'}{R}=\frac{R_x}{R}.
+\end{equation}
+\textbf{Interpretación.} $R_x/R$ es el coseno director de $\vc{R}$ con el eje
+$x$: la distancia crece al mover $x$ tanto más cuanto más alineado esté
+$\vc{R}$ con ese eje.
+
+% ===========================================================================
+\section{Demostración}
+% ===========================================================================
+\subsection{Componente $x$}
+Sustituyendo \eqref{eq:exterior} y \eqref{eq:dR} en \eqref{eq:cadena} y
+juntando potencias ($R^{n-1}/R=R^{(n-1)-1}$):
+\begin{equation}\label{eq:compx}
+  \pd{R^{n}}{x}=n\,R^{n-1}\,\frac{R_x}{R}=n\,R^{n-2}\,R_x .
+\end{equation}
+
+\subsection{Componentes $y$, $z$: simetría}
+$R$ es simétrica en las tres coordenadas. Repitiendo \eqref{eq:dR} con $y$ o
+$z$ se obtiene $\partial R/\partial y=R_y/R$ y $\partial R/\partial z=R_z/R$,
+luego
+\begin{equation}\label{eq:compyz}
+  \pd{R^{n}}{y}=n\,R^{n-2}\,R_y,\qquad \pd{R^{n}}{z}=n\,R^{n-2}\,R_z .
+\end{equation}
+
+\subsection{Agrupando en el gradiente}
+Por definición, $\nab f=\pd{f}{x}\ux+\pd{f}{y}\uy+\pd{f}{z}\uz$. El factor
+$nR^{n-2}$ es un \emph{escalar común} a las tres componentes y sale fuera; lo
+que queda entre paréntesis es exactamente \eqref{eq:Rvec}:
+\begin{equation}\label{eq:agrupar}
+  \nab(R^{n})=nR^{n-2}\bigl(R_x\,\ux+R_y\,\uy+R_z\,\uz\bigr)
+  =nR^{n-2}\,\vc{R}.
+\end{equation}
+Finalmente, con $\vc{R}=R\,\uR$ de \eqref{eq:Rmod}:
+\begin{equation}\label{eq:final}
+  nR^{n-2}\,\vc{R}=nR^{n-2}\,R\,\uR=n\,R^{n-1}\,\uR .
+\end{equation}
+
+\subsection{La igualdad con $-\nab'$}
+$\nab'$ deriva respecto de las coordenadas \emph{de la fuente}. Como $R$
+depende de $x'$ solo a través de $x-x'$, la derivada interior cambia de signo:
+\begin{equation}\label{eq:dRprima}
+  \pd{R}{x'}=\tfrac12\bigl[\cdots\bigr]^{-1/2}\cdot2(x-x')\cdot
+  \underbrace{\pd{(x-x')}{x'}}_{=\,-1}=-\frac{R_x}{R}.
+\end{equation}
+La derivada exterior \eqref{eq:exterior} no cambia, de modo que cada
+componente de $\nab'(R^{n})$ es la de $\nab(R^{n})$ con signo opuesto:
+$\nab'(R^{n})=-\nab(R^{n})$. Esto completa \eqref{eq:objetivo}.
+\hfill$\blacksquare$
+
+% ===========================================================================
+\section{Comprobaciones e interpretación}
+% ===========================================================================
+\begin{itemize}
+  \item \textbf{$n=1$:} $\nab R=\uR$. La distancia crece a ritmo $1$ al
+        alejarse radialmente de la fuente, y no crece al moverse en
+        perpendicular (sobre una esfera centrada en $\vc{r}\,'$).
+  \item \textbf{$n=2$:} $\nab(R^{2})=2\vc{R}$. Se comprueba a mano:
+        $\partial_x\bigl[(x-x')^{2}+\cdots\bigr]=2(x-x')$.
+  \item \textbf{$n=-1$ (Coulomb):}
+        \begin{equation}\label{eq:coulomb}
+          \nab\!\left(\frac1R\right)=-\frac{1}{R^{2}}\,\uR=-\frac{\vc{R}}{R^{3}} .
+        \end{equation}
+        Con $V=\dfrac{q}{4\pi\varepsilon_0 R}$ y $\vc{E}=-\nab V$ se obtiene
+        $\vc{E}=\dfrac{q}{4\pi\varepsilon_0}\dfrac{\vc{R}}{R^{3}}$: el campo de
+        una carga puntual.
+\end{itemize}
+
+\textbf{Idea geométrica.} $R^{n}$ tiene simetría esférica alrededor de
+$\vc{r}\,'$: es constante sobre cada esfera $R=\text{cte}$. El gradiente es
+perpendicular a las superficies de nivel, así que \emph{tiene} que ser radial,
+$\propto\uR$; y su módulo es la derivada en la dirección radial,
+$\mathrm d(R^{n})/\mathrm dR=nR^{n-1}$. La cuenta en cartesianas solo confirma
+esto componente a componente:
+\begin{resultado}
+\vspace{-8pt}
+\begin{equation}\label{eq:general}
+  \nab f(R)=f'(R)\,\uR,\qquad \nab' f(R)=-f'(R)\,\uR
+  \qquad\text{para cualquier } f \text{ derivable}.
+\end{equation}
+\end{resultado}
+La demostración de arriba es exactamente esta con $f(R)=R^{n}$: el único
+ingrediente fue $\partial R/\partial x=R_x/R$, que no depende de $f$.
+
+\end{document}
