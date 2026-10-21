@@ -41,21 +41,49 @@ produce el recorte y relacionarlo con lo medido en la representación X--Y.
 \end{pregunta}
 
 \begin{respuesta}
-La característica es una recta que pasa por el origen con pendiente $+11$ (la ganancia), hasta que la salida
-llega a la tensión de saturación $\Vsat$; a partir de ahí la salida ya no puede crecer y la curva se vuelve
-horizontal.
+\textbf{Configuración del osciloscopio} (Agilent DSO1052B, \cref{fig:xy-ni}): modo X--Y; canal~1 (eje X) conectado
+a la entrada $\vin$, con acoplamiento en continua (DC) y escala de $550\,\mathrm{mV/div}$; canal~2 (eje Y) conectado a la
+salida $\vout$, con $5{,}20\,\mathrm{V/div}$; ambas sondas pasivas $10{:}1$ (Agilent N2862A/B). Las escalas no son
+valores redondos porque se ajustaron en modo fino para que la característica completa ocupase la pantalla.
+Para medir usamos los cursores en modo manual, tipo «tiempo» con fuente CH1: en modo X--Y estos cursores son
+verticales y miden directamente la tensión de entrada.
 
-La salida empieza a recortarse cuando $11\cdot V_p$ alcanza $\Vsat$, es decir, para una amplitud de entrada
-\begin{equation}\label{eq:n-umbral}
-  V_{p,\mathrm{umbral}}=\frac{\Vsat}{A_V}=\frac{\Vsat}{11} .
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.62\textwidth]{figuras/xy_no_inversor.jpg}
+\caption{Característica de transferencia $\vout(\vin)$ del amplificador no inversor en modo X--Y
+(CH1: $\vin$, $550\,\mathrm{mV/div}$; CH2: $\vout$, $5{,}20\,\mathrm{V/div}$). Los cursores marcan los codos de la
+característica: $-616\,\mathrm{mV}$ y $+792\,\mathrm{mV}$.}
+\label{fig:xy-ni}
+\end{figure}
+
+\textbf{Qué vemos.} La característica tiene tres tramos: una recta de pendiente positiva que pasa por la zona
+central, que es la zona lineal ($\vout=A_V\vin$, en fase), y dos tramos horizontales, que son las saturaciones
+positiva y negativa. Los cursores sitúan los codos en
+\begin{equation}\label{eq:n-codos}
+  \vin^{-}=-616\,\mathrm{mV},\qquad \vin^{+}=+792\,\mathrm{mV},\qquad \Delta X=1{,}41\,\mathrm{V}.
 \end{equation}
-Medimos $V_{p,\mathrm{umbral}}=$ \dato\ en la pantalla en función del tiempo, y en el modo X--Y los codos de la
-característica aparecen en $\vin=$ \dato\ y \dato. Ambas medidas deben coincidir, porque son el mismo
-fenómeno visto de dos formas: el punto en que la recta se dobla en el modo X--Y es justo la amplitud a la
-que la sinusoide de salida empieza a aplanarse.
-\begin{center}
-\hueco{0.6\textwidth}{Característica $\vout(\vin)$ en modo X--Y}
-\end{center}
+Entre esos dos puntos la salida recorre, según la cuadrícula, unas $2{,}9$ divisiones verticales, es decir,
+$\Delta Y\simeq2{,}9\times5{,}20\,\mathrm{V}\simeq15\,\mathrm{V}$. La pendiente del tramo lineal es entonces
+\begin{equation}\label{eq:n-pendiente}
+  A_V\simeq\frac{\Delta Y}{\Delta X}\simeq\frac{15\,\mathrm{V}}{1{,}41\,\mathrm{V}}\simeq10{,}6 ,
+\end{equation}
+compatible con la ganancia teórica con las resistencias medidas, $1+R_2/R_1=1+9{,}7/0{,}99\simeq10{,}8$.
+
+\textbf{Relación con el recorte en la representación temporal.} Un codo de la característica es el valor de
+entrada a partir del cual la salida ya no puede crecer, de modo que el recorte de la sinusoide empieza cuando
+su amplitud alcanza ese valor:
+\begin{equation}\label{eq:n-umbral}
+  V_{p,\mathrm{umbral}}=\frac{\Vsat}{A_V} .
+\end{equation}
+Los dos codos no son simétricos ($0{,}62$ frente a $0{,}79\,\mathrm{V}$): las saturaciones positiva y negativa del 741
+son distintas, $V_{\mathrm{sat}}^{+}\simeq0{,}792\cdot10{,}8\simeq8{,}6\,\mathrm{V}$ y $V_{\mathrm{sat}}^{-}\simeq0{,}616\cdot10{,}8\simeq6{,}7\,\mathrm{V}$
+(puede contribuir también un pequeño \emph{offset} de continua en la entrada). En consecuencia, en la
+representación temporal el recorte aparece primero en el semiciclo negativo, para una amplitud de entrada de
+unos $0{,}62\,\mathrm{V}$ ($V_{\mathrm{in},pp}\simeq1{,}2\,\mathrm{V}$), y afecta a los dos semiciclos a partir de unos $0{,}79\,\mathrm{V}$
+($V_{\mathrm{in},pp}\simeq1{,}6\,\mathrm{V}$). Esto es coherente con la tabla: con $V_{\mathrm{in},pp}=500\,\mathrm{mV}$ no hay
+recorte; con $1400\,\mathrm{mV}$ la salida ($16{,}4\,\mathrm{V}$ pico a pico) está ya en el límite, con un recorte
+incipiente en el semiciclo negativo; y con $2000$ y $3050\,\mathrm{mV}$ la salida está claramente saturada.
 \end{respuesta}
 
 \begin{pregunta}[Definición de la ganancia]
