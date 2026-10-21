@@ -132,27 +132,44 @@ $\Delta t=$ \dato; los máximos de la salida valen \dato\ y aparecen en $t=$ \da
 \end{pregunta}
 
 \begin{respuesta}
-No. El modelo ideal solo dice que la ganancia es $R_2/R_1$, pero el AO real impone límites a los valores
-que podemos usar: ni muy pequeños ni muy grandes.
+No. El modelo ideal solo fija el cociente $R_2/R_1$, pero en el laboratorio ni los valores muy pequeños ni
+los muy grandes funcionan bien. Veamos qué ocurriría en la práctica en cada caso.
 
-\textbf{Decenas de ohmios: demasiado pequeñas.} Con resistencias tan bajas el circuito pide mucha corriente.
-Por ejemplo, con $R_2=100\,\Omega$ y $5\,\mathrm{V}$ a la salida, el AO tendría que dar
-\begin{equation}\label{eq:r-Iout}
-  i=\frac{\vout}{R_2}=\frac{5\,\mathrm{V}}{100\,\Omega}=50\,\mathrm{mA},
-\end{equation}
-el doble de lo que puede dar un 741 (unos $25\,\mathrm{mA}$), así que la salida se deformaría. Además, la entrada
-del inversor ($R_1$) sería tan pequeña como la resistencia del propio generador ($50\,\Omega$), y parte de la
-señal se perdería en él.
+\textbf{Decenas de ohmios} (por ejemplo, $R_1=10\,\Omega$, $R_2=100\,\Omega$).
+\begin{itemize}
+  \item \emph{El AO no puede dar tanta corriente.} Para sacar $5\,\mathrm{V}$ sobre $R_2=100\,\Omega$ haría falta
+        \begin{equation}\label{eq:r-Iout}
+          i=\frac{\vout}{R_2}=\frac{5\,\mathrm{V}}{100\,\Omega}=50\,\mathrm{mA},
+        \end{equation}
+        y el 741 limita su salida a unos $25\,\mathrm{mA}$. En el osciloscopio veríamos la sinusoide de salida
+        recortada mucho antes de llegar a $\pm\Vsat$, con una amplitud menor que la esperada.
+  \item \emph{No se quema, pero se calienta.} El 741 tiene protección interna contra cortocircuito, así que no
+        se destruye; pero mientras limita disipa del orden de $0{,}1$--$0{,}25\,\mathrm{W}$, se nota caliente y sus
+        parámetros (por ejemplo, el \emph{offset}) derivan.
+  \item \emph{Las resistencias sí pueden sufrir.} $R_2$ disiparía hasta $V^{2}/R=25/100=0{,}25\,\mathrm{W}$ de pico, justo
+        el límite de una resistencia de $1/4\,\mathrm{W}$; con valores aún menores se quemaría.
+  \item \emph{Se pierde señal en el generador.} La entrada del inversor es $R_1=10\,\Omega$, más pequeña que la
+        resistencia interna del generador ($50\,\Omega$): el generador marcaría una amplitud, pero al circuito
+        llegaría solo una sexta parte.
+\end{itemize}
 
-\textbf{Megaohmios: demasiado grandes.} Ahora las corrientes de señal son tan pequeñas que se confunden con
-las pequeñas corrientes que, en la realidad, sí entran por las entradas del AO ($I_B\simeq80\,\mathrm{nA}$). Por
-ejemplo, con $R_1=1\,\mathrm{M}\Omega$ y $\vin=0{,}1\,\mathrm{V}$, la corriente de señal es
-\begin{equation}\label{eq:r-IB}
-  i=\frac{\vin}{R_1}=\frac{0{,}1\,\mathrm{V}}{1\,\mathrm{M}\Omega}=100\,\mathrm{nA}\sim I_B ,
-\end{equation}
-y deja de cumplirse que «no entra corriente al AO». El circuito sería además muy sensible a ruido e
-interferencias.
+\textbf{Megaohmios} (por ejemplo, $R_1=1\,\mathrm{M}\Omega$, $R_2=10\,\mathrm{M}\Omega$).
+\begin{itemize}
+  \item \emph{La señal se confunde con las corrientes parásitas del AO.} Con $\vin=0{,}1\,\mathrm{V}$, la corriente de señal es
+        \begin{equation}\label{eq:r-IB}
+          i=\frac{\vin}{R_1}=\frac{0{,}1\,\mathrm{V}}{1\,\mathrm{M}\Omega}=100\,\mathrm{nA},
+        \end{equation}
+        del mismo orden que la corriente que realmente entra por las entradas del 741 ($I_B\simeq80\,\mathrm{nA}$).
+        En la práctica veríamos la salida desplazada en continua: $I_BR_2\simeq0{,}8\,\mathrm{V}$ de \emph{offset}, y la
+        ganancia medida ya no sería $R_2/R_1$.
+  \item \emph{Más ruido e interferencias.} Los nudos de tanta resistencia actúan como antenas: la señal saldría
+        con ruido y con el zumbido de $50\,\mathrm{Hz}$ de la red.
+  \item \emph{Pérdida de ancho de banda.} Las capacidades parásitas del montaje (unos pocos pF) junto con
+        $R_2=10\,\mathrm{M}\Omega$ forman un filtro paso bajo con corte en torno a $10\,\mathrm{kHz}$: la ganancia empezaría a
+        caer cerca de la frecuencia de trabajo.
+\end{itemize}
 
-\textbf{Conclusión.} Lo razonable son valores intermedios, entre $1$ y $100\,\mathrm{k}\Omega$, como los de nuestro
-diseño ($1$ y $10\,\mathrm{k}\Omega$).
+\textbf{Conclusión.} Los valores razonables están entre $1$ y $100\,\mathrm{k}\Omega$, como los de nuestro diseño
+($1$ y $10\,\mathrm{k}\Omega$): corrientes de miliamperios o menos, que el AO entrega sin problema, y muy por encima
+de sus corrientes de polarización.
 \end{respuesta}
