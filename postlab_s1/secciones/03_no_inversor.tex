@@ -64,20 +64,30 @@ posible definir la ganancia como $A_V=\partial\Vout/\partial\Vin$.
 \end{pregunta}
 
 \begin{respuesta}
-Las dos características son lineales a trozos: una recta por el origen en la zona lineal y tramos
-horizontales en saturación. La definición como cociente, $A_V=\vout/\vin$, solo tiene sentido en la zona
-lineal; en saturación el cociente varía con la amplitud de entrada y no describe el circuito. La
-definición incremental,
+\textbf{En teoría.} La derivada $\partial\vout/\partial\vin$ es la pendiente de la característica, y sería la
+definición natural de ganancia. Pero las características que hemos medido no son una única recta: son
+lineales a trozos, con una zona lineal y dos tramos de saturación. Por eso la derivada no describe el
+circuito con una sola expresión: vale $A_V$ en la zona lineal, $0$ en saturación y ni siquiera existe en los
+codos, donde la característica tiene un pico y no es derivable. Tal cual, la definición no contempla el
+\emph{clipping}.
+
+\textbf{En el laboratorio.} Tampoco es conveniente ni realmente posible calcularla con los datos. El
+osciloscopio no da una curva continua, sino un conjunto discreto de puntos con resolución vertical limitada
+(está digitalizado en niveles) y con ruido; derivar esos datos por diferencias finitas,
+$\Delta\vout/\Delta\vin$ entre puntos vecinos, amplifica el ruido y da pendientes muy dispersas, y cerca del
+recorte mezcla la zona lineal con la saturada.
+
+\textbf{Cómo hacerlo posible.} Si en lugar de una única expresión definimos la ganancia a trozos,
 \begin{equation}\label{eq:n-deriv}
   A_V=\frac{\partial\vout}{\partial\vin}=
   \begin{cases}
-    -R_2/R_1 \ \text{(inversor)},\quad 1+R_2/R_1 \ \text{(no inversor)}, & \text{zona lineal},\\[2pt]
-    0, & \text{saturación},
+    -R_2/R_1 \ \text{(inversor)}\quad\text{o}\quad 1+R_2/R_1 \ \text{(no inversor)}, & \text{sin \emph{clipping}},\\[2pt]
+    0, & \text{con \emph{clipping}},
   \end{cases}
 \end{equation}
-es la pendiente de la característica en cada punto. En la zona lineal coincide con el cociente, porque la
-recta pasa por el origen; pero es más general: describe la respuesta a pequeñas variaciones en torno a cualquier
-punto de trabajo, sigue siendo válida si hubiera una tensión de \emph{offset} (la recta no pasaría por el origen
-y el cociente variaría con $\vin$) y muestra explícitamente que en saturación el amplificador deja de
-amplificar. Por eso sí es conveniente, y es la definición que se usa para el comportamiento en pequeña señal.
+la definición sí es teóricamente válida y útil: separa explícitamente la zona en la que el circuito
+amplifica de la zona en la que deja de hacerlo. Experimentalmente, la forma correcta de obtener la ganancia
+es entonces ajustar por regresión lineal los puntos X--Y de la zona sin recorte: la pendiente de la recta
+ajustada es $A_V$, con su incertidumbre, y aprovecha todos los puntos en lugar de solo dos. En esa zona
+coincide además con el cociente $\vout/\vin$, porque la recta pasa por el origen.
 \end{respuesta}
