@@ -1,0 +1,80 @@
+% =========================================================================
+\section{Circuito 2: amplificador no inversor}\label{sec:no-inversor}
+% =========================================================================
+Montamos el no inversor de la \cref{fig:no-inversor}, con $1+R_2/R_1=11$, a $1\,\mathrm{kHz}$.
+
+\input{figuras/fig_no_inversor}
+
+\begin{pregunta}[Formas de onda y ganancia]
+Dibujar las formas de onda de $\Vin=V_g$ y $\Vout$ detallando las escalas, y comparar la relación de
+amplitudes o tensiones pico a pico con la $A_V$ buscada.
+\end{pregunta}
+
+\begin{respuesta}
+Ahora la ganancia teórica y la experimental son
+\begin{equation}\label{eq:n-Av}
+  A_V^{\mathrm{teo}}=1+\frac{R_2}{R_1},\qquad
+  A_V^{\mathrm{exp}}=+\frac{V_{\mathrm{out},pp}}{V_{\mathrm{in},pp}} ,
+\end{equation}
+con signo positivo porque la salida está en fase con la entrada.
+\begin{center}\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$V_p$ & Escala X, Y (V/div) & Base de tiempos & $V_{\mathrm{in},pp}$ & $V_{\mathrm{out},pp}$ & $A_V^{\mathrm{exp}}$\\
+\midrule
+\dato & \dato & \dato & \dato & \dato & \dato\\
+\dato & \dato & \dato & \dato & \dato & \dato\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{center}
+\hueco{0.6\textwidth}{Oscilograma $\vin$, $\vout$ (en fase)}
+\end{center}
+Obtenemos $A_V^{\mathrm{exp}}=$ \dato\ frente a $A_V^{\mathrm{teo}}=$ \dato, una desviación de \dato. A diferencia del inversor,
+la entrada no absorbe corriente ($\Zin\to\infty$), de modo que $\vin$ coincide con la tensión del generador.
+\end{respuesta}
+
+\begin{pregunta}[Característica de transferencia y recorte]
+Dibujar la característica $\Vout(V_g)$. Señalar para qué amplitud de entrada (en la representación temporal) se
+produce el recorte y relacionarlo con lo medido en la representación X--Y.
+\end{pregunta}
+
+\begin{respuesta}
+La característica es ahora una recta de pendiente positiva $A_V$ por el origen, limitada por $\pm\Vsat$. El
+recorte empieza cuando
+\begin{equation}\label{eq:n-umbral}
+  V_{p,\mathrm{umbral}}=\frac{\Vsat}{A_V}\simeq\frac{\Vsat}{11},
+\end{equation}
+algo antes que en el inversor porque la ganancia es mayor. Medimos $V_{p,\mathrm{umbral}}=$ \dato\ en la
+representación temporal, y los codos de la característica X--Y en $\vin=$ \dato\ y \dato, en acuerdo con
+\eqref{eq:n-umbral}: de nuevo, los codos de la característica son las amplitudes de entrada a las que la salida
+empieza a recortarse.
+\begin{center}
+\hueco{0.6\textwidth}{Característica $\vout(\vin)$ en modo X--Y}
+\end{center}
+\end{respuesta}
+
+\begin{pregunta}[Definición de la ganancia]
+A la vista de las características de transferencia de ambos circuitos, discutir si sería conveniente o
+posible definir la ganancia como $A_V=\partial\Vout/\partial\Vin$.
+\end{pregunta}
+
+\begin{respuesta}
+Las dos características son lineales a trozos: una recta por el origen en la zona lineal y tramos
+horizontales en saturación. La definición como cociente, $A_V=\vout/\vin$, solo tiene sentido en la zona
+lineal; en saturación el cociente varía con la amplitud de entrada y no describe el circuito. La
+definición incremental,
+\begin{equation}\label{eq:n-deriv}
+  A_V=\frac{\partial\vout}{\partial\vin}=
+  \begin{cases}
+    -R_2/R_1 \ \text{(inversor)},\quad 1+R_2/R_1 \ \text{(no inversor)}, & \text{zona lineal},\\[2pt]
+    0, & \text{saturación},
+  \end{cases}
+\end{equation}
+es la pendiente de la característica en cada punto. En la zona lineal coincide con el cociente, porque la
+recta pasa por el origen; pero es más general: describe la respuesta a pequeñas variaciones en torno a cualquier
+punto de trabajo, sigue siendo válida si hubiera una tensión de \emph{offset} (la recta no pasaría por el origen
+y el cociente variaría con $\vin$) y muestra explícitamente que en saturación el amplificador deja de
+amplificar. Por eso sí es conveniente, y es la definición que se usa para el comportamiento en pequeña señal.
+\end{respuesta}

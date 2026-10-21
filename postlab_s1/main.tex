@@ -1,0 +1,44 @@
+\documentclass[a4paper,11pt,reqno]{amsart}
+
+% =========================================================================
+%  Instrumentación Electrónica — PostLab de la sesión 1 (amplificadores operacionales)
+%  Mismo formato que el PreLab de la sesión 1. Los datos medidos se rellenan en los
+%  huecos marcados con \dato y \hueco. Compilar con: latexmk -pdf main.tex
+% =========================================================================
+\input{preambulo}
+
+\newcommand{\Universidad}{Universidad de Salamanca}
+\newcommand{\Facultad}{Facultad de Ciencias}
+\newcommand{\Titulacion}{Grado en Física}
+\newcommand{\Asignatura}{Instrumentación Electrónica}
+\newcommand{\NumTema}{Laboratorio de circuitos, sesión 1}
+\newcommand{\TituloTema}{PostLab:\\amplificadores operacionales}
+\newcommand{\tipotrabajo}{PostLab. Informe de la sesión}
+\newcommand{\miNombre}{Daniel Martín Guerrero}
+\newcommand{\miRotuloProfesor}{Profesores}
+\newcommand{\miProfesor}{Yahya Moubarak Meziani\\María Susana Pérez Santos\\Jesús Enrique Velázquez Pérez}
+\newcommand{\miDetalleProfesor}{Área de Electrónica}
+\newcommand{\SubtituloTema}{Amplificadores inversor y no inversor,\\integrador y derivador inversores}
+\newcommand{\miUbicacion}{Salamanca, curso 2026/2027}
+
+\title{PostLab de la sesión 1: amplificadores operacionales}
+\author{Daniel Martín Guerrero}
+\address{Grado en Física, Facultad de Ciencias, Universidad de Salamanca,
+         Salamanca, España}
+\date{}
+
+\begin{document}
+\pagenumbering{alph}
+\input{portada}
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\maketitle
+
+\input{secciones/01_introduccion}
+\input{secciones/02_inversor}
+\input{secciones/03_no_inversor}
+\input{secciones/04_integrador_derivador}
+
+\end{document}

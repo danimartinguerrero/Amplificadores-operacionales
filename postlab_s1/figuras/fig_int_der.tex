@@ -1,0 +1,35 @@
+% Figura: integrador inversor (figura 5a del guion) y derivador inversor (figura 5b).
+\begin{figure}[ht]
+\centering
+\begin{minipage}[b]{0.48\textwidth}\centering
+\begin{circuitikz}[circuito, scale=0.85, transform shape]
+  \draw (0,0) node[op amp, ao] (A) {};
+  \draw (A.-) -- ++(-0.5,0) coordinate (N);
+  \draw (N) to[R, l_=$R$, i<^=$i$] ++(-2.2,0) to[short, -o] ++(-0.3,0) node[left, tens] {$\vin$};
+  \draw (A.out) -- ++(0.6,0) coordinate (O);
+  \draw (N) -- ++(0,1.2) coordinate (T1) to[C, l_=$C$] (T1 -| O) -- (O);
+  \draw (T1) -- ++(0,1.0) coordinate (T2) to[R, l=$R_F$] (T2 -| O) -- (T1 -| O);
+  \fill (T1) circle (1.6pt); \fill (T1 -| O) circle (1.6pt);
+  \draw (O) to[short, *-o] ++(0.6,0) node[right, tens] {$\vout$};
+  \draw (A.+) -- ++(-0.5,0) -- ++(0,-0.4) node[ground] {};
+  \fill (N) circle (1.6pt);
+\end{circuitikz}\\[2pt]
+{\small (a)}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.48\textwidth}\centering
+\begin{circuitikz}[circuito, scale=0.85, transform shape]
+  \draw (0,0) node[op amp, ao] (A) {};
+  \draw (A.-) -- ++(-0.5,0) coordinate (N);
+  \draw (N) to[C, l_=$C$, i<^=$i$] ++(-2.2,0) to[short, -o] ++(-0.3,0) node[left, tens] {$\vin$};
+  \draw (A.out) -- ++(0.6,0) coordinate (O);
+  \draw (N) -- ++(0,1.2) coordinate (T1) to[R, l=$R$] (T1 -| O) -- (O);
+  \draw (O) to[short, *-o] ++(0.6,0) node[right, tens] {$\vout$};
+  \draw (A.+) -- ++(-0.5,0) -- ++(0,-0.4) node[ground] {};
+  \fill (N) circle (1.6pt);
+\end{circuitikz}\\[2pt]
+{\small (b)}
+\end{minipage}
+\caption{(a) Integrador inversor (figura~5a del guion); con $R_F\to\infty$ (set~2) es un integrador ideal.
+(b) Derivador inversor (figura~5b del guion).}
+\label{fig:int-der}
+\end{figure}

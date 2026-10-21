@@ -1,0 +1,146 @@
+% =========================================================================
+\section{Circuito 3: integrador y derivador inversores}\label{sec:int-der}
+% =========================================================================
+Montamos el integrador de la \figpanel{fig:int-der}{a} con los sets~1 ($R_F=100\,\mathrm{k}\Omega$) y~2
+($R_F\to\infty$), y el derivador de la \figpanel{fig:int-der}{b} con $R=1\,\mathrm{k}\Omega$ y $C=1{,}59\,\mathrm{nF}$. Empezamos
+por la respuesta temporal (cuestión~9 del informe, última del guion), porque de ella se deducen las demás.
+
+\input{figuras/fig_int_der}
+
+\begin{pregunta}[Respuesta temporal]
+Analizar la respuesta temporal de los circuitos de las figuras~5a (con $R_F=\infty$) y~5b: obtener $V_0(t)$ en
+función de los parámetros del circuito y de la entrada $V_i(t)$.
+\end{pregunta}
+
+\begin{respuesta}
+En ambos circuitos la entrada $+$ está a tierra, de modo que por (R2) el nudo inversor es una tierra virtual,
+$\vm=0$, y por (R1) toda la corriente $i$ de la rama de entrada recorre la de realimentación.
+
+\textbf{Integrador} ($R_F\to\infty$). La corriente por $R$ es $i=\vin/R$. En el condensador, la tensión entre sus
+bornes es $\vm-\vout=-\vout$, y su corriente, $i=C\,\dif(\vm-\vout)/\dif t$:
+\begin{equation}\label{eq:int1}
+  \frac{\vin(t)}{R}=-C\,\frac{\dif\vout}{\dif t} .
+\end{equation}
+Integrando entre $0$ y $t$:
+\begin{equation}\label{eq:int2}
+  \resultado{\vout(t)=-\frac{1}{RC}\int_{0}^{t}\vin(\tau)\,\dif\tau+\vout(0)}
+\end{equation}
+
+\textbf{Derivador.} Ahora la corriente es la del condensador, con $\vin$ en un borne y la tierra virtual en el otro,
+$i=C\,\dif\vin/\dif t$, y recorre $R$ hasta la salida, $\vm-\vout=Ri$:
+\begin{equation}\label{eq:der}
+  \resultado{\vout(t)=-RC\,\frac{\dif\vin}{\dif t}}
+\end{equation}
+
+\textbf{Set~1} ($R_F$ finita). El integrador tiene entonces $H(s)=-(R_F/R)/(1+sR_FC)$: un paso bajo de ganancia
+$R_F/R=100$ en continua y corte en $f_c=1/(2\pi R_FC)\simeq1\,\mathrm{kHz}$, que solo integra para $f\gg f_c$. La
+ventaja de $R_F$ es que limita la ganancia en continua: sin ella, cualquier \emph{offset} se integra y lleva la
+salida a saturación.
+\end{respuesta}
+
+\begin{pregunta}[Integrador: elección de la señal]
+¿Qué tipo de onda debemos seleccionar en el generador para que el osciloscopio permita verificar que la señal
+de entrada es integrada por el circuito: la triangular o la rectangular?
+\end{pregunta}
+
+\begin{respuesta}
+La \emph{rectangular}. Por \eqref{eq:int2}, en cada semiperiodo la entrada es constante, $\pm V_p$, y su integral es una
+rampa: la salida es una onda triangular, cuya forma identifica sin ambigüedad la integración. Con una
+triangular, la salida estaría formada por arcos de parábola, difíciles de distinguir a simple vista de una
+sinusoide; y con una sinusoide solo obtendríamos otra sinusoide desfasada. Con el set~1, además, las rampas
+solo son rectas si el semiperiodo es mucho menor que $R_FC\simeq159\,\mu\mathrm{s}$, es decir, si $f_0\gg f_c$.
+\begin{center}
+\hueco{0.47\textwidth}{Integrador, set 1:\\ entrada cuadrada y salida}\hfill
+\hueco{0.47\textwidth}{Integrador, set 2:\\ entrada cuadrada y salida}
+\end{center}
+\end{respuesta}
+
+\begin{pregunta}[Integrador: efecto de la frecuencia]
+Manteniendo fijos el \emph{offset} y la amplitud de la entrada, variar su frecuencia $f_0$ entre $f_0/10$ y $10f_0$.
+¿Influye la frecuencia en la ganancia en tensión del circuito?
+\end{pregunta}
+
+\begin{respuesta}
+Sí. Para una entrada cuadrada de amplitud $V_p$ y periodo $T=1/f_0$, \eqref{eq:int2} da en cada semiperiodo una
+rampa de excursión
+\begin{equation}\label{eq:int-pp}
+  V_{\mathrm{out},pp}=\frac{V_p}{RC}\,\frac{T}{2}=\frac{V_p}{2f_0RC},
+  \qquad
+  \frac{V_{\mathrm{out},pp}}{V_{\mathrm{in},pp}}=\frac{1}{4f_0RC},
+\end{equation}
+inversamente proporcional a la frecuencia: al multiplicar $f_0$ por $10$, la salida se divide por $10$.
+\begin{center}\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Set & $f_0$ & $V_{\mathrm{in},pp}$ & $V_{\mathrm{out},pp}$ & Cociente medido & $1/(4f_0RC)$\\
+\midrule
+2 & \dato & \dato & \dato & \dato & \dato\\
+2 & \dato & \dato & \dato & \dato & \dato\\
+2 & \dato & \dato & \dato & \dato & \dato\\
+1 & \dato & \dato & \dato & \dato & \dato\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{respuesta}
+
+\begin{pregunta}[Derivador: elección de la señal]
+¿Qué tipo de onda debemos seleccionar para verificar que la señal de entrada es derivada por el circuito: la
+triangular o la rectangular?
+\end{pregunta}
+
+\begin{respuesta}
+La \emph{triangular}. Por \eqref{eq:der}, cada rampa de pendiente constante $\pm m$ da una salida constante
+$\mp RCm$: la salida es una onda cuadrada. Con una rectangular, la derivada sería nula en los tramos planos e
+infinita en los flancos: solo veríamos picos estrechos en cada transición, limitados por el AO real.
+\begin{center}
+\hueco{0.6\textwidth}{Derivador: entrada triangular y salida cuadrada}
+\end{center}
+\end{respuesta}
+
+\begin{pregunta}[Derivador: efecto de la frecuencia]
+Variando la frecuencia $f_0$ de la entrada entre $f_0/10$ y $10f_0$, ¿influye la frecuencia en la ganancia en
+tensión del circuito?
+\end{pregunta}
+
+\begin{respuesta}
+Sí, en sentido contrario al integrador. Una triangular de tensión pico a pico $V_{\mathrm{in},pp}$ y frecuencia $f_0$ sube
+y baja $V_{\mathrm{in},pp}$ en cada semiperiodo, con pendiente $\abs{m}=2f_0V_{\mathrm{in},pp}$. Por \eqref{eq:der}, la salida es una
+cuadrada de amplitud $RC\abs{m}$, es decir,
+\begin{equation}\label{eq:der-pp}
+  V_{\mathrm{out},pp}=2RC\abs{m}=4f_0RC\,V_{\mathrm{in},pp},
+  \qquad
+  \frac{V_{\mathrm{out},pp}}{V_{\mathrm{in},pp}}=4f_0RC ,
+\end{equation}
+proporcional a la frecuencia.
+\begin{center}\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$f_0$ & $V_{\mathrm{in},pp}$ & $V_{\mathrm{out},pp}$ & Cociente medido & $4f_0RC$\\
+\midrule
+\dato & \dato & \dato & \dato & \dato\\
+\dato & \dato & \dato & \dato & \dato\\
+\dato & \dato & \dato & \dato & \dato\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{respuesta}
+
+\begin{pregunta}[Coherencia con la respuesta en frecuencia]
+¿Son congruentes los resultados anteriores, en cuanto a la dependencia de la amplitud de salida con la
+frecuencia para una entrada de amplitud constante? Justifíquese.
+\end{pregunta}
+
+\begin{respuesta}
+Sí. En el dominio de la frecuencia, el integrador ideal y el derivador tienen
+\begin{equation}\label{eq:H-int-der}
+  H_{\mathrm{int}}(s)=-\frac{1}{sRC},\quad \abs{H_{\mathrm{int}}(\jj\omega)}=\frac{1}{2\pi fRC};\qquad
+  H_{\mathrm{der}}(s)=-sRC,\quad \abs{H_{\mathrm{der}}(\jj\omega)}=2\pi fRC ,
+\end{equation}
+consecuencia directa de que en Laplace integrar es dividir por $s$ y derivar, multiplicar por $s$. Los cocientes
+temporales \eqref{eq:int-pp} y \eqref{eq:der-pp} tienen exactamente la misma dependencia, $1/f$ y $f$: solo cambia
+la constante ($4$ en lugar de $2\pi$), porque una cuadrada o una triangular no son sinusoides puras, sino sumas de
+armónicos que el circuito trata cada uno según \eqref{eq:H-int-der}. Ambas descripciones coinciden además en la
+frecuencia a la que la ganancia es unidad, del orden de $1/(2\pi RC)\simeq100\,\mathrm{kHz}$ con los valores nominales.
+\end{respuesta}

@@ -1,0 +1,154 @@
+% =========================================================================
+\section{Circuito 1: amplificador inversor}\label{sec:inversor}
+% =========================================================================
+Montamos el inversor de la \cref{fig:inversor}, con $R_2/R_1=10$, y lo excitamos con una sinusoide de
+$1\,\mathrm{kHz}$ (canal X: $\vin$; canal Y: $\vout$).
+
+\input{figuras/fig_inversor}
+
+\begin{pregunta}[Formas de onda y ganancia]
+Dibujar en cada caso las formas de onda de $\Vin$ y $\Vout$, detallando las escalas de cada canal y de la base
+de tiempos, y comparar la relación de amplitudes (o de tensiones pico a pico) con la $A_V$ buscada.
+\end{pregunta}
+
+\begin{respuesta}
+Con el modelo ideal, la ganancia esperada, con los valores \emph{medidos} de las resistencias, es
+\begin{equation}\label{eq:i-Avteo}
+  A_V^{\mathrm{teo}}=-\frac{R_2}{R_1} ,
+\end{equation}
+y la experimental se obtiene del cociente de tensiones pico a pico, con el signo de la contrafase observada:
+\begin{equation}\label{eq:i-Avexp}
+  A_V^{\mathrm{exp}}=-\frac{V_{\mathrm{out},pp}}{V_{\mathrm{in},pp}},\qquad
+  \varepsilon=\frac{\abs{A_V^{\mathrm{exp}}}-\abs{A_V^{\mathrm{teo}}}}{\abs{A_V^{\mathrm{teo}}}} .
+\end{equation}
+\begin{center}\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$V_p$ nominal & Escala X, Y (V/div) & Base de tiempos & $V_{\mathrm{in},pp}$ & $V_{\mathrm{out},pp}$ & $A_V^{\mathrm{exp}}$\\
+\midrule
+$0{,}1\,\mathrm{V}$ & \dato & \dato & \dato & \dato & \dato\\
+$0{,}2\,\mathrm{V}$ & \dato & \dato & \dato & \dato & \dato\\
+$0{,}5\,\mathrm{V}$ & \dato & \dato & \dato & \dato & \dato\\
+$1{,}0\,\mathrm{V}$ & \dato & \dato & \dato & \dato & \dato\\
+$1{,}5\,\mathrm{V}$ & \dato & \dato & \dato & \dato & \dato\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{center}
+\hueco{0.47\textwidth}{Oscilograma $\vin$, $\vout$\\($V_p=0{,}5\,\mathrm{V}$)}\hfill
+\hueco{0.47\textwidth}{Oscilograma $\vin$, $\vout$\\($V_p=1{,}5\,\mathrm{V}$)}
+\end{center}
+Con $A_V^{\mathrm{teo}}=$ \dato, la desviación \eqref{eq:i-Avexp} es \dato. Mientras la salida no satura, la
+salida es una sinusoide en contrafase con la entrada y el cociente pico a pico reproduce \eqref{eq:i-Avteo};
+las diferencias se explican por la tolerancia de las resistencias y la resolución de la lectura en pantalla.
+La ganancia finita del AO no es apreciable: con $A_0\simeq2\cdot10^{5}$, la ganancia real
+$\abs{A_V}=(R_2/R_1)/[1+(1+R_2/R_1)/A_0]$ difiere de la ideal en un $0{,}006$\,\%. En las amplitudes mayores
+(donde $\abs{A_V}V_p>\Vsat$) el cociente deja de valer $10$ porque la salida se recorta (cuestión~2).
+\end{respuesta}
+
+\begin{pregunta}[Recorte o \emph{clipping}]
+¿Qué ocurre en la forma de la salida si la amplitud de la entrada se aumenta por encima de un cierto nivel?
+Medir los niveles de entrada y salida para los que el fenómeno empieza.
+\end{pregunta}
+
+\begin{respuesta}
+La salida del AO no puede superar las tensiones de saturación, algo menores que la alimentación:
+$-V_{\mathrm{sat}}^{-}\le\vout\le V_{\mathrm{sat}}^{+}$. La relación lineal $\vout=A_V\vin$ solo vale mientras $\abs{A_V}\,\abs{\vin}$
+no alcanza esos valores; por encima, las crestas de la sinusoide de salida se recortan en tramos planos.
+El recorte empieza cuando
+\begin{equation}\label{eq:i-umbral}
+  \abs{A_V}\,V_{p,\mathrm{umbral}}=\Vsat\quad\Longrightarrow\quad V_{p,\mathrm{umbral}}=\frac{\Vsat}{\abs{A_V}} .
+\end{equation}
+Medimos $V_{\mathrm{sat}}^{+}=$ \dato\ y $V_{\mathrm{sat}}^{-}=$ \dato, y el recorte comienza para una amplitud de entrada
+$V_{p,\mathrm{umbral}}=$ \dato, frente a $\Vsat/\abs{A_V}=$ \dato\ según \eqref{eq:i-umbral}. Las dos saturaciones pueden
+no ser iguales, porque las etapas de salida positiva y negativa del 741 no son simétricas.
+\end{respuesta}
+
+\begin{pregunta}[Característica de transferencia]
+Con la amplitud de entrada máxima, trazar $\Vout(\Vin)$ en modo X--Y. Señalar para qué amplitud de entrada
+(en la representación temporal) se produce el corte y relacionarlo con lo medido en la representación X--Y.
+\end{pregunta}
+
+\begin{respuesta}
+En modo X--Y el osciloscopio dibuja $\vout$ frente a $\vin$ eliminando el tiempo, de modo que vemos
+directamente la característica de transferencia. Esperamos tres tramos:
+\begin{equation}\label{eq:i-caract}
+  \vout=\begin{cases}
+    +V_{\mathrm{sat}}^{+}, & \vin\le-V_{\mathrm{sat}}^{+}/\abs{A_V},\\[2pt]
+    A_V\,\vin, & \text{en la zona lineal},\\[2pt]
+    -V_{\mathrm{sat}}^{-}, & \vin\ge V_{\mathrm{sat}}^{-}/\abs{A_V},
+  \end{cases}
+\end{equation}
+una recta de pendiente $A_V$ por el origen y dos tramos horizontales. La pendiente medida es \dato\ y los codos
+están en $\vin=$ \dato\ y \dato.
+\begin{center}
+\hueco{0.6\textwidth}{Característica $\vout(\vin)$ en modo X--Y}
+\end{center}
+Las abscisas de los codos son exactamente las amplitudes de entrada a las que empieza el recorte en la
+representación temporal \eqref{eq:i-umbral}: ambas medidas describen el mismo fenómeno, la entrada del AO en
+saturación, vista en un caso frente al tiempo y en el otro frente a $\vin$.
+\end{respuesta}
+
+\begin{pregunta}[Respuesta a $100\,\mathrm{kHz}$]
+¿Qué ocurre en la salida si la frecuencia de la entrada se aumenta a $100\,\mathrm{kHz}$? Representar las ondas de
+entrada y salida con sus puntos más significativos. ¿Cuánto vale la ganancia?
+\end{pregunta}
+
+\begin{respuesta}
+A esta frecuencia deja de valer la hipótesis $A\to\infty$, y aparecen dos limitaciones del AO real.
+
+\textbf{Ancho de banda finito.} La ganancia en lazo abierto del 741 decae como $\abs{A}\simeq f_t/f$, con
+$f_t\simeq1\,\mathrm{MHz}$. Con realimentación, el inversor se comporta como un paso bajo de primer orden de frecuencia
+de corte
+\begin{equation}\label{eq:i-f3dB}
+  f_{3\mathrm{dB}}=\frac{f_t}{1+R_2/R_1}\simeq\frac{1\,\mathrm{MHz}}{11}\simeq91\,\mathrm{kHz},
+\end{equation}
+de modo que, a $f=100\,\mathrm{kHz}$,
+\begin{equation}\label{eq:i-100k}
+  \abs{A_V}=\frac{R_2/R_1}{\sqrt{1+(f/f_{3\mathrm{dB}})^{2}}}\simeq6{,}7,\qquad
+  \Delta\varphi=-\arctg\frac{f}{f_{3\mathrm{dB}}}\simeq-48^{\circ} :
+\end{equation}
+la ganancia baja y la salida se retrasa, además de la inversión, unos $48^{\circ}$, es decir,
+$\Delta t=\abs{\Delta\varphi}/(360^{\circ}f)\simeq1{,}3\,\mu\mathrm{s}$.
+
+\textbf{Velocidad de subida.} La pendiente de la salida no puede superar $\mathrm{SR}\simeq0{,}5\,\mathrm{V}/\mu\mathrm{s}$. Una
+sinusoide de amplitud $V_p$ y frecuencia $f$ tiene pendiente máxima $2\pi fV_p$, luego solo se reproduce sin
+deformarse si
+\begin{equation}\label{eq:i-slew}
+  V_{p,\mathrm{out}}\le\frac{\mathrm{SR}}{2\pi f}\simeq0{,}8\,\mathrm{V}\quad(f=100\,\mathrm{kHz});
+\end{equation}
+por encima, la salida se convierte en una onda triangular de pendientes $\pm\mathrm{SR}$.
+
+\textbf{Medidas.} Observamos \dato. La ganancia medida es $\abs{A_V}=$ \dato, con un retraso adicional
+$\Delta t=$ \dato; los máximos de la salida valen \dato\ y aparecen en $t=$ \dato.
+\begin{center}
+\hueco{0.6\textwidth}{Oscilograma a $100\,\mathrm{kHz}$, con máximos, mínimos\\y sus posiciones temporales}
+\end{center}
+\end{respuesta}
+
+\begin{pregunta}[Valor de las resistencias]
+¿Sería razonable elegir resistencias del orden de decenas de $\Omega$? ¿Y del orden de $\mathrm{M}\Omega$?
+\end{pregunta}
+
+\begin{respuesta}
+El modelo ideal solo fija el cociente $R_2/R_1$; sus valores absolutos los limitan las propiedades del AO real.
+
+\textbf{Decenas de ohmios} (por ejemplo, $R_1=10\,\Omega$, $R_2=100\,\Omega$): no. La impedancia de entrada del inversor
+es $R_1$, comparable con la resistencia interna del generador, $50\,\Omega$, que formaría un divisor:
+$\vin=v_g\,R_1/(R_1+50\,\Omega)\simeq v_g/6$. Además, la salida tendría que entregar
+\begin{equation}\label{eq:r-Iout}
+  i_{\mathrm{out}}\simeq\frac{\abs{\vout}}{R_2}=\frac{5\,\mathrm{V}}{100\,\Omega}=50\,\mathrm{mA},
+\end{equation}
+por encima de la corriente máxima del 741 ($\sim25\,\mathrm{mA}$), y la salida se deformaría mucho antes de saturar.
+
+\textbf{Megaohmios} (por ejemplo, $R_1=1\,\mathrm{M}\Omega$, $R_2=10\,\mathrm{M}\Omega$): tampoco. Con $\vin=0{,}1\,\mathrm{V}$, la
+corriente de señal $i_1=\vin/R_1=100\,\mathrm{nA}$ es comparable con la corriente de polarización del 741,
+$I_B\simeq80\,\mathrm{nA}$, de modo que (R1) deja de cumplirse, y aparece un error continuo en la salida
+\begin{equation}\label{eq:r-IB}
+  \Delta\vout\simeq I_B\,R_2=80\,\mathrm{nA}\cdot10\,\mathrm{M}\Omega=0{,}8\,\mathrm{V}.
+\end{equation}
+Además, $\Rin\simeq2\,\mathrm{M}\Omega$ ya no es mucho mayor que las resistencias, y una capacidad parásita de unos
+picofaradios en paralelo con $R_2$ forma un paso bajo de corte $1/(2\pi R_2C_p)\sim10\,\mathrm{kHz}$, cerca de la
+frecuencia de trabajo. Por todo ello se eligen resistencias entre $1$ y $100\,\mathrm{k}\Omega$, como en nuestro diseño.
+\end{respuesta}
