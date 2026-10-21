@@ -132,23 +132,27 @@ $\Delta t=$ \dato; los máximos de la salida valen \dato\ y aparecen en $t=$ \da
 \end{pregunta}
 
 \begin{respuesta}
-El modelo ideal solo fija el cociente $R_2/R_1$; sus valores absolutos los limitan las propiedades del AO real.
+No. El modelo ideal solo dice que la ganancia es $R_2/R_1$, pero el AO real impone límites a los valores
+que podemos usar: ni muy pequeños ni muy grandes.
 
-\textbf{Decenas de ohmios} (por ejemplo, $R_1=10\,\Omega$, $R_2=100\,\Omega$): no. La impedancia de entrada del inversor
-es $R_1$, comparable con la resistencia interna del generador, $50\,\Omega$, que formaría un divisor:
-$\vin=v_g\,R_1/(R_1+50\,\Omega)\simeq v_g/6$. Además, la salida tendría que entregar
+\textbf{Decenas de ohmios: demasiado pequeñas.} Con resistencias tan bajas el circuito pide mucha corriente.
+Por ejemplo, con $R_2=100\,\Omega$ y $5\,\mathrm{V}$ a la salida, el AO tendría que dar
 \begin{equation}\label{eq:r-Iout}
-  i_{\mathrm{out}}\simeq\frac{\abs{\vout}}{R_2}=\frac{5\,\mathrm{V}}{100\,\Omega}=50\,\mathrm{mA},
+  i=\frac{\vout}{R_2}=\frac{5\,\mathrm{V}}{100\,\Omega}=50\,\mathrm{mA},
 \end{equation}
-por encima de la corriente máxima del 741 ($\sim25\,\mathrm{mA}$), y la salida se deformaría mucho antes de saturar.
+el doble de lo que puede dar un 741 (unos $25\,\mathrm{mA}$), así que la salida se deformaría. Además, la entrada
+del inversor ($R_1$) sería tan pequeña como la resistencia del propio generador ($50\,\Omega$), y parte de la
+señal se perdería en él.
 
-\textbf{Megaohmios} (por ejemplo, $R_1=1\,\mathrm{M}\Omega$, $R_2=10\,\mathrm{M}\Omega$): tampoco. Con $\vin=0{,}1\,\mathrm{V}$, la
-corriente de señal $i_1=\vin/R_1=100\,\mathrm{nA}$ es comparable con la corriente de polarización del 741,
-$I_B\simeq80\,\mathrm{nA}$, de modo que (R1) deja de cumplirse, y aparece un error continuo en la salida
+\textbf{Megaohmios: demasiado grandes.} Ahora las corrientes de señal son tan pequeñas que se confunden con
+las pequeñas corrientes que, en la realidad, sí entran por las entradas del AO ($I_B\simeq80\,\mathrm{nA}$). Por
+ejemplo, con $R_1=1\,\mathrm{M}\Omega$ y $\vin=0{,}1\,\mathrm{V}$, la corriente de señal es
 \begin{equation}\label{eq:r-IB}
-  \Delta\vout\simeq I_B\,R_2=80\,\mathrm{nA}\cdot10\,\mathrm{M}\Omega=0{,}8\,\mathrm{V}.
+  i=\frac{\vin}{R_1}=\frac{0{,}1\,\mathrm{V}}{1\,\mathrm{M}\Omega}=100\,\mathrm{nA}\sim I_B ,
 \end{equation}
-Además, $\Rin\simeq2\,\mathrm{M}\Omega$ ya no es mucho mayor que las resistencias, y una capacidad parásita de unos
-picofaradios en paralelo con $R_2$ forma un paso bajo de corte $1/(2\pi R_2C_p)\sim10\,\mathrm{kHz}$, cerca de la
-frecuencia de trabajo. Por todo ello se eligen resistencias entre $1$ y $100\,\mathrm{k}\Omega$, como en nuestro diseño.
+y deja de cumplirse que «no entra corriente al AO». El circuito sería además muy sensible a ruido e
+interferencias.
+
+\textbf{Conclusión.} Lo razonable son valores intermedios, entre $1$ y $100\,\mathrm{k}\Omega$, como los de nuestro
+diseño ($1$ y $10\,\mathrm{k}\Omega$).
 \end{respuesta}
